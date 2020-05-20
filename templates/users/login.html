@@ -1,0 +1,41 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/users/login_signup.css'%}">
+{% endblock %}
+
+{% block register-form %}
+
+<div class="form-container">
+
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+
+            <input type="text" name="username" placeholder="Nombre de usuario">
+            <input type="password" name="password" placeholder="Contraseña">
+            <button type="submit" class="form-button">
+                <p>Iniciar sesión</p>
+            </button>
+
+            {% if error %}
+            <hr class="error-divisor">
+            <p class="error-message">{{error}}</p>
+            {% endif %}
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block register-option %}
+<div class="form-elements-container">
+    <p class="register-option">
+        ¿No tienes una cuenta? <a href="{% url 'signup' %}"><strong>Regístrate</strong></a>
+    </p>
+</div>
+{% endblock %}
