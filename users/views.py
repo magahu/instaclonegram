@@ -1,4 +1,4 @@
-"""users views Configuration"""
+"""Users views Configuration"""
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.models import Profile
 from django.db import IntegrityError
+from .forms import SignUpForm
 
 def login_view(request):
 
@@ -34,27 +35,42 @@ def logout_view(request):
 
 
 def signup_view(request):
-    #simport pdb; pdb.set_trace()
-    
+    #import pdb; pdb.set_trace()
+    # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        email = request.POST['email']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        password_confirmation = request.POST['password_confirmation']
+        # create a form instance and populate it with data from the request:
+        form = SignUpForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            try:
+                data = form.cleaned_data
+                first_name = data['first_name']
+                last_name = data['last_name']
+                email = data['email']
+                username = data['username']
+                password = data['password']
+                password_confirmation = data['password_confirmation']
+                if password == password_confirmation:
+                    user  = User.objects.create_user(
+                        first_name=first_name,
+                        last_name=last_name,
+                        username=username,
+                        email=email,
+                        password=password
+                        )
+                    profile = Profile(user=user)
+                    profile.phone = data['phone']
+                    profile.save()
+                    # redirect to a new URL:
+                    return redirect('login')
+                else:
+                    return render(request, 'users/signup.html', {'form':form})
+            except IntegrityError:
+                return render(request, 'users/signup.html', {'form':form})
 
-        if password != password_confirmation:
-            return render(request, 'users/signup.html', {'error':'La contraseña que ingresate no coincide'})
-    
-        try:
-            user = User.objects.create_user(username=username, password=password, email=email)
-            profile = Profile(user=user)
-            profile.phone = request.POST['phone']
-            profile.save()
-            return redirect('login')
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = SignUpForm()
 
-        except IntegrityError:
-            return render(request, 'users/signup.html', {'error':'Nombre de usuario no disponible'}) 
-
-    return render(request, 'users/signup.html')
+    return render(request, 'users/signup.html', {'form':form})

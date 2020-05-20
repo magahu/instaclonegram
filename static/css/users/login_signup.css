@@ -44,12 +44,12 @@ form{
 }
 
 form input{
-    padding: 5px 0;
+    padding: 5px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: lighter;
     font-size: 0.8em;
     margin: 2px 0;
-    width: 250px;
+    width: 240px;
 }
 
 .form-button{
@@ -94,11 +94,16 @@ form input{
     margin:1.5em;
 }
 
-.error-message{
-    color: red;
+.errorlist{
     font-family: 'Varela', sans-serif;
-    font-size: small;
-    text-align: center;
-    max-width: 280px;
-    margin: 5px;
+    font-size: 0.7em;
+    color: red;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.my-error-alert{
+    border: 1px solid red;
+    border-radius: 5px;
 }
