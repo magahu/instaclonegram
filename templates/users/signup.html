@@ -21,72 +21,18 @@
                     <p>{{form.errors}}</p>
                 {% endif %}
             {% endcomment %}
-            
-            <input type="text" name="first_name" placeholder="Nombre"
-                value="{% if form.first_name.errors %}{{form.first_name.value}}{% endif %}" class="{% if form.first_name.errors %}my-error-alert{% endif %}">
-             <p class="errorlist">
-                 {% if form.first_name.errors %}
-                    {% for error in form.first_name.errors %}
-                        {{error}}
-                    {% endfor %}
-                {% endif %}
-                </p>
-            <input type="text" name="last_name" placeholder="Apellido"
-                value="{% if form.last_name.errors %}{{form.last_name.value}}{% endif %}" class="{% if form.last_name.errors %}my-error-alert{% endif %}">
-                <p class="errorlist">
-                {% if form.last_name.errors %}
-                    {% for error in form.last_name.errors %}
-                           {{error}}
-                     {% endfor %}
-                 {% endif %}
-                </p>
-            <input type="email" name="email" placeholder="Correo electrónico"
-                value="{% if form.email.errors%}{{form.email.value}}{% endif %}" class="{% if form.email.errors %}my-error-alert{% endif %}">
-                <p class="errorlist">
-                {% if form.email.errors %}
-                    {% for error in form.email.errors %}
-                         {{error}}
-                    {% endfor %}
-                {% endif %}
-                </p>
-            <input type="text" name="phone" placeholder="Número telefónico"
-                value="{% if form.phone.errors %}{{form.phone.value}}{% endif%}" class="{% if form.phone.errors %}my-error-alert{% endif %}">
-            <p class="errorlist">
-                {% if form.first_phone.errors %}
-                    {% for error in form.phone.errors %}
-                          {{error}}
-                    {% endfor %}
-                {% endif %}
-                </p>
-            <input type="text" name="username" placeholder="Nombre de usuario"
-                value="{% if form.username.errors %}{{form.username.value}}{% endif %}" class="{% if form.username.errors %}my-error-alert{% endif %}">
-            <p class="errorlist">
-                {% if form.username.errors %}
-                    {% for error in form.username.errors %}
-                        {{error}}
-                    {% endfor %}
-                {% endif %}
-            </p>
-            
-            <input type="password" name="password" placeholder="Contraseña"
-                value="{% if form.password.errors %}{{form.password.value}}{% endif %}" class="{% if form.password.errors %}my-error-alert{% endif %}">
-            <p class="errorlist">
-                {% if form.password.errors %}
-                    {% for error in form.password.errors %}
-                        {{error}}
-                    {% endfor %}
-                {% endif %}
-            </p>
-            <input type="password" name="password_confirmation" placeholder="Confirmar contraseña" class="{% if form.password.errors %}my-error-alert{% endif %}">
-            <p class="errorlist">
-                {% if form.password_confirmation.errors %}
-                    {% for error in form.password_confirmation.errors %}
-                        {{error}}
-                    {% endfor %}
-                {% endif %}
-            </p>
-                
-            
+
+            {% for field in form %}
+                {{field}}
+
+            {% endfor %}
+
+            {%if form.errors %}
+                {% for error in errors %}
+                    <p class="errorlist">{{error}}</p>
+                {% endfor %}
+            {% endif %}
+
             <button type="submit" class="form-button">
                 <p>Registrarse</p>
             </button>
