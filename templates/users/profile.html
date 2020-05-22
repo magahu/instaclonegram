@@ -1,1 +1,53 @@
 {% extends 'base.html' %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/users/profile.css' %}">
+{% endblock %}
+
+{% block title %}
+<title>{{user.first_name}} @{{user.username}}</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <div class="user-info-container">
+        <a href="">
+            <img class="profile-picture" src="{{user.profile.picture.url}}" width="150px" height="150px">
+        </a>
+        <div class="info-rows">
+            <div class="info-first-row">
+                <p class="info-username">{{user.username}}</p>
+            {% if user == request.user %}
+                <button class="row-element">
+                    <a href="{% url 'update-profile' %}">
+                        <strong>Editar perfil</strong>
+                    </a>
+                </button>
+                <a class="row-element"><img src="{% static 'images/settings.png'%}"></a>
+            {% else %}
+                <button class="row-element">
+                    <a href="">
+                        <strong>Seguir</strong>
+                    </a>
+                </button>
+            {% endif%}
+            </div>
+            <div class="info-second-row">
+                <p>publicaciones</p>
+                <p>seguidores</p>
+                <p>seguidos</p>
+            </div>
+            <p class="profile-data"><strong>{{user.first_name}} {{user.last_name}}</strong></p>
+            <p class="profile-data">{{user.profile.biography}}</p>
+            
+        </div>
+    </div>
+
+
+
+</div>
+
+{% endblock %}

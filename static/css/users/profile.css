@@ -1,0 +1,77 @@
+.profile-container{
+    padding-top: 55px;
+}
+
+.profile-picture{
+    border-radius: 50%;  
+    margin: 0 30px; 
+}
+
+.user-info-container{
+    display: flex;
+    margin: 50px;
+}
+
+
+.info-first-row{
+    display: flex;
+    align-content: center;
+}
+
+.info-username{
+    font-family:'Varela', sans-serif;
+    font-size: 2em;
+    font-weight: lighter;
+    margin: 0;
+}
+
+.info-first-row button{
+    font-family:'Varela', sans-serif;
+    font-size: 0.8em;
+    padding: 0.1em;
+    height: 2.5em;
+}
+
+.info-first-row button a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.info-first-row img{
+    width:1.9em;
+}
+
+.info-second-row{
+    display: flex;
+}
+
+.info-second-row p{
+    margin: 0;
+    font-family:'Varela', sans-serif;
+}
+
+.row-element{
+    margin: 0 15px;
+}
+
+.info-second-row p{
+    margin: 5px;
+    font-family:'Varela', sans-serif;
+    font-size: 0.9em;
+}
+
+.profile-data{
+    margin: 5px;
+    font-family:'Varela', sans-serif;
+    font-size: 0.9em;
+}
+
+/* POSTS VIEWS */
+
+.user-posts{
+    margin: 0 140px;
+}
+
+.user-pic{
+    margin: 20px;
+}
