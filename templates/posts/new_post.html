@@ -16,16 +16,16 @@
     <form action="{% url 'new-post' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <input type="hidden" name="user" value="{{user.pk}}">
-        <input type="hidden" name="profile" value="{{profile.pk}}">
+        <input type="hidden" name="user" value="{{request.user.pk}}">
+        <input type="hidden" name="profile" value="{{request.user.profile.pk}}">
 
         <div class="form-items-container">
 
             <div class="form-elements">
                 <div class="image-container" >
-                    <img src="{{profile.picture.url}}" width=400px id="target" class="image-container" hidden="True">
+                    <img src="{{request.user.profile.picture.url}}" width=400px id="target" class="image-container" hidden="True">
                     {% if profile.picture %}
-                       <img src="{{profile.picture.url}}" width=400px id="target" class="image-container" hidden="True"> 
+                       <img src="{{request.user.profile.picture.url}}" width=400px id="target" class="image-container" hidden="True"> 
                     {% endif %} 
                 </div>
                 <div class="inputs-container">    
