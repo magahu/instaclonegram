@@ -117,6 +117,7 @@ def update_profile(request):
 
 
 #Profile view
+@login_required
 def profile(request):
     if request.method == 'POST':
         pass

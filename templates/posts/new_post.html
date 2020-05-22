@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>New post</title>
+{% endblock %}
+
+{% block css %}
+{%load static%}
+<link rel="stylesheet" href="{% static 'css/posts/new_post.css'%}">
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <form action="{% url 'new-post' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="hidden" name="user" value="{{user.pk}}">
+        <input type="hidden" name="profile" value="{{profile.pk}}">
+
+        <div class="form-items-container">
+
+            <div class="form-elements">
+                <div class="image-container" >
+                    <img src="{{profile.picture.url}}" width=400px id="target" class="image-container" hidden="True">
+                    {% if profile.picture %}
+                       <img src="{{profile.picture.url}}" width=400px id="target" class="image-container" hidden="True"> 
+                    {% endif %} 
+                </div>
+                <div class="inputs-container">    
+                    
+                    <input type="file" name="picture" id="src">
+                    {% if form.picture.errors %}
+                    {% for error in form.picture.errors %}
+                        <p class="error-message">{{ form.picture.label_tag}}{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
+
+                    <textarea rows="4" cols="50" name="description" placeholder="Escribe un pie de foto o video..."></textarea>
+                    {% if form.description.errors %}
+                    {% for error in form.description.errors %}
+                        <p class="error-message">{{ form.description.label_tag}}{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
+
+                    <input type="text" name="title" placeholder="Título"
+                    value="{% if form.title.errors %}{{ form.title.value }}{% endif %}">
+                    {% if form.title.errors %}
+                    {% for error in form.title.errors %}
+                        <p class="error-message">{{ form.title.label_tag}}{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
+
+                </div>
+            </div>
+           
+            <button type="submit">Compartir</button>
+
+        </div>
+
+    </form>
+
+    {% load static %}
+    <script src="{% static 'js/posts/show_picture.js' %}" type="text/javascript"></script>
+
+</div>
+
+{% endblock %}

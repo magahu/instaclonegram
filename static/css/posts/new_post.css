@@ -1,0 +1,74 @@
+html, body{
+    background-color: whitesmoke;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.form-container{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.form-items-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border: 1px solid #8fabbf;
+    padding: 1em;
+}
+
+.form-elements{
+    display: flex;
+    align-items: center;
+}
+
+.inputs-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 1em;
+
+}
+
+.inputs-container input{
+    margin: 5px 0;
+    font-family: 'Varela', sans-serif;
+}
+.inputs-container textarea{
+    margin: 5px 0;
+    font-family: 'Varela', sans-serif;
+}
+
+.image-container{
+    width: 200px;
+    height: 200px;
+    border: 1px solid #8fabbf;
+}
+
+.form-items-container button{
+    background-color: #0095f6;
+    border-color: #0095f6;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
+    margin:10px 0;
+}
+
+.error-message{
+    color: red;
+    font-family: 'Varela', sans-serif;
+    font-size: small;
+    text-align: center;
+    margin: 5px;
+}
