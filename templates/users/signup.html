@@ -22,16 +22,15 @@
                 {% endif %}
             {% endcomment %}
 
-            {% for field in form %}
-                {{field}}
-
+           {% for field in form %}
+               <div class="fieldWrapper">
+                    {{ field.errors }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
             {% endfor %}
-
-            {%if form.errors %}
-                {% for error in errors %}
-                    <p class="errorlist">{{error}}</p>
-                {% endfor %}
-            {% endif %}
 
             <button type="submit" class="form-button">
                 <p>Registrarse</p>

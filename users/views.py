@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 from users.models import Profile
 from django.db import IntegrityError
 from .forms import SignUpForm
+from .forms import UpdateProfileForm
 
+# Login view
 def login_view(request):
 
     if request.method == 'POST':
@@ -26,6 +28,7 @@ def login_view(request):
     return render(request, 'users/login.html')
 
 
+#Logout view
 @login_required
 def logout_view(request):
 
@@ -34,6 +37,7 @@ def logout_view(request):
     return redirect('login')
 
 
+#Signup view
 def signup_view(request):
     #import pdb; pdb.set_trace()
     # if this is a POST request we need to process the form data
@@ -74,3 +78,46 @@ def signup_view(request):
         form = SignUpForm()
 
     return render(request, 'users/signup.html', {'form':form})
+
+
+#Update profile view
+@login_required
+def update_profile(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = UpdateProfileForm(request.POST, request.FILES)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            data = form.cleaned_data
+        
+            if data['picture']:
+                request.user.profile.picture = data['picture']
+            else:
+                request.user.profile.picture
+            request.user.profile.website = data['website']
+            request.user.profile.biography = data['biography']
+            request.user.profile.phone = data['phone']
+            #request.user.profile.gender = data['gender']
+
+            request.user.profile.save()
+
+            # redirect to a new URL:
+            return redirect('update-profile')
+
+        else:
+            return render(request, 'users/update_profile.html', {'form':form})
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = UpdateProfileForm()
+         
+    return render(request, 'users/update_profile.html')
+
+
+#Profile view
+def profile(request):
+    if request.method == 'POST':
+        pass
+    return render(request, 'users/profile.html')

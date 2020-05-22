@@ -1,0 +1,72 @@
+body{
+    background-color: whitesmoke;
+    margin: 0;
+    padding: 0;
+}
+
+.icon{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between ;
+}
+
+.icon h2{
+    font-family: 'Lobster', cursive;
+    font-weight: lighter;
+    font-size: 1.7em;
+    margin-left: 0.5em;
+
+}
+
+.nav-space{
+    margin: 0em;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    border-bottom: 1px solid #8fabbf;
+    height: 54px;
+}
+
+.nav-menu ul li{
+    list-style: none;
+    margin-left: 0.5em;
+    margin-right: 1em;
+}
+
+.nav-menu ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-button .lens{
+    margin: 0.1em;
+}
+
+.search-button p{
+    margin: 0em;
+    margin-left: 0.5em;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.8em;
+    color: #8fabbf;
+}
+
+.search-button{
+    display: flex;
+    width: 15em;
+    height: 25px;
+    justify-content: center;
+    align-items: center;
+    border:  0.5px solid #8fabbf;
+    background-color: whitesmoke;
+    
+}
+
+.profile-pic{
+    border-radius: 50%;
+}

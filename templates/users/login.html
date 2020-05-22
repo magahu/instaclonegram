@@ -24,7 +24,12 @@
 
             {% if error %}
             <hr class="error-divisor">
-            <p class="error-message">{{error}}</p>
+            <p>
+                <style type="text/css">
+                    p { color: red; font-family: 'Varela', sans-serif; text-align: center; font-size: 0.9em;}
+                </style>
+                {{error}}
+            </p>
             {% endif %}
     </form>
 

@@ -5,15 +5,16 @@ class Profile(models.Model):
     GENDER_CHOICES = [
         ('male', 'Mujer'),
         ('female', 'Hombre'),
-        ('other', 'Otro')
+        ('other', 'Otro'),
+        ('default', '----')
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.FileField(upload_to='users/profile_pictures')
     biography = models.TextField(max_length=500, blank=True)
-    website = models.URLField(max_length=70, blank=True)
+    website = models.URLField(max_length=70)
     phone = models.CharField(max_length=10)
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
+    #gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='default')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 

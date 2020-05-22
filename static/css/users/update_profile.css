@@ -1,0 +1,102 @@
+html, body{
+    background-color: whitesmoke;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.edit-profile{
+    margin: 0;
+    padding-top: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.username-header{
+    padding: 0;
+    margin: 0 15px;
+    font-family: 'Varela', sans-serif;
+    font-size: 1em;
+}
+
+.change-pic{
+    margin:0;
+    color: #0095f6;
+    font-weight: bolder;
+}
+
+
+
+.user-main-data{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+}
+
+.profile-pic{
+    border-radius: 50%;
+}
+
+.edit-profile-container{
+    border: 1px solid #8fabbf;
+    padding: 1em 3em;
+}
+
+.edit-profile-form{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Varela', sans-serif;
+    font-size: 0.8em;
+    font-weight: bolder;
+    margin: 1em;
+    width: 35em;
+}
+
+.privacy-info{
+    width: inherit;
+    font-family: 'Varela', sans-serif;
+    font-weight: lighter;
+    font-size: 0.8em;
+    color: grey;
+    text-align: justify;
+    margin-top: 10px;
+}
+
+.privacy-info p{
+    margin : 0;
+}
+
+.submit-form{
+    background-color: #0095f6;
+    border-color: #0095f6;
+    padding: 5px 0;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.submit-form p{
+    color:ivory;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    margin:0;
+    text-align: center;
+    
+}
+
+.edit-profile-form label{
+    margin-top: 10px;
+}
+
+.errorlist{
+    color: red;
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+}

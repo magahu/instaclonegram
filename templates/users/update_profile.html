@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/users/update_profile.css' %}">
+{% endblock %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+
+{% block content %}
+<div class="edit-profile">
+    <div class="edit-profile-container">
+
+        <form action="{% url 'update-profile' %}" method="POST" enctype="multipart/form-data" class="edit-profile-form">
+            {% csrf_token %}
+
+            <div class="user-main-data">
+                
+                {% if request.user.profile.picture %}
+                    <img class="profile-pic" src="{{request.user.profile.picture.url }}" width=100px>
+                {% else %}
+                    <img class="profile-pic" src="{% static 'images/default-profile.png' %}" width=100px>
+                {% endif %}
+
+                <h1 class="username-header">
+                    {{request.user.get_full_name}}
+                    <br>
+                    @{{request.user.username}}
+                    <br>
+                    <p><input type="file" class="change-pic-button" name="picture"></p>
+           
+                    <p class="errorlist">
+                        {% for error in form.picture.errors %}
+                        {{error}}
+                        {% endfor %}
+                    </p>
+                  
+               
+                </h1>
+            </div>
+
+            <label>Sitio web</label>
+            <input type="text" name="website" 
+            value="{% if form.website.errors%}{{form.website.value}}{% else %}{{ request.user.profile.website}}{% endif %}">
+            
+            <p class="errorlist">
+                {% for error in form.website.errors %}
+                {{error}}
+                {% endfor %}
+            </p>
+          
+            
+            
+            <label>Presentación</label>
+            <input type="text" name="biography"
+            value="{% if form.biography.errors %}{{form.biography.value}}{% else %}{{request.user.profile.biography}}{% endif %}">
+            <p class="errorlist">
+                {% for error in form.biography.errors %}
+                {{error}}
+                {% endfor %}
+            </p>
+
+
+            <div class="privacy-info">
+                <p><strong>Información personal</strong></p>
+                <p>Proporciona tu información personal, incluso si la cuenta se usa para un negocio, una mascota, etc. Esta información no se incluirá en tu perfil público.</p>
+            </div>
+            
+
+            <label>Número telefónico</label>
+            <input type="text" name="phone" value="{% if form.phone.errors%}{{form.phone.value}}{% else %}{{request.user.profile.phone}}{% endif %}">
+            <p class="errorlist">
+                {% for error in form.phone.errors %}
+                {{error}}
+                {% endfor %}
+            </p>
+
+            <!--
+            <label>Género</label>
+            <input type="radio" name="gender">
+            <input type="radio" name="gender">
+            <input type="radio" name="gender">
+            -->
+           
+    
+            <button type="submit" class="submit-form">
+                <p>Enviar</p>
+            </button>
+
+
+
+        </form>
+
+    </div>
+    
+    
+</div>
+
+{% endblock %}

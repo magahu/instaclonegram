@@ -1,0 +1,56 @@
+{% load static %}
+
+<header class="nav-space">
+    <div class="icon">
+        <img src="{% static 'images/instagram.svg' %}" width="25px" height="25px">
+        <h2>instaclonegram</h2>
+    </div>
+    <!--<button class="search-button">
+        <img class="lens" src="{% static 'images/lens.svg'%}" width="10px">
+        <p>Buscar</p>
+    </button>-->
+    <a href="">
+        <img src="{% static 'images/add.png' %}" height="25px">
+    </a>
+    
+    <nav class="nav-menu">
+        <ul>
+            <li>
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'images/home.svg' %}" height="25px">
+                </a>
+            </li>
+            <!--
+            <li>
+                <a href="">
+                    <img src="{% static 'imgs/heart-shape.svg' %}" height="25px">
+                </a>
+            </li>-->
+            <li>
+                <a href="">
+                    <img src="{% static 'images/multy-user.svg' %} " height="25px">
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'update-profile' %}">
+                    <img src="{% static 'images/settings.png' %}" height="25px">
+                </a>
+            </li>
+            <!--<li>
+                <a href="">
+                    <img src="{% static 'imgs/add.png' %}" height="25px">
+                </a>
+            </li>-->
+            <li>
+                <a href="{% url 'profile' %}">
+                    {% if request.user.profile.picture %}
+                        <img src="{{request.user.profile.picture.url}}" height="30px" class="profile-pic">
+                    {% else %}
+                        <img src="{% static 'images/default-profile.png' %}" height="30px" class="profile-pic">
+                    {% endif %}
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</header>
