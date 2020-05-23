@@ -16,20 +16,16 @@
     <form action="{% url 'signup' %}" method="POST">
         {% csrf_token %}
 
-            {% comment %}
-                {% if form.errors %}
-                    <p>{{form.errors}}</p>
-                {% endif %}
-            {% endcomment %}
+            {% for field in form.visible_fields %}
+            <div class="fieldWrapper">
+                <p >{{ field.errors }}</p>
+                {{ field }}
+            </div>
+            {% endfor %}
 
-           {% for field in form %}
-               <div class="fieldWrapper">
-                    {{ field.errors }}
-                    {{ field }}
-                    {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
-                    {% endif %}
-                </div>
+        
+            {% for error in form.password.errors %}
+               <p class="errorlist">{{error}}</p> 
             {% endfor %}
 
             <button type="submit" class="form-button">

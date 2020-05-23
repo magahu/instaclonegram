@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.models import Profile
 from django.db import IntegrityError
-from .forms import SignUpForm
-from .forms import UpdateProfileForm
+from .forms import SignUpForm, UpdateProfileForm
+ 
 
 # Login view
 def login_view(request):
@@ -47,31 +47,9 @@ def signup_view(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            try:
-                data = form.cleaned_data
-                first_name = data['first_name']
-                last_name = data['last_name']
-                email = data['email']
-                username = data['username']
-                password = data['password']
-                password_confirmation = data['password_confirmation']
-                if password == password_confirmation:
-                    user  = User.objects.create_user(
-                        first_name=first_name,
-                        last_name=last_name,
-                        username=username,
-                        email=email,
-                        password=password
-                        )
-                    profile = Profile(user=user)
-                    profile.phone = data['phone']
-                    profile.save()
-                    # redirect to a new URL:
-                    return redirect('login')
-                else:
-                    return render(request, 'users/signup.html', {'form':form})
-            except IntegrityError:
-                return render(request, 'users/signup.html', {'form':form})
+            form.save()
+            # redirect to a new URL:
+            return redirect('login')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -119,6 +97,4 @@ def update_profile(request):
 #Profile view
 @login_required
 def profile(request):
-    if request.method == 'POST':
-        pass
     return render(request, 'users/profile.html')
