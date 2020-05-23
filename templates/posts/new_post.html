@@ -23,9 +23,11 @@
 
             <div class="form-elements">
                 <div class="image-container" >
-                    <img src="{{request.user.profile.picture.url}}" width=400px id="target" class="image-container" hidden="True">
+                    
                     {% if profile.picture %}
                        <img src="{{request.user.profile.picture.url}}" width=400px id="target" class="image-container" hidden="True"> 
+                    {% else %}
+                       <img src="{% static 'images/default-profile.png' %}" width=400px id="target" class="image-container" hidden="True">
                     {% endif %} 
                 </div>
                 <div class="inputs-container">    

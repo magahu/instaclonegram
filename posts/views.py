@@ -3,11 +3,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import NewPostForm
+from posts.models import Post
 
 #Home view
 @login_required
 def posts(request):
-    return render(request, 'home.html')
+    posts_queryset = Post.objects.all().order_by('-posted')
+    return render(request, 'home.html', {'posts':posts_queryset})
 
 
 #Create new post view
@@ -22,7 +24,6 @@ def new_post(request):
             form.save()
             # redirect to a new URL:
             return redirect('home')
-    
     else:
         # if a GET (or any other method) we'll create a blank form
         form = NewPostForm()

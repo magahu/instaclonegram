@@ -15,7 +15,11 @@
 
     <div class="user-info-container">
         <a href="">
+            {% if user.profile.picture %}
             <img class="profile-picture" src="{{user.profile.picture.url}}" width="150px" height="150px">
+            {% else %}
+            <img class="profile-picture" src="{% static 'images/default-profile.png' %}" width="150px" height="150px">
+            {% endif%}
         </a>
         <div class="info-rows">
             <div class="info-first-row">
