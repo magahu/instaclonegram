@@ -39,11 +39,11 @@ def logout_view(request):
 
 #Signup view
 def signup_view(request):
-    #import pdb; pdb.set_trace()
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = SignUpForm(request.POST)
+        import pdb; pdb.set_trace()
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required

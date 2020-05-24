@@ -19,7 +19,7 @@ class SignUpForm(forms.Form):
         username = self.cleaned_data['username']
         username_queryset = User.objects.filter(username=username).exists()
         if username_queryset:
-            raise forms.ValidationError('Nombre de usuario no disponible')
+            raise forms.ValidationError('Nombre de usuario no disponible', code='invalid_username')
         return username
 
     def clean(self):
@@ -29,8 +29,8 @@ class SignUpForm(forms.Form):
         password_confirmation = cleaned_data.get("password_confirmation")
 
         if password != password_confirmation:
-            raise forms.ValidationError('Las contraseñas ingresadas no coinciden')
-        return password
+            raise forms.ValidationError('Las contraseñas ingresadas no coinciden', code='invalid_password')
+        return cleaned_data
 
     def save(self):
         #Save profile and user data
