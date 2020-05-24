@@ -16,17 +16,65 @@
     <form action="{% url 'signup' %}" method="POST">
         {% csrf_token %}
 
-            {% for field in form.visible_fields %}
-            <div class="fieldWrapper">
-                <p >{{ field.errors }}</p>
-                {{ field }}
-            </div>
-            {% endfor %}
 
-        
-            {% for error in form.password.errors %}
-               <p class="errorlist">{{error}}</p> 
-            {% endfor %}
+           <input type="text" name="first_name" placeholder="Nombre"
+           class="{% if form.first_name.errors %}my-error-alert{% endif %}"
+           value="{% if form.first_name.errors %}{{form.first_name.value}}{% endif %}">
+           {% if form.first_name.errors %}
+               {% for error in form.first_name.errors %}
+                   <p class="errorlist">{{error}}</p>
+               {% endfor %}
+           {% endif %}
+
+           <input type="text" name="last_name" placeholder="Apellido"
+           class="{% if form.last_name.errors %}my-error-alert{% endif %}">
+           {% if form.last_name.errors %}
+               {% for error in form.last_name.errors %}
+                   <p class="errorlist">{{error}}</p>
+               {% endfor %}
+           {% endif %}
+
+           <input type="email" name="email" placeholder="Correo electrónico"
+           class="{% if form.last_name.errors %}my-error-alert{% endif %}">
+           {% if form.email.errors %}
+               {% for error in form.email.errors %}
+                   <p class="errorlist">{{error}}</p>
+               {% endfor %}
+           {% endif %}
+
+           <input type="text" name="phone" placeholder="Phone"
+           class="{% if form.phone.errors %}my-error-alert{% endif %}">
+           {% if form.phone.errors %}
+               {% for error in form.phone.errors %}
+                   <p class="errorlist">{{error}}</p>
+               {% endfor %}
+           {% endif %}
+
+           <input type="text" name="username" placeholder="Nombre de usuario"
+           class="{% if form.username.errors %}my-error-alert{% endif %}">
+           {% if form.username.errors %}
+               {% for error in form.username.errors %}
+                   <p class="errorlist">{{error}}</p>
+               {% endfor %}
+           {% endif %}
+
+           <input type="password" name="password" placeholder="Contraseña"
+           class="{% if form.password.errors %}my-error-alert{% endif %}">
+           {% if form.password.errors %}
+               {% for error in form.password.errors %}
+                   <p class="errorlist">{{error}}</p>
+               {% endfor %}
+           {% endif %}
+
+           <input type="password" name="password_confirmation" placeholder="Confirmar contraseña"
+           class="{% if form.password.errors %}my-error-alert{% endif %}">
+           {% if form.password_confirmation.errors %}
+               {% for error in form.password_confirmation.errors %}
+                   <p class="errorlist">{{error}}</p>
+               {% endfor %}
+           {% endif %}
+   
+
 
             <button type="submit" class="form-button">
                 <p>Registrarse</p>

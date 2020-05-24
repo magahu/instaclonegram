@@ -1,4 +1,4 @@
-#!/home/margarita/DJANGO/instaclonegram/.env/bin/python3
+#!/home/margarita/DJANGO/instaclonegram/.env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

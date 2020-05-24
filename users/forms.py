@@ -30,7 +30,7 @@ class SignUpForm(forms.Form):
 
         if password != password_confirmation:
             raise forms.ValidationError('Las contraseñas ingresadas no coinciden')
-        return cleaned_data
+        return password
 
     def save(self):
         #Save profile and user data
