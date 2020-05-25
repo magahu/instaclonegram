@@ -24,7 +24,7 @@ def login_view(request):
             return redirect('home')
         else:
             # No backend authenticated the credentials
-            return render(request, 'users/login.html', {'error': 'La contraseña o el nombre de usuario no son correctos.'})
+            return render(request, 'users/login.html', {'error': 'La contraseña o el nombre de usuario son incorrectos.'})
     return render(request, 'users/login.html')
 
 
