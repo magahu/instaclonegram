@@ -44,7 +44,7 @@
                {% endfor %}
            {% endif %}
 
-           <input type="text" name="phone" placeholder="Phone"
+           <input type="text" name="phone" placeholder="Número telefónico"
            class="{% if form.phone.errors %}my-error-alert{% endif %}"
            value="{% if form.phone.errors %}{{form.phone.value}}{% elif form.phone.value != None %}{{form.phone.value}}{% endif %}">
            {% if form.phone.errors %}
@@ -79,7 +79,7 @@
            {% endif %}
 
            <p class="errorlist">{{form.non_field_errors}}</p>
-  
+        
          
             <button type="submit" class="form-button">
                 <p>Registrarse</p>

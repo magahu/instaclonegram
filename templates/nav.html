@@ -2,7 +2,7 @@
 
 <header class="nav-space">
     <div class="icon">
-        <a href="{% url 'new-post' %}">
+        <a href="{% url 'posts:new-post' %}">
             <img src="{% static 'images/instagram.svg' %}" width="25px" height="25px">
         </a> 
         <h2>instaclonegram</h2>
@@ -11,14 +11,14 @@
         <img class="lens" src="{% static 'images/lens.svg'%}" width="10px">
         <p>Buscar</p>
     </button>-->
-    <a href="{% url 'new-post' %}">
+    <a href="{% url 'posts:new-post' %}">
         <img src="{% static 'images/add.png' %}" height="25px">
     </a>
     
     <nav class="nav-menu">
         <ul>
             <li>
-                <a href="{% url 'home' %}">
+                <a href="{% url 'posts:home' %}">
                     <img src="{% static 'images/home.svg' %}" height="25px">
                 </a>
             </li>

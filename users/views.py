@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from users.models import Profile
 from django.db import IntegrityError
 from .forms import SignUpForm, UpdateProfileForm
+from django.urls import reverse
  
 
 # Login view
@@ -21,7 +22,7 @@ def login_view(request):
             # A backend authenticated the credentials
             login(request, user)
             # Redirect to a success page.
-            return redirect('home')
+            return redirect('posts:home')
         else:
             # No backend authenticated the credentials
             return render(request, 'users/login.html', {'error': 'La contraseña o el nombre de usuario son incorrectos.'})
@@ -98,3 +99,4 @@ def update_profile(request):
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
+    #return render(reverse('profile'))
