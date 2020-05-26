@@ -72,3 +72,8 @@ html, body{
     text-align: center;
     margin: 5px;
 }
+
+.my-error-alert{
+    border: 1px solid red;
+    border-radius: 5px;
+}

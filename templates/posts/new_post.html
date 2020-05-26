@@ -22,14 +22,13 @@
         <div class="form-items-container">
 
             <div class="form-elements">
-                <div class="image-container" >
+                
+                <div class="image-container">
                     
-                    {% if profile.picture %}
-                       <img src="{{request.user.profile.picture.url}}" width=400px id="target" class="image-container" hidden="True"> 
-                    {% else %}
-                       <img src="{% static 'images/default-profile.png' %}" width=400px id="target" class="image-container" hidden="True">
-                    {% endif %} 
+                       <img id="target" width=400px  class="image-container" hidden="True"> 
+
                 </div>
+
                 <div class="inputs-container">    
                     
                     <input type="file" name="picture" id="src">
@@ -39,7 +38,8 @@
                     {% endfor %}
                     {% endif %}
 
-                    <textarea rows="4" cols="50" name="description" placeholder="Escribe un pie de foto o video..."></textarea>
+                    <textarea rows="4" cols="50" name="description" placeholder="Escribe un pie de foto o video..."
+                    class="{% if form.description.errors %}my-error-alert{% endif %}"></textarea>
                     {% if form.description.errors %}
                     {% for error in form.description.errors %}
                         <p class="error-message">{{ form.description.label_tag}}{{ error }}</p>
@@ -47,7 +47,8 @@
                     {% endif %}
 
                     <input type="text" name="title" placeholder="Título"
-                    value="{% if form.title.errors %}{{ form.title.value }}{% endif %}">
+                    value="{% if form.title.errors %}{{ form.title.value }}{% endif %}" 
+                    class="{% if form.title.errors %}my-error-alert{% endif %}">
                     {% if form.title.errors %}
                     {% for error in form.title.errors %}
                         <p class="error-message">{{ form.title.label_tag}}{{ error }}</p>
