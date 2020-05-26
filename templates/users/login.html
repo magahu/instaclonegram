@@ -13,7 +13,7 @@
 
 <div class="form-container">
 
-    <form action="{% url 'login' %}" method="POST">
+    <form action="{% url 'users:login' %}" method="POST">
         {% csrf_token %}
 
             <input type="text" name="username" placeholder="Nombre de usuario">
@@ -40,7 +40,7 @@
 {% block register-option %}
 <div class="form-elements-container">
     <p class="register-option">
-        ¿No tienes una cuenta? <a href="{% url 'signup' %}"><strong>Regístrate</strong></a>
+        ¿No tienes una cuenta? <a href="{% url 'users:signup' %}"><strong>Regístrate</strong></a>
     </p>
 </div>
 {% endblock %}

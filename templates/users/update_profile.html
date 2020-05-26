@@ -13,7 +13,7 @@
 <div class="edit-profile">
     <div class="edit-profile-container">
 
-        <form action="{% url 'update-profile' %}" method="POST" enctype="multipart/form-data" class="edit-profile-form">
+        <form action="{% url 'users:update-profile' %}" method="POST" enctype="multipart/form-data" class="edit-profile-form">
             {% csrf_token %}
 
             <div class="user-main-data">

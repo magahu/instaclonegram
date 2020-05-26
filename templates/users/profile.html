@@ -27,7 +27,7 @@
                 <p class="info-username">{{user.username}}</p>
             {% if user == request.user %}
                 <button class="row-element">
-                    <a href="{% url 'update-profile' %}">
+                    <a href="{% url 'users:update-profile' %}">
                         <strong>Editar perfil</strong>
                     </a>
                 </button>

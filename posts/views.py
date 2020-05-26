@@ -23,7 +23,7 @@ def new_post(request):
         if form.is_valid():
             form.save()
             # redirect to a new URL:
-            return redirect('home')
+            return redirect('posts:home')
     else:
         # if a GET (or any other method) we'll create a blank form
         form = NewPostForm()

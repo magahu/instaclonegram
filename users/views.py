@@ -35,7 +35,7 @@ def logout_view(request):
 
     logout(request)
     # Redirect to a success page.
-    return redirect('login')
+    return redirect('users:login')
 
 
 #Signup view
@@ -50,7 +50,7 @@ def signup_view(request):
             # process the data in form.cleaned_data as required
             form.save()
             # redirect to a new URL:
-            return redirect('login')
+            return redirect('users:login')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -83,7 +83,7 @@ def update_profile(request):
             request.user.profile.save()
 
             # redirect to a new URL:
-            return redirect('update-profile')
+            return redirect('users:update-profile')
 
         else:
             return render(request, 'users/update_profile.html', {'form':form})

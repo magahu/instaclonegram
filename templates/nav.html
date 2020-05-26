@@ -29,7 +29,7 @@
                 </a>
             </li>-->
             <li>
-                <a href="{% url 'logout' %}">
+                <a href="{% url 'users:logout' %}">
                     <img src="{% static 'images/multy-user.svg' %} " height="25px">
                 </a>
             </li>
@@ -39,7 +39,7 @@
                 </a>
             </li>-->
             <li>
-                <a href="{% url 'profile' %}">
+                <a href="{% url 'users:profile' %}">
                     {% if request.user.profile.picture %}
                         <img src="{{request.user.profile.picture.url}}" height="30px" class="profile-pic">
                     {% else %}
