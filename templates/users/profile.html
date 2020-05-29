@@ -41,10 +41,20 @@
             {% endif%}
             </div>
             <div class="info-second-row">
-                <p>publicaciones</p>
-                <p>seguidores</p>
-                <p>seguidos</p>
+                    <div class="field">
+                        <p>n</p>
+                        <p>publicaciones</p>
+                    </div>
+                    <div class="field">
+                        <p>n</p>
+                        <p>seguidores</p>
+                    </div>
+                    <div class="field">
+                        <p>n</p>
+                        <p>seguidos</p>
+                    </div>
             </div>
+            
             <p class="profile-data"><strong>{{user.first_name}} {{user.last_name}}</strong></p>
             <p class="profile-data">{{user.profile.biography}}</p>
             

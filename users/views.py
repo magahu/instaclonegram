@@ -1,13 +1,13 @@
 """Users views Configuration"""
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.models import Profile
 from django.db import IntegrityError
 from .forms import SignUpForm, UpdateProfileForm
-from django.urls import reverse
+
  
 
 # Login view
@@ -97,6 +97,7 @@ def update_profile(request):
 
 #Profile view
 @login_required
-def profile(request):
-    return render(request, 'users/profile.html')
-    #return render(reverse('profile'))
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    return render(request, 'users/profile.html', {'user':user})
+    

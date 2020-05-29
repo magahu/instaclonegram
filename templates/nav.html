@@ -39,7 +39,7 @@
                 </a>
             </li>-->
             <li>
-                <a href="{% url 'users:profile' %}">
+                <a href="{% url 'users:profile' request.user.username %}">
                     {% if request.user.profile.picture %}
                         <img src="{{request.user.profile.picture.url}}" height="30px" class="profile-pic">
                     {% else %}
