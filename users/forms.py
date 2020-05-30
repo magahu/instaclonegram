@@ -36,13 +36,13 @@ class SignUpForm(forms.Form):
         #Save profile and user data
         data = self.cleaned_data
         data.pop('password_confirmation')
-        #user = User.object.create_user(**data)
+        #user = User.objects.create_user(**data)
         user  = User.objects.create_user(
-                        first_name=first_name,
-                        last_name=last_name,
-                        username=username,
-                        email=email,
-                        password=password
+                        first_name=data['first_name'],
+                        last_name=data['last_name'],
+                        username=data['username'],
+                        email=data['email'],
+                        password=data['password']
                         )
         profile = Profile(user=user)
         profile.phone = data['phone']
