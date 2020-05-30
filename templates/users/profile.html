@@ -34,7 +34,7 @@
                 <a class="row-element"><img src="{% static 'images/settings.png'%}"></a>
             {% else %}
                 <button class="row-element">
-                    <a href="">
+                    <a href="{%url 'users:follow' user.username %}">
                         <strong>Seguir</strong>
                     </a>
                 </button>
@@ -61,7 +61,14 @@
         </div>
     </div>
 
+    <div class="user-posts">
+        {% for post in posts %}
 
+            <img class="user-pic" src="{{post.picture.url}}" alt="" width="293px" height="293px">
+            
+
+        {% endfor %}
+    </div>
 
 </div>
 

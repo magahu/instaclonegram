@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from users.models import Profile
 from django.db import IntegrityError
 from .forms import SignUpForm, UpdateProfileForm
+from posts.models import Post
 
  
 
@@ -98,6 +99,14 @@ def update_profile(request):
 #Profile view
 @login_required
 def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    posts = Post.objects.filter(user=user).order_by('-posted')
+    return render(request, 'users/profile.html', {'user':user, 'posts':posts})
+    
+
+#Follows view
+@login_required
+def follow(request, username):
     user = get_object_or_404(User, username=username)
     return render(request, 'users/profile.html', {'user':user})
     

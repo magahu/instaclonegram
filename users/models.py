@@ -22,3 +22,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Follow(models.Model):
+      follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='who_follows')
+      followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name='who_is_followed')
+      follow_time = models.DateTimeField(auto_now=True)
+
+      def __str__(self):
+          return self.user.username
