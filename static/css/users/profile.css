@@ -55,13 +55,14 @@
 }
 
 .info-second-row p{
-    margin: 5px;
+    margin: 5px 20px 5px 0;
     font-family:'Varela', sans-serif;
     font-size: 0.9em;
+    
 }
 
 .profile-data{
-    margin: 5px;
+    margin: 5px 0;
     font-family:'Varela', sans-serif;
     font-size: 0.9em;
 }
@@ -76,6 +77,8 @@
     margin: 10px;
 }
 
-.field{
-    text-align: center;
+
+.contacts_link{
+    text-decoration: none;
+    color: black;
 }

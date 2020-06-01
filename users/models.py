@@ -30,4 +30,4 @@ class Follow(models.Model):
       follow_time = models.DateTimeField(auto_now=True)
 
       def __str__(self):
-          return self.user.username
+          return self.follower.username

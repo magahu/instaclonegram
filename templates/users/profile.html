@@ -34,25 +34,33 @@
                 <a class="row-element"><img src="{% static 'images/settings.png'%}"></a>
             {% else %}
                 <button class="row-element">
-                    <a href="{%url 'users:follow' user.username %}">
-                        <strong>Seguir</strong>
-                    </a>
+                   
+                    {% if follow.followed == user %}
+                        <a href="{% url 'users:unfollow' user.username %}">
+                            <strong>Dejar de seguir</strong>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'users:follow' user.username %}">
+                            <strong>Seguir</strong>
+                        </a>
+                    {% endif %}
+                    
                 </button>
             {% endif%}
             </div>
             <div class="info-second-row">
-                    <div class="field">
-                        <p>n</p>
-                        <p>publicaciones</p>
-                    </div>
-                    <div class="field">
-                        <p>n</p>
-                        <p>seguidores</p>
-                    </div>
-                    <div class="field">
-                        <p>n</p>
-                        <p>seguidos</p>
-                    </div>
+                
+                        <p><strong>{{n_posts}}</strong> publicaciones</p>
+
+                        <a href="{% url 'users:followers' user.username %}" class="contacts_link">
+                            <p><strong>{{n_followers}}</strong> seguidores</p>
+                        </a>
+                    
+                        <a href="{% url 'users:followed' user.username %}" class="contacts_link">
+                            <p><strong>{{n_followed}}</strong> seguidos</p>
+                        </a>
+                        
+                    
             </div>
             
             <p class="profile-data"><strong>{{user.first_name}} {{user.last_name}}</strong></p>

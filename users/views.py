@@ -8,6 +8,7 @@ from users.models import Profile
 from django.db import IntegrityError
 from .forms import SignUpForm, UpdateProfileForm
 from posts.models import Post
+from .models import Follow
 
  
 
@@ -100,13 +101,69 @@ def update_profile(request):
 @login_required
 def profile(request, username):
     user = get_object_or_404(User, username=username)
+    follow = Follow.objects.filter(followed=user)
     posts = Post.objects.filter(user=user).order_by('-posted')
-    return render(request, 'users/profile.html', {'user':user, 'posts':posts})
+    n_posts = Post.objects.filter(user=user).count()
+    n_followers = Follow.objects.filter(followed=user).count()
+    n_followed = Follow.objects.filter(follower=user).count()
+
+    return render(request,
+                 'users/profile.html',
+                 {
+                     'user':user,
+                     'posts':posts,
+                     'follow':follow, 
+                     'n_posts':n_posts,
+                     'n_followers':n_followers,
+                     'n_followed':n_followed
+                 }
+                )
+                 
     
 
-#Follows view
+#Follow view
 @login_required
 def follow(request, username):
     user = get_object_or_404(User, username=username)
-    return render(request, 'users/profile.html', {'user':user})
-    
+    #import pdb; pdb.set_trace()
+    #follow_query = Follow.objects.filter(followed=user, follower=request.user).exists()
+   
+    follow = Follow.objects.create(
+        followed = user,
+        follower = request.user
+    )
+
+    return render(request, 'users/profile.html', {'user':user, 'follow':follow})
+
+
+#List followers view
+@login_required
+def list_follows(request):   
+    #all_follow = Follow.objects.filter(follower=request.user)
+    pass
+
+
+#Unfollow view
+@login_required
+def unfollow(request, username):
+    user = get_object_or_404(User, username=username)
+    follow = Follow.objects.get(followed=user)
+    follow.delete()
+
+    return render(request, 'users/profile.html', {'user':user, 'follow':follow})
+
+
+#Followers view
+@login_required
+def followers(request, username):
+    user = get_object_or_404(User, username=username)
+    followers = Follow.objects.filter(followed=user)
+
+    return render(request, 'users/contacts.html', {'user':user, 'contacts':followers})
+
+#Followed view
+def followed(request, username):
+    user = get_object_or_404(User, username=username)
+    followed = Follow.objects.filter(follower=user)
+
+    return render(request, 'users/contacts.html', {'user':user, 'contacts':followed})
