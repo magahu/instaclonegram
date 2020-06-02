@@ -25,28 +25,7 @@
         <div class="info-rows">
             <div class="info-first-row">
                 <p class="info-username">{{user.username}}</p>
-            {% if user == request.user %}
-                <button class="row-element">
-                    <a href="{% url 'users:update-profile' %}">
-                        <strong>Editar perfil</strong>
-                    </a>
-                </button>
-                <a class="row-element"><img src="{% static 'images/settings.png'%}"></a>
-            {% else %}
-                <button class="row-element">
-                   
-                    {% if follow.followed == user %}
-                        <a href="{% url 'users:unfollow' user.username %}">
-                            <strong>Dejar de seguir</strong>
-                        </a>
-                    {% else %}
-                        <a href="{% url 'users:follow' user.username %}">
-                            <strong>Seguir</strong>
-                        </a>
-                    {% endif %}
-                    
-                </button>
-            {% endif%}
+                {% include "users/follow_button.html" %}
             </div>
             <div class="info-second-row">
                 

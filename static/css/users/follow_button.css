@@ -1,0 +1,12 @@
+.follow-button{
+    font-family:'Varela', sans-serif;
+    font-size: 0.8em;
+    padding: 0.1em;
+    height: 2.5em;
+    margin: 0 15px;
+}
+
+.follow-button a{
+    text-decoration: none;
+    color: inherit;
+}

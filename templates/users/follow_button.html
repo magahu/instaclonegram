@@ -1,0 +1,25 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/users/follow_button.css' %}">
+
+{% if user == request.user %}
+<button class="follow-button">
+    <a href="{% url 'users:update-profile' %}">
+        <strong>Editar perfil</strong>
+    </a>
+</button>
+<a class="follow-button"><img src="{% static 'images/settings.png'%}"></a>
+{% else %}
+<button class="follow-button">
+   
+    {% if follow.followed == user %}
+        <a href="{% url 'users:unfollow' user.username %}">
+            <strong>Dejar de seguir</strong>
+        </a>
+    {% else %}
+        <a href="{% url 'users:follow' user.username %}">
+            <strong>Seguir</strong>
+        </a>
+    {% endif %}
+    
+</button>
+{% endif%}
