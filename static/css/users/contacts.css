@@ -1,3 +1,37 @@
 .contacts-container{
     padding-top: 55px;
+    border: 1px solid #8fabbf;
+}
+
+.left-elements{
+    display: flex;
+}
+
+.contact-data{
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact-image{
+    border-radius: 50%;
+}
+
+.contact-name{
+    font-family:'Varela', sans-serif;
+    font-size: 0.8em;
+}
+
+.profile-link{
+    text-decoration: none;
+    color: #000000;
+}
+
+.contact-name .username{
+    margin: 0;
+}
+
+.contact-name .name{
+    margin: 0;
+    font-weight: lighter;
+    color: rgb(48, 45, 45);
 }

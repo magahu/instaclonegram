@@ -2,18 +2,18 @@
 
 <header class="nav-space">
     <div class="icon">
-        <a href="{% url 'posts:new-post' %}">
+        <a href="{% url 'users:profile' request.user.username %}">
             <img src="{% static 'images/instagram.svg' %}" width="25px" height="25px">
         </a> 
         <h2>instaclonegram</h2>
     </div>
-    <!--<button class="search-button">
+    <button class="search-button">
         <img class="lens" src="{% static 'images/lens.svg'%}" width="10px">
         <p>Buscar</p>
-    </button>-->
-    <a href="{% url 'posts:new-post' %}">
+    </button>
+    <!--<a href="{% url 'posts:new-post' %}">
         <img src="{% static 'images/add.png' %}" height="25px">
-    </a>
+    </a>-->
     
     <nav class="nav-menu">
         <ul>
@@ -22,6 +22,12 @@
                     <img src="{% static 'images/home.svg' %}" height="25px">
                 </a>
             </li>
+            <li>
+                <a href="{% url 'posts:new-post' %}">
+                    <img src="{% static 'images/add.png' %}" height="25px">
+                </a>
+            </li>
+            
             <!--
             <li>
                 <a href="">

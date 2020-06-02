@@ -11,8 +11,6 @@ from posts.models import Post
 from .models import Follow
 
 
- 
-
 # Login view
 def login_view(request):
 
@@ -34,8 +32,8 @@ def login_view(request):
 
 #Logout view
 @login_required
-def logout_view(request):
 
+def logout_view(request):
     logout(request)
     # Redirect to a success page.
     return redirect('users:login')
@@ -54,11 +52,9 @@ def signup_view(request):
             form.save()
             # redirect to a new URL:
             return redirect('users:login')
-
     # if a GET (or any other method) we'll create a blank form
     else:
         form = SignUpForm()
-
     return render(request, 'users/signup.html', {'form':form})
 
 
@@ -190,15 +186,21 @@ def unfollow(request, username):
 #Followers view
 @login_required
 def followers(request, username):
+    followers=[]
     user = get_object_or_404(User, username=username)
-    followers = Follow.objects.filter(followed=user).order_by('-follow_time')
-    return render(request, 'users/contacts.html', {'user':user, 'contacts':followers})
+    follows = Follow.objects.filter(followed=user).order_by('-follow_time')
+    for follow in follows:
+        followers.append(follow.follower)
+
+    return render(request,'users/contacts.html', {'user':user,'contacts':followers})
 
 
 #Followed view
 def followed(request, username):
+    followed=[]
     user = get_object_or_404(User, username=username)
-    followed = Follow.objects.filter(follower=user).order_by('-follow_time')
+    follows = Follow.objects.filter(follower=user).order_by('-follow_time')
+    for follow in follows:
+        followed.append(follow.followed)
     #import pdb; pdb.set_trace()
-
     return render(request, 'users/contacts.html', {'user':user, 'contacts':followed})
