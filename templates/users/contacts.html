@@ -1,1 +1,28 @@
 {% extends 'base.html' %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/users/contacts.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="contacts-container">
+
+    <div class="contacts">
+        {% if not contacts %}
+        <p>Aun no tienes contactos</p>
+        {% else %}
+        {% for contact in contacts %}
+        <div class="contact-data">
+            <p>SEGUIDOR:{{contact.follower}}</p>
+            <p>SEGUIDO:{{contact.followed}}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+    
+</div>
+
+{% endblock %}

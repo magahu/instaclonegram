@@ -10,6 +10,7 @@ from .forms import SignUpForm, UpdateProfileForm
 from posts.models import Post
 from .models import Follow
 
+
  
 
 # Login view
@@ -97,15 +98,19 @@ def update_profile(request):
     return render(request, 'users/update_profile.html')
 
 
-#Profile view
+#Profile view 
 @login_required
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    follow = Follow.objects.filter(followed=user)
+    try:
+        follow = Follow.objects.get(follower=request.user, followed=user)  
+    except Follow.DoesNotExist:
+        follow = Follow()
     posts = Post.objects.filter(user=user).order_by('-posted')
     n_posts = Post.objects.filter(user=user).count()
     n_followers = Follow.objects.filter(followed=user).count()
     n_followed = Follow.objects.filter(follower=user).count()
+    #import pdb; pdb.set_trace()
 
     return render(request,
                  'users/profile.html',
@@ -126,44 +131,71 @@ def profile(request, username):
 def follow(request, username):
     user = get_object_or_404(User, username=username)
     #import pdb; pdb.set_trace()
-    #follow_query = Follow.objects.filter(followed=user, follower=request.user).exists()
-   
+
     follow = Follow.objects.create(
         followed = user,
         follower = request.user
     )
 
-    return render(request, 'users/profile.html', {'user':user, 'follow':follow})
+    n_followers = Follow.objects.filter(followed=user).count()
+    n_followed = Follow.objects.filter(follower=user).count()
+    n_posts = Post.objects.filter(user=user).count()
+    posts = Post.objects.filter(user=user).order_by('-posted')
+
+    return render(request,
+                  'users/profile.html',
+                  {
+                    'user':user,
+                    'follow':follow,
+                    'n_followers':n_followers,
+                    'n_followed':n_followed,
+                    'n_posts':n_posts,
+                    'posts':posts
+                  }
+                )
+   
 
 
-#List followers view
-@login_required
-def list_follows(request):   
-    #all_follow = Follow.objects.filter(follower=request.user)
-    pass
 
 
 #Unfollow view
 @login_required
 def unfollow(request, username):
     user = get_object_or_404(User, username=username)
-    follow = Follow.objects.get(followed=user)
+    follow = Follow.objects.filter(followed=user, follower=request.user)
     follow.delete()
-
-    return render(request, 'users/profile.html', {'user':user, 'follow':follow})
+    n_followers = Follow.objects.filter(followed=user).count()
+    n_followed = Follow.objects.filter(follower=user).count()
+    n_posts = Post.objects.filter(user=user).count()
+    posts = Post.objects.filter(user=user).order_by('-posted')
+   
+    
+    return render(request,
+                  'users/profile.html',
+                   {
+                       'user':user,
+                       'follow':follow,
+                       'n_followers':n_followers,
+                       'n_followed':n_followed,
+                       'n_posts': n_posts,
+                       'posts':posts
+                    }
+                )
 
 
 #Followers view
 @login_required
 def followers(request, username):
     user = get_object_or_404(User, username=username)
-    followers = Follow.objects.filter(followed=user)
-
+    followers = Follow.objects.filter(followed=user).order_by('-follow_time')
     return render(request, 'users/contacts.html', {'user':user, 'contacts':followers})
+
 
 #Followed view
 def followed(request, username):
     user = get_object_or_404(User, username=username)
-    followed = Follow.objects.filter(follower=user)
+    all_follows = Follow.objects.all()
+    followed = Follow.objects.all().filter(follower=user).order_by('-follow_time')
+    #import pdb; pdb.set_trace()
 
     return render(request, 'users/contacts.html', {'user':user, 'contacts':followed})
