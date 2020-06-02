@@ -40,6 +40,10 @@
     </div>
     
     <div class="pic-info">
+        <div class="pic-icons">
+            <img class="pic-icon" src="{% static 'images/heart-shape.svg'%}" height="25px">
+            <img class="pic-icon" src="{% static 'images/add_comment.png'%}" height="25px">
+        </div>
         <p class="info-pic-footer"><strong>@{{post.user.username}}</strong> {{post.description}} <strong>-</strong> {{post.posted}}</p>
     </div>
 </div>

@@ -132,6 +132,10 @@ def follow(request, username):
     user = get_object_or_404(User, username=username)
     #import pdb; pdb.set_trace()
 
+    #is_already_follow = Follow.objects.get(follower=request.user, followed=user
+    #is_auto_follower = Follow.objects.get(follower=request.user, followed=request.user)
+
+
     follow = Follow.objects.create(
         followed = user,
         follower = request.user
@@ -194,8 +198,7 @@ def followers(request, username):
 #Followed view
 def followed(request, username):
     user = get_object_or_404(User, username=username)
-    all_follows = Follow.objects.all()
-    followed = Follow.objects.all().filter(follower=user).order_by('-follow_time')
+    followed = Follow.objects.filter(follower=user).order_by('-follow_time')
     #import pdb; pdb.set_trace()
 
     return render(request, 'users/contacts.html', {'user':user, 'contacts':followed})

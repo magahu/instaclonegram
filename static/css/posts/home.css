@@ -70,4 +70,13 @@ body{
     font-size: 0.8em;
     font-weight: inherit;
     margin: 20px;
+    margin-top: 0;
+}
+
+.pic-icons{
+    margin: 0 20px;
+}
+
+.pic-icon{
+    margin: 10px 10px 5px 0;
 }
