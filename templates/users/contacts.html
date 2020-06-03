@@ -21,7 +21,11 @@
         <div class="contact-data">
             <div class="left-elements">
                 <a class="profile-link" href="{% url 'users:profile' user %}">
+                    {% if user.profile.picture %}
                     <img class="contact-image" src="{{user.profile.picture.url}}" width="30px">
+                    {% else %}
+                    <img class="contact-image" src="{% static 'images/default-profile.png' %}" width="30px">
+                    {% endif %}
                 </a>
                 
                 <div class="contact-name">
@@ -32,8 +36,9 @@
                     <p class="name">{{user.first_name}} {{user.last_name}}</p>
                 </div> 
             </div>
-
+            {% comment %}
             {% include "users/follow_button.html"%}
+            {% endcomment %}
 
         </div>
        
