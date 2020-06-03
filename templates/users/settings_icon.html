@@ -1,0 +1,6 @@
+{% load static %}
+{% if user == request.user %}
+<a>
+    <img class="settings-icon" src="{% static 'images/settings.png'%}">
+</a>
+{% endif %}

@@ -128,14 +128,17 @@ def follow(request, username):
     user = get_object_or_404(User, username=username)
     #import pdb; pdb.set_trace()
 
-    #is_already_follow = Follow.objects.get(follower=request.user, followed=user
-    #is_auto_follower = Follow.objects.get(follower=request.user, followed=request.user)
+    is_already_followed = Follow.objects.filter(follower=request.user, followed=user)
+    is_auto_follower = Follow.objects.filter(follower=request.user, followed=request.user)
 
+    if not is_already_followed or is_auto_follower:
 
-    follow = Follow.objects.create(
-        followed = user,
-        follower = request.user
-    )
+        follow = Follow.objects.create(
+            followed = user,
+            follower = request.user
+        )
+    else:
+        follow = Follow.objects.get(followed=user, follower=request.user)
 
     n_followers = Follow.objects.filter(followed=user).count()
     n_followed = Follow.objects.filter(follower=user).count()
@@ -168,7 +171,6 @@ def unfollow(request, username):
     n_followed = Follow.objects.filter(follower=user).count()
     n_posts = Post.objects.filter(user=user).count()
     posts = Post.objects.filter(user=user).order_by('-posted')
-   
     
     return render(request,
                   'users/profile.html',
@@ -191,8 +193,7 @@ def followers(request, username):
     follows = Follow.objects.filter(followed=user).order_by('-follow_time')
     for follow in follows:
         followers.append(follow.follower)
-
-    return render(request,'users/contacts.html', {'user':user,'contacts':followers})
+    return render(request,'users/contacts.html', {'user':user, 'contacts':followers, 'follows':follows})
 
 
 #Followed view
@@ -203,4 +204,4 @@ def followed(request, username):
     for follow in follows:
         followed.append(follow.followed)
     #import pdb; pdb.set_trace()
-    return render(request, 'users/contacts.html', {'user':user, 'contacts':followed})
+    return render(request, 'users/contacts.html', {'user':user, 'contacts':followed, 'follows':follows})

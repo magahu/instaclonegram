@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}
+<title>Contactos</title>
+{% endblock %}
+
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/users/contacts.css' %}">
@@ -13,38 +17,25 @@
         {% if not contacts %}
         <p>Aun no hay contactos</p>
         {% else %}
-        {% for contact in contacts %}
+        {% for user in contacts %}
         <div class="contact-data">
             <div class="left-elements">
-                <a class="profile-link" href="{% url 'users:profile' contact %}">
-                    <img class="contact-image" src="{contact.profile.picture.url}}" width="30px">
+                <a class="profile-link" href="{% url 'users:profile' user %}">
+                    <img class="contact-image" src="{{user.profile.picture.url}}" width="30px">
                 </a>
                 
                 <div class="contact-name">
-                    <a class="profile-link" href="{% url 'users:profile' contact %}">
-                        <p class="username"><strong>@{{contact}}</strong></p>
+                    <a class="profile-link" href="{% url 'users:profile' user %}">
+                        <p class="username"><strong>@{{user}}</strong></p>
                     </a>
                     
-                    <p class="name">{{contact.first_name}} {{contact.last_name}}</p>
+                    <p class="name">{{user.first_name}} {{user.last_name}}</p>
                 </div> 
             </div>
 
-            <button>
-                   
-                {% if contact.followed == user %}
-                    <a href="{% url 'users:unfollow' contact.username %}">
-                        <strong>Dejar de seguir</strong>
-                    </a>
-                {% else %}
-                    <a href="{% url 'users:follow' contact.username %}">
-                        <strong>Seguir</strong>
-                    </a>
-                {% endif %}
-                
-            </button>
-            
-        </div>
+            {% include "users/follow_button.html"%}
 
+        </div>
        
         {% endfor %}
         {% endif %}

@@ -7,19 +7,17 @@
         <strong>Editar perfil</strong>
     </a>
 </button>
-<a class="follow-button"><img src="{% static 'images/settings.png'%}"></a>
-{% else %}
+
+{% elif follow.followed == user %}
 <button class="follow-button">
-   
-    {% if follow.followed == user %}
-        <a href="{% url 'users:unfollow' user.username %}">
-            <strong>Dejar de seguir</strong>
-        </a>
-    {% else %}
-        <a href="{% url 'users:follow' user.username %}">
-            <strong>Seguir</strong>
-        </a>
-    {% endif %}
-    
+    <a href="{% url 'users:unfollow' user.username %}">
+        <strong>Dejar de seguir</strong>
+    </a>
+</button>
+{% else %}
+<button class="blue-follow-button">
+    <a href="{% url 'users:follow' user.username %}">
+        <strong>Seguir</strong>
+    </a>
 </button>
 {% endif%}

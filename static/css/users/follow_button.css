@@ -4,9 +4,38 @@
     padding: 0.1em;
     height: 2.5em;
     margin: 0 15px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.settings-icon{
+    width:30px;
 }
 
 .follow-button a{
     text-decoration: none;
     color: inherit;
+    margin: 0 10px;
+    border-radius: 5px;
 }
+
+.blue-follow-button{
+    font-family:'Varela', sans-serif;
+    font-size: 0.8em;
+    padding: 0.1em;
+    height: 2.5em;
+    margin: 0 15px;
+    background-color: #0095f6;
+    border-radius: 5px;
+    border: 1px solid #0095f6;
+}
+
+.blue-follow-button a{
+    text-decoration: none;
+    color: white;
+    margin: 0 10px;
+}
+
+
+

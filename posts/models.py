@@ -15,3 +15,26 @@ class Post(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+#class Like(models.Model):
+    #post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #timestamp = models.DateTimeField(auto_now=True)
+
+    #def __str__(self):
+        #return self.user.username
+
+
+#class Comment(models.Model):
+    #post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #comment_text = models.TextField(max_length=200, blank=True)
+    #timestamp = models.DateTimeField(auto_now=True)
+
+    #def __str__(self):
+        #return self.comment_text
+
+
+    
+    

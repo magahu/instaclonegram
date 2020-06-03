@@ -13,7 +13,6 @@
 
 <div class="profile-container">
 
-
     <div class="user-info-container">
         <a href="">
             {% if user.profile.picture %}
@@ -26,9 +25,9 @@
             <div class="info-first-row">
                 <p class="info-username">{{user.username}}</p>
                 {% include "users/follow_button.html" %}
+                {% include "users/settings_icon.html" %}
             </div>
             <div class="info-second-row">
-                
                         <p><strong>{{n_posts}}</strong> publicaciones</p>
 
                         <a href="{% url 'users:followers' user.username %}" class="contacts_link">
@@ -37,9 +36,7 @@
                     
                         <a href="{% url 'users:followed' user.username %}" class="contacts_link">
                             <p><strong>{{n_followed}}</strong> seguidos</p>
-                        </a>
-                        
-                    
+                        </a>     
             </div>
             
             <p class="profile-data"><strong>{{user.first_name}} {{user.last_name}}</strong></p>
@@ -50,10 +47,7 @@
 
     <div class="user-posts">
         {% for post in posts %}
-
             <img class="user-pic" src="{{post.picture.url}}" alt="" width="293px" height="293px">
-            
-
         {% endfor %}
     </div>
 
