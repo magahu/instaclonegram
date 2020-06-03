@@ -9,6 +9,7 @@ from django.db import IntegrityError
 from .forms import SignUpForm, UpdateProfileForm
 from posts.models import Post
 from .models import Follow
+from django.urls import reverse
 
 
 # Login view
@@ -69,7 +70,6 @@ def update_profile(request):
         if form.is_valid():
             # process the data in form.cleaned_data as required
             data = form.cleaned_data
-        
             if data['picture']:
                 request.user.profile.picture = data['picture']
             else:
@@ -78,19 +78,14 @@ def update_profile(request):
             request.user.profile.biography = data['biography']
             request.user.profile.phone = data['phone']
             #request.user.profile.gender = data['gender']
-
             request.user.profile.save()
-
             # redirect to a new URL:
             return redirect('users:update-profile')
-
         else:
             return render(request, 'users/update_profile.html', {'form':form})
-
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = UpdateProfileForm()
-         
+        form = UpdateProfileForm()      
     return render(request, 'users/update_profile.html')
 
 
@@ -108,18 +103,19 @@ def profile(request, username):
     n_followed = Follow.objects.filter(follower=user).count()
     #import pdb; pdb.set_trace()
 
-    return render(request,
-                 'users/profile.html',
-                 {
+    context = {
                      'user':user,
                      'posts':posts,
                      'follow':follow, 
                      'n_posts':n_posts,
                      'n_followers':n_followers,
                      'n_followed':n_followed
-                 }
-                )
+            }
+
+    return render(request, 'users/profile.html', context=context)
                  
+
+        
     
 
 #Follow view
@@ -140,22 +136,24 @@ def follow(request, username):
     else:
         follow = Follow.objects.get(followed=user, follower=request.user)
 
-    n_followers = Follow.objects.filter(followed=user).count()
-    n_followed = Follow.objects.filter(follower=user).count()
-    n_posts = Post.objects.filter(user=user).count()
-    posts = Post.objects.filter(user=user).order_by('-posted')
+    #n_followers = Follow.objects.filter(followed=user).count()
+    #n_followed = Follow.objects.filter(follower=user).count()
+    #n_posts = Post.objects.filter(user=user).count()
+    #posts = Post.objects.filter(user=user).order_by('-posted')
 
-    return render(request,
-                  'users/profile.html',
-                  {
-                    'user':user,
-                    'follow':follow,
-                    'n_followers':n_followers,
-                    'n_followed':n_followed,
-                    'n_posts':n_posts,
-                    'posts':posts
-                  }
-                )
+    #return render(request,
+    #             'users/profile.html',
+    #              {
+    #                'user':user,
+    #                'follow':follow,
+    #                'n_followers':n_followers,
+    #                'n_followed':n_followed,
+    #                'n_posts':n_posts,
+    #                'posts':posts
+    #              }
+    #            )
+    url = reverse('users:profile', kwargs={'username':user.username})
+    return redirect(url)
    
 
 
@@ -167,22 +165,24 @@ def unfollow(request, username):
     user = get_object_or_404(User, username=username)
     follow = Follow.objects.filter(followed=user, follower=request.user)
     follow.delete()
-    n_followers = Follow.objects.filter(followed=user).count()
-    n_followed = Follow.objects.filter(follower=user).count()
-    n_posts = Post.objects.filter(user=user).count()
-    posts = Post.objects.filter(user=user).order_by('-posted')
+    #n_followers = Follow.objects.filter(followed=user).count()
+    #n_followed = Follow.objects.filter(follower=user).count()
+    #n_posts = Post.objects.filter(user=user).count()
+    #posts = Post.objects.filter(user=user).order_by('-posted')
     
-    return render(request,
-                  'users/profile.html',
-                   {
-                       'user':user,
-                       'follow':follow,
-                       'n_followers':n_followers,
-                       'n_followed':n_followed,
-                       'n_posts': n_posts,
-                       'posts':posts
-                    }
-                )
+    #return render(request,
+    #              'users/profile.html',
+    #               {
+    #                   'user':user,
+    #                   'follow':follow,
+    #                   'n_followers':n_followers,
+    #                   'n_followed':n_followed,
+    #                   'n_posts': n_posts,
+    #                   'posts':posts
+    #                }
+    #            )
+    url = reverse('users:profile', kwargs={'username':user.username})
+    return redirect(url)
 
 
 #Followers view

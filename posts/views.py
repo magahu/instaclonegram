@@ -33,5 +33,5 @@ def new_post(request):
 
 #Like view
 @login_required
-def like(request):
+def new_like(request):
     return redirect('posts:home')

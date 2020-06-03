@@ -41,9 +41,9 @@
     
     <div class="pic-info">
         <div class="pic-icons">
-            <a href="{% url 'posts:like' %}">
-                <img class="pic-icon" src="{% static 'images/heart-shape.svg'%}" height="25px">
-            </a>
+        <a href="{% url 'posts:like' %}">
+            <img class="pic-icon" src="{% static 'images/heart-shape.svg'%}" height="25px">
+        </a>
             <img class="pic-icon" src="{% static 'images/add_comment.png'%}" height="25px">
         </div>
         <p class="info-pic-footer"><strong>@{{post.user.username}}</strong> {{post.description}} <strong>-</strong> {{post.posted}}</p>

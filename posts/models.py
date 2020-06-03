@@ -20,6 +20,7 @@ class Post(models.Model):
 class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    n_likes = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
