@@ -7,6 +7,7 @@ urlpatterns = [
 
      path('feed/',  views.posts, name='home'),
      path('new-post/', views.new_post, name='new-post'),
+     path('like/', views.like, name='like')
 
 ]
 

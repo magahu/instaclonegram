@@ -17,13 +17,13 @@ class Post(models.Model):
         return self.user.username
 
 
-#class Like(models.Model):
-    #post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    #user = models.ForeignKey(User, on_delete=models.CASCADE)
-    #timestamp = models.DateTimeField(auto_now=True)
+class Like(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
 
-    #def __str__(self):
-        #return self.user.username
+    def __str__(self):
+        return self.user.username
 
 
 #class Comment(models.Model):

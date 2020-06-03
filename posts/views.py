@@ -3,7 +3,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import NewPostForm
-from posts.models import Post
+from posts.models import Post, Like
+
 
 #Home view
 @login_required
@@ -29,3 +30,8 @@ def new_post(request):
         form = NewPostForm()
     return render(request, 'posts/new_post.html', {'form':form})
 
+
+#Like view
+@login_required
+def like(request):
+    return redirect('posts:home')
