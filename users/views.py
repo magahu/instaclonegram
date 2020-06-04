@@ -112,11 +112,8 @@ def profile(request, username):
                      'n_followed':n_followed
             }
 
-    return render(request, 'users/profile.html', context=context)
+    return render(request, 'users/profile.html', context)
                  
-
-        
-    
 
 #Follow view
 @login_required
@@ -136,28 +133,9 @@ def follow(request, username):
     else:
         follow = Follow.objects.get(followed=user, follower=request.user)
 
-    #n_followers = Follow.objects.filter(followed=user).count()
-    #n_followed = Follow.objects.filter(follower=user).count()
-    #n_posts = Post.objects.filter(user=user).count()
-    #posts = Post.objects.filter(user=user).order_by('-posted')
-
-    #return render(request,
-    #             'users/profile.html',
-    #              {
-    #                'user':user,
-    #                'follow':follow,
-    #                'n_followers':n_followers,
-    #                'n_followed':n_followed,
-    #                'n_posts':n_posts,
-    #                'posts':posts
-    #              }
-    #            )
     url = reverse('users:profile', kwargs={'username':user.username})
     return redirect(url)
    
-
-
-
 
 #Unfollow view
 @login_required
@@ -165,22 +143,7 @@ def unfollow(request, username):
     user = get_object_or_404(User, username=username)
     follow = Follow.objects.filter(followed=user, follower=request.user)
     follow.delete()
-    #n_followers = Follow.objects.filter(followed=user).count()
-    #n_followed = Follow.objects.filter(follower=user).count()
-    #n_posts = Post.objects.filter(user=user).count()
-    #posts = Post.objects.filter(user=user).order_by('-posted')
-    
-    #return render(request,
-    #              'users/profile.html',
-    #               {
-    #                   'user':user,
-    #                   'follow':follow,
-    #                   'n_followers':n_followers,
-    #                   'n_followed':n_followed,
-    #                   'n_posts': n_posts,
-    #                   'posts':posts
-    #                }
-    #            )
+
     url = reverse('users:profile', kwargs={'username':user.username})
     return redirect(url)
 
@@ -193,7 +156,13 @@ def followers(request, username):
     follows = Follow.objects.filter(followed=user).order_by('-follow_time')
     for follow in follows:
         followers.append(follow.follower)
-    return render(request,'users/contacts.html', {'user':user, 'contacts':followers, 'follows':follows})
+        context= {
+            'user':user,
+            'contacts':followers,
+            'follows':follows,
+            'label':'Seguidores'
+            }
+    return render(request,'users/contacts.html', context)
 
 
 #Followed view
@@ -204,4 +173,10 @@ def followed(request, username):
     for follow in follows:
         followed.append(follow.followed)
     #import pdb; pdb.set_trace()
-    return render(request, 'users/contacts.html', {'user':user, 'contacts':followed, 'follows':follows})
+    context= {
+        'user':user,
+        'contacts':followed, 
+        'follows':follows, 
+        'label':'Seguidos'
+        }
+    return render(request, 'users/contacts.html', context)

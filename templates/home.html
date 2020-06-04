@@ -13,42 +13,43 @@
 
 <div class="posts">
     {% for post in posts %}
-<div class="post">
-    <div class="post-header">
-        <div class="user-info">
-            <a href="{% url 'users:profile' post.user.username %}">
-                {% if post.profile.picture %}
+    <div class="post">
+        <div class="post-header">
+            <div class="user-info">
+                <a href="{% url 'users:profile' post.user.username %}">
+                    {% if post.profile.picture %}
                     <img src="{{ post.profile.picture.url}}" width="35px" height="35px">
-                {% else %}
-                   <img src="{% static 'images/default-profile.png' %}" width="35px" height="35px">
-                {% endif%}
-            </a>
-            <div>
-                <h4 class="info"><strong>{{post.user.username}}</strong></h4>
-                <h5 class="info">{{post.title}}</h5>
+                    {% else %}
+                    <img src="{% static 'images/default-profile.png' %}" width="35px" height="35px">
+                    {% endif%}
+                </a>
+                <div>
+                    <h4 class="info"><strong>{{post.user.username}}</strong></h4>
+                    <h5 class="info">{{post.title}}</h5>
+                </div>
+            </div>
+            <div class="options">
+                {% load static %}
+                <img src="{% static 'images/options.png'%}" width="35px">
             </div>
         </div>
-        <div class="options">
-            {% load static %}
-            <img src="{% static 'images/options.png'%}" width="35px">
-        </div>
-    </div>
 
-     
-    <div class="pic-container">
-        <img class="pic" src="{{post.picture.url}}" width="450px" height="450px">
-    </div>
-    
-    <div class="pic-info">
-        <div class="pic-icons">
-        <a href="{% url 'posts:like' %}">
-            <img class="pic-icon" src="{% static 'images/heart-shape.svg'%}" height="25px">
-        </a>
-            <img class="pic-icon" src="{% static 'images/add_comment.png'%}" height="25px">
+
+        <div class="pic-container">
+            <img class="pic" src="{{post.picture.url}}" width="450px" height="450px">
         </div>
-        <p class="info-pic-footer"><strong>@{{post.user.username}}</strong> {{post.description}} <strong>-</strong> {{post.posted}}</p>
+
+        <div class="pic-info">
+            <div class="pic-icons">
+                {% include 'posts/like_icon.html' %}
+                <img class="pic-icon" src="{% static 'images/add_comment.png' %}" height="25px">
+            </div>
+            <p class="info-pic-footer"><strong>@{{post.user.username}}</strong> {{post.description}} <strong>-</strong>{{post.posted}}</p>
+        </div>
+       
     </div>
+    {% endfor %}
+    
 </div>
-{% endfor %}
 
 {% endblock %}

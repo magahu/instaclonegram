@@ -17,6 +17,9 @@
         {% if not contacts %}
         <p>Aun no hay contactos</p>
         {% else %}
+        <div>
+            <h4 class="contacts-label">{{label}}</h4>
+        </div>
         {% for user in contacts %}
         <div class="contact-data">
             <div class="left-elements">

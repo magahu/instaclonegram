@@ -1,0 +1,25 @@
+{% load static %}
+
+<form action="{% url 'posts:like' %}" method="POST">
+
+    {% csrf_token %} 
+
+    <input type="hidden" name="post" value="{{post.pk}}">
+    <input type="hidden" name="user" value="{{post.user.username}}">
+
+    <style>
+        button{
+            padding: 0;
+            border: none;
+            background: none;
+        }
+    </style>
+
+    <button type="submit" >
+        <img class="pic-icon" src="{% static 'images/heart-shape.svg' %}" height="25px">
+    </button>
+
+    
+</form>
+
+

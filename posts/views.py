@@ -34,4 +34,6 @@ def new_post(request):
 #Like view
 @login_required
 def new_like(request):
+    if request.method == 'POST':
+        import pdb; pdb.set_trace()
     return redirect('posts:home')

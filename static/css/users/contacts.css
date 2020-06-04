@@ -36,3 +36,11 @@
     font-weight: lighter;
     color: rgb(48, 45, 45);
 }
+
+.contacts-label{
+    font-family:'Varela', sans-serif;
+    font-size: 0.9em;
+    margin: 10px;
+    text-align: center;
+
+}
