@@ -49,7 +49,8 @@
                 <img class="pic-icon" src="{% static 'images/tag.png' %}" height="22px">
             </div>
             <p class="info-pic-likes"><strong>{{like_form.n_likes}} Me gusta</strong></p>
-            <p class="info-pic-footer"><strong>@{{post.user.username}}</strong> {{post.description}} <strong>-</strong>{{post.posted}}</p>
+            <p class="info-pic-footer"><strong>@{{post.user.username}}</strong> {{post.description}}</p> 
+            <p class="info-pic-date"><strong>{{post.posted}}</strong></p>
             
         </div>
         

@@ -81,6 +81,16 @@ body{
     margin-top: 0;
 }
 
+.info-pic-date{
+    margin: 5px 0;
+    font-family: 'Varela', sans-serif;
+    font-size: 0.6em;
+    font-weight: inherit;
+    margin-top: 0;
+    color: gray;
+    text-transform: uppercase;
+}
+
 .pic-icons{
     display: flex;
     justify-content: space-between;
