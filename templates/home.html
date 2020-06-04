@@ -41,9 +41,14 @@
 
         <div class="pic-info">
             <div class="pic-icons">
-                {% include 'posts/like_icon.html' %}
-                <img class="pic-icon" src="{% static 'images/add_comment.png' %}" height="25px">
+                <div class="left-icons">
+                    {% include 'posts/like_button.html' %}
+                    <img class="pic-icon" src="{% static 'images/add_comment.png' %}" height="25px">
+                </div>
+               
+                <img class="pic-icon" src="{% static 'images/tag.png' %}" height="22px">
             </div>
+            <p class="info-pic-likes"><strong>{{n_likes}} Me gusta</strong></p>
             <p class="info-pic-footer"><strong>@{{post.user.username}}</strong> {{post.description}} <strong>-</strong>{{post.posted}}</p>
         </div>
        

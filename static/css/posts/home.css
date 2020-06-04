@@ -55,6 +55,7 @@ body{
 
 .pic-info{
     border-top: 1px solid #8fabbf;
+    padding: 0 10px 10px 10px;
 }
 
 .info{
@@ -64,18 +65,29 @@ body{
     font-weight: inherit;
 }
 
+.info-pic-likes{
+    font-family: 'Varela', sans-serif;
+    font-size: 0.6em;
+    font-weight: inherit;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
 .info-pic-footer{
-    margin: 0 10px;
+    margin: 5px 0;
     font-family: 'Varela', sans-serif;
     font-size: 0.8em;
     font-weight: inherit;
-    margin: 20px;
     margin-top: 0;
 }
 
 .pic-icons{
     display: flex;
-    margin: 0 20px;
+    justify-content: space-between;
+}
+
+.left-icons{
+    display: flex;
 }
 
 .pic-icon{
