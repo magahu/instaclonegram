@@ -1,0 +1,23 @@
+.comment-form{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #8fabbf;
+    padding: 0 10px;
+}
+
+.comment-space{
+    border: none;
+    padding: 10px 0;
+}
+
+.submit-comment{
+    padding: 5px 0;
+    border: none;
+    background: none;
+}
+
+.button-text{
+    color: #b1defc;
+    font-family:'Varela', sans-serif;
+    margin: 0;
+}

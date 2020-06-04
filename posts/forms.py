@@ -8,8 +8,10 @@ class NewPostForm(forms.ModelForm):
         model = Post
         fields = ('user', 'profile', 'title', 'picture', 'description')
 
-class LikeForm(forms.ModelForm):
+class NewLikeForm(forms.ModelForm):
+    class Meta:
         model = Like
-        fields = ('user', 'post', 'n_likes')
+        fields = ('liked_post', 'user', 'n_likes')
+    
 
     

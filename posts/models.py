@@ -18,7 +18,7 @@ class Post(models.Model):
 
 
 class Like(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    liked_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     n_likes = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now=True)
@@ -28,7 +28,7 @@ class Like(models.Model):
 
 
 #class Comment(models.Model):
-    #post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    #commented_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     #user = models.ForeignKey(User, on_delete=models.CASCADE)
     #comment_text = models.TextField(max_length=200, blank=True)
     #timestamp = models.DateTimeField(auto_now=True)

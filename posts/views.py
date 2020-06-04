@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import NewPostForm, LikeForm
+from .forms import NewPostForm, NewLikeForm
 from posts.models import Post, Like
 
 
@@ -19,16 +19,16 @@ def new_post(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST': 
         # create a form instance and populate it with data from the request:
-        form = NewPostForm(request.POST, request.FILES)
+        like_form = NewPostForm(request.POST, request.FILES)
         # check whether it's valid:
-        if form.is_valid():
-            form.save()
+        if like_form.is_valid(): 
+            like_form.save()
             # redirect to a new URL:
             return redirect('posts:home')
     else:
         # if a GET (or any other method) we'll create a blank form
         form = NewPostForm()
-    return render(request, 'posts/new_post.html', {'form':form})
+    return render(request, 'posts/new_post.html', {'like_form':form})
 
 
 #Like view
@@ -38,7 +38,7 @@ def new_like(request):
     if request.method == 'POST':
         #import pdb; pdb.set_trace()
         # create a form instance and populate it with data from the request:
-        form = LikeForm(request.POST)
+        form = NewLikeForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             form.save()
@@ -46,5 +46,6 @@ def new_like(request):
             return redirect('posts:home')
     else:
         # if a GET (or any other method) we'll create a blank form
-        form =LikeForm()
+        form = NewLikeForm()
+    return redirect('posts:home')
 
