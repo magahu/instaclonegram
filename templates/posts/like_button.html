@@ -5,7 +5,7 @@
     {% csrf_token %} 
 
     <input type="hidden" name="liked_post" value="{{post.pk}}">
-    <input type="hidden" name="user" value="{{request.user.username}}">
+    <input type="hidden" name="user" value="{{request.user.pk}}">
 
     <style>
         button{
@@ -15,11 +15,14 @@
         }
     </style>
 
-    <button type="submit" >
-        <img class="pic-icon" src="{% static 'images/heart-shape.svg' %}" height="25px">
+    <button type="submit" onclick="ChangeHeart()">
+        <img class="pic-icon" src="{% static 'images/heart-shape.svg' %}" height="25px" id="black-heart">
+        <img class="pic-icon" src="{% static 'images/red-heart-shape.svg' %}" height="23px" id="red-heart" hidden="True">
     </button>
 
     
 </form>
+
+<script src="{% static 'js/posts/heart_color.js'%}" type="text/javascript"></script>
 
 

@@ -1,11 +1,11 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/posts/comment.css' %}">
 
-    <form class="comment-form" action="" method="POST">
+    <form class="comment-form" action="{% url 'posts:comment' %}" method="POST">
 
         {% csrf_token %}
 
-        <input type="hidden" name="user" value="{{request.user.username}}">
+        <input type="hidden" name="user" value="{{request.user.pk}}">
         <input type="hidden" name="commented_post" value="{{post.pk}}">
 
             <input type="text" class="comment-space" name="comment_text" placeholder="Agregar un comentario...">

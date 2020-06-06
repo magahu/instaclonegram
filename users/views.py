@@ -33,7 +33,6 @@ def login_view(request):
 
 #Logout view
 @login_required
-
 def logout_view(request):
     logout(request)
     # Redirect to a success page.

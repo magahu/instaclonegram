@@ -4,6 +4,7 @@ from django import forms
 from .models import Profile
 from django.contrib.auth.models import User
 
+
 #Signup Form
 class SignUpForm(forms.Form):
     first_name = forms.CharField(max_length=70, widget=forms.TextInput(attrs={'placeholder': 'Nombre'}))

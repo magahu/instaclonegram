@@ -20,21 +20,20 @@ class Post(models.Model):
 class Like(models.Model):
     liked_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    n_likes = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.username
+        return self.liked_post.title
 
 
-#class Comment(models.Model):
-    #commented_post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    #user = models.ForeignKey(User, on_delete=models.CASCADE)
-    #comment_text = models.TextField(max_length=200, blank=True)
-    #timestamp = models.DateTimeField(auto_now=True)
+class Comment(models.Model):
+    commented_post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField(max_length=200, blank=True)
+    timestamp = models.DateTimeField(auto_now=True)
 
-    #def __str__(self):
-        #return self.comment_text
+    def __str__(self):
+        return self.comment_text
 
 
     
