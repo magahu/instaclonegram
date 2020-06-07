@@ -33,7 +33,7 @@ class Comment(models.Model):
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.comment_text
+        return self.comment
 
 
     
