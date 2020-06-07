@@ -80,11 +80,8 @@ def new_comment(request):
 
 
 #Show comments
-def list_comments(request):
-    return render(request, 'posts/comment.html')
-    #url = reverse('posts:show-comments', kwargs={'post':post.pk})
-    #return redirect(url)
-    #comment = Comment.objects.filter(pk=post_id)
-    #return render(request, 'comment.html', {'comment':comment})
-
-
+def list_comments(request, pk):
+    comments = Comment.objects.filter(post=pk)
+    return render(request, 'posts/comments.html', {'comments':comments})
+    
+ 

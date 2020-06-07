@@ -1,0 +1,15 @@
+<style>
+    .comment{
+    margin: 5px 0;
+    font-family: 'Varela', sans-serif;
+    font-size: 0.8em;
+    font-weight: inherit;
+    margin-top: 0;
+}
+</style>
+
+<div class="comments">
+    {% for comment in comments %}
+        <p class="comment"><strong>@{{comment.user.username}}</strong> {{comment.text}}</p>
+    {% endfor %}
+</div>
