@@ -27,13 +27,13 @@ class Like(models.Model):
 
 
 class Comment(models.Model):
-    commented_post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.TextField(max_length=200, blank=True)
+    text = models.TextField(max_length=200, blank=True)
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.comment
+        return self.text
 
 
     

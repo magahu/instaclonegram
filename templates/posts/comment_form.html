@@ -5,10 +5,10 @@
 
         {% csrf_token %}
 
-        <input type="hidden" name="commented_post" value="{{post.pk}}">
+        <input type="hidden" name="post" value="{{post.pk}}">
         <input type="hidden" name="user" value="{{request.user.pk}}">
 
-            <input type="text" class="comment-space" name="comment" placeholder="Agregar un comentario...">
+            <input type="text" class="comment-space" name="text" placeholder="Agregar un comentario...">
 
             <button type="submit" class="submit-comment">
                 <p class="button-text"><strong>Publicar</strong></p>

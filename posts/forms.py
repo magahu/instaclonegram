@@ -18,7 +18,7 @@ class NewLikeForm(forms.ModelForm):
 class NewCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('commented_post', 'user', 'comment')
+        fields = ('post', 'user', 'text')
     
 
     
