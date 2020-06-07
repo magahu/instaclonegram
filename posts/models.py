@@ -18,12 +18,12 @@ class Post(models.Model):
 
 
 class Like(models.Model):
-    liked_post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.liked_post.title
+        return self.post.title
 
 
 class Comment(models.Model):

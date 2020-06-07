@@ -12,7 +12,7 @@ class NewPostForm(forms.ModelForm):
 class NewLikeForm(forms.ModelForm):
     class Meta:
         model = Like
-        fields = ('liked_post', 'user')
+        fields = ('post', 'user')
 
 
 class NewCommentForm(forms.ModelForm):

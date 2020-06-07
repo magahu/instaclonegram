@@ -4,7 +4,7 @@
 
     {% csrf_token %} 
 
-    <input type="hidden" name="liked_post" value="{{post.pk}}">
+    <input type="hidden" name="post" value="{{post.pk}}">
     <input type="hidden" name="user" value="{{request.user.pk}}">
 
     <style>

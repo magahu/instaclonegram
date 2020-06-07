@@ -40,9 +40,9 @@ def new_like(request):
         # create a form instance and populate it with data from the request:
         form = NewLikeForm(request.POST)
        
-        liked_post = request.POST['liked_post']
+        post = request.POST['post']
         user = request.POST['user']
-        like = Like.objects.filter(liked_post=liked_post, user=user)
+        like = Like.objects.filter(post=post, user=user)
         #import pdb; pdb.set_trace()
         # check whether it's valid:
         if like:
