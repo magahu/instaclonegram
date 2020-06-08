@@ -1,0 +1,48 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.content{
+    padding-top: 50px;
+   
+}
+
+.comment-text{
+    margin: 5px 0;
+    font-family: 'Varela', sans-serif;
+    font-size: 0.8em;
+    font-weight: inherit;
+    margin-top: 0;
+}
+
+.comment{
+    display: flex;
+    align-items: center;
+}
+
+.content{
+    display: flex;
+}
+
+.user-data{
+    display: flex;
+    justify-content:left;
+    align-items: center;
+    border-bottom: 1px solid #8fabbf;
+    padding: 10px 20px;
+}
+
+.profile-pic{
+    border-radius: 50%;
+    margin: 3px 10px 2px 0;
+}
+
+.content{
+    border: 1px solid #8fabbf;
+}
+
+.comments{
+    padding: 13px 22px;
+}

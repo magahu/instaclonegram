@@ -10,6 +10,7 @@
     padding: 10px 0;
     font-family:'Varela', sans-serif;
     font-size: 0.8em;
+    width: 355px;
 }
 
 .submit-comment{
@@ -24,3 +25,4 @@
     font-size: 0.9em;
     margin: 0;
 }
+

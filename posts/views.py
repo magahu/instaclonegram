@@ -62,7 +62,7 @@ def new_like(request):
 
 #Create comment view
 @login_required
-def new_comment(request):
+def new_comment(request, pk):
     # if this is a POST request we need to process the form data
     if request.method == 'POST': 
         #import pdb; pdb.set_trace()
@@ -72,7 +72,10 @@ def new_comment(request):
         if form.is_valid(): 
             form.save()
             # redirect to a new URL:
-            return redirect('posts:home')
+            post = get_object_or_404(Post, pk=pk)
+            url = reverse('posts:show-comments', kwargs={'pk':post.pk})
+            return redirect(url)
+            
     else:
         # if a GET (or any other method) we'll create a blank form
         form =NewCommentForm()
@@ -82,6 +85,15 @@ def new_comment(request):
 #Show comments
 def list_comments(request, pk):
     comments = Comment.objects.filter(post=pk)
-    return render(request, 'posts/comments.html', {'comments':comments})
+    post = Post.objects.get(pk=pk)
+    n_likes = Like.objects.filter(post=pk)
+
+    context = {
+        'comments':comments,
+        'post':post,
+        'n_likes':n_likes
+        }
+
+    return render(request, 'posts/comments.html', context)
     
  

@@ -1,7 +1,7 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/posts/comment.css' %}">
+<link rel="stylesheet" href="{% static 'css/posts/comment_form.css' %}">
 
-    <form class="comment-form" action="{% url 'posts:new-comment' %}" method="POST">
+    <form class="comment-form" action="{% url 'posts:new-comment' post.pk %}" method="POST" id="comment">
 
         {% csrf_token %}
 

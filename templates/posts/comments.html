@@ -1,15 +1,66 @@
-<style>
-    .comment{
-    margin: 5px 0;
-    font-family: 'Varela', sans-serif;
-    font-size: 0.8em;
-    font-weight: inherit;
-    margin-top: 0;
-}
-</style>
+{% extends 'base.html' %}
 
-<div class="comments">
-    {% for comment in comments %}
-        <p class="comment"><strong>@{{comment.user.username}}</strong> {{comment.text}}</p>
-    {% endfor %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/posts/comments.css' %}">
+{% endblock %}
+
+{% block title %}
+<title>{{post.title}} - {{post.user.username}}</title>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <img src="{{post.picture.url}}" width="500px" class="post-img">
+
+    <div class="second-row">
+
+        <div class="user-data">
+            {% if post.user.profile.picture %}
+            <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
+            {% else %}
+            {% load static %}
+            <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
+            {% endif %}
+            <p class="comment-text"><strong>{{post.user.username}}</strong></p>
+        </div>
+
+
+        <div class="comments">
+            <div class="comment">
+                {% if post.user.profile.picture %}
+                <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
+                {% else %}
+                <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
+                {% endif %}
+                <p class="comment-text"><strong>@{{post.user.username}}</strong> {{post.description}}</p>
+            </div>
+           
+            {% for comment in comments %}
+    
+                {% if comment.user.profile.picture %}
+                <div class="comment">
+                    <img src="{{comment.user.profile.picture.url}}" width="35px" class="profile-pic">
+                {% else %}
+                    {% load static %}
+                    <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
+                {% endif %}
+                    <p class="comment-text"><strong>@{{comment.user.username}}</strong> {{comment.text}}</p>
+                </div>
+                    
+            {% endfor %}
+        
+              
+        </div>
+
+        {% include 'posts/like_button.html' %}
+        <a href="#comment">
+            <img class="pic-icon" src="{% static 'images/add_comment.png' %}" height="25px">
+        </a>
+        {%include 'posts/comment_form.html'%}
+
+    </div>
+    
 </div>
+{% endblock %}
+    

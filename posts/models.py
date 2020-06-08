@@ -14,7 +14,7 @@ class Post(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.username
+        return self.title
 
 
 class Like(models.Model):
