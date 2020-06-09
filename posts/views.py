@@ -51,7 +51,8 @@ def new_like(request):
         elif form.is_valid():
             form.save()
             # redirect to a new URL:
-            return redirect('posts:home')
+            url = reverse('posts:show-comments', kwargs={'pk':post})
+            return redirect(url)
 
     else:
         # if a GET (or any other method) we'll create a blank form
@@ -86,12 +87,14 @@ def new_comment(request, pk):
 def list_comments(request, pk):
     comments = Comment.objects.filter(post=pk)
     post = Post.objects.get(pk=pk)
-    n_likes = Like.objects.filter(post=pk)
+    n_likes = Like.objects.filter(post=pk).count()
+    like = Like.objects.filter(post=pk, user=request.user)
 
     context = {
         'comments':comments,
         'post':post,
-        'n_likes':n_likes
+        'n_likes':n_likes,
+        'like':like
         }
 
     return render(request, 'posts/comments.html', context)

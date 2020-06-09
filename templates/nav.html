@@ -7,10 +7,7 @@
         </a> 
         <h2>instaclonegram</h2>
     </div>
-    <button class="search-button">
-        <img class="lens" src="{% static 'images/lens.svg'%}" width="10px">
-        <p>Buscar</p>
-    </button>
+    {% include 'search_button.html'%}
     <!--<a href="{% url 'posts:new-post' %}">
         <img src="{% static 'images/add.png' %}" height="25px">
     </a>-->

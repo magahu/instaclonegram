@@ -44,29 +44,6 @@ body{
     align-items: center;
 }
 
-.search-button .lens{
-    margin: 0.1em;
-}
-
-.search-button p{
-    margin: 0em;
-    margin-left: 0.5em;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 0.8em;
-    color: #8fabbf;
-}
-
-.search-button{
-    display: flex;
-    width: 15em;
-    height: 25px;
-    justify-content: center;
-    align-items: center;
-    border:  0.5px solid #8fabbf;
-    background-color: whitesmoke;
-    
-}
-
 .profile-pic{
     border-radius: 50%;
 }

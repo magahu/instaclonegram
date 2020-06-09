@@ -10,11 +10,25 @@ body{
 }
 
 .comment-text{
-    margin: 5px 0;
+    margin: 0 0 5px 0;
     font-family: 'Varela', sans-serif;
     font-size: 0.8em;
     font-weight: inherit;
+    width: 300px;
     margin-top: 0;
+}
+
+
+.comment-date{
+    margin: 0 20px 0 0;
+    font-family: 'Varela', sans-serif;
+    font-size: 0.5em;
+    font-weight: inherit;
+    margin-top: 0;
+    color: gray;
+    height: 1px;
+    text-transform: uppercase;
+
 }
 
 .comment{
@@ -32,6 +46,8 @@ body{
     align-items: center;
     border-bottom: 1px solid #8fabbf;
     padding: 10px 20px;
+    text-decoration: none;
+    color: black;
 }
 
 .profile-pic{
@@ -45,4 +61,25 @@ body{
 
 .comments{
     padding: 13px 22px;
+}
+
+.icons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-icons{
+    display: flex;
+}
+
+.info-pic-likes{
+    font-family: 'Varela', sans-serif;
+    font-size: 0.8em;
+    font-weight: inherit;
+    margin-bottom: 1px;
+    margin-top: 0;
+}
+
+.comment-options{
+    display: flex;
 }

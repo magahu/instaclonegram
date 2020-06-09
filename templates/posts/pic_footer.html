@@ -1,0 +1,74 @@
+<style>
+.pic-info{
+    border-top: 1px solid #8fabbf;
+    padding: 0 10px 0 10px;
+}
+
+.pic-icons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-icons{
+    display: flex;
+}
+
+.pic-icon{
+    margin: 10px 10px 5px 0;
+}
+
+.info-pic-likes{
+    font-family: 'Varela', sans-serif;
+    font-size: 0.8em;
+    font-weight: inherit;
+    margin-bottom: 1px;
+    margin-top: 0;
+}
+
+.info-pic-footer{
+    margin: 5px 0;
+    font-family: 'Varela', sans-serif;
+    font-size: 0.8em;
+    font-weight: inherit;
+    margin-top: 0;
+}
+
+.info-pic-date{
+    margin: 5px 0;
+    font-family: 'Varela', sans-serif;
+    font-size: 0.6em;
+    font-weight: inherit;
+    margin-top: 0;
+    color: gray;
+    text-transform: uppercase;
+}
+
+</style>
+
+{% load static %}
+
+<div class="pic-footer">
+
+    <div class="pic-info">
+        <div class="pic-icons">
+            <div class="left-icons">
+                {% include 'posts/like_button.html' %}
+                <a href="{% url 'posts:show-comments' post.pk %}">
+                    <img class="pic-icon" src="{% static 'images/add_comment.png' %}" height="25px">
+                </a>
+            </div>
+           
+                <img class="pic-icon" src="{% static 'images/tag.png' %}" height="22px">
+           
+            
+        </div>
+        <p class="info-pic-likes"><strong>{{n_likes}} Me gusta</strong></p>
+        <p class="info-pic-footer"><strong>@{{post.user.username}}</strong> {{post.description}}</p> 
+        <p class="info-pic-date"><strong>{{post.posted}}</strong></p>
+
+        
+    </div>
+    
+    {% include 'posts/comment_form.html' %}
+
+</div>
