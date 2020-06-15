@@ -6,96 +6,99 @@
 {% endblock %}
 
 {% block title %}
-<title>{{post.title}} - {{post.user.username}}</title>
+<title>{{post.title}} - @{{post.user.username}}</title>
 {% endblock %}
 
 {% block content %}
-<div class="content">
-    <img src="{{post.picture.url}}" width="500px" class="post-img">
+<div class="container">
 
-    <div class="second-row">
-
-    <a href="{% url 'users:profile' post.user.username %}">
-            <div class="user-data">
-            {% if post.user.profile.picture %}
-                <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
-            {% else %}
-            {% load static %}
-                <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
-            {% endif %}
-            <p class="comment-text"><strong>{{post.user.username}}</strong></p>
-            </div>
-        </a>
-           
-        
-        <div class="comments">
-            <div class="comment">
-                {% if post.user.profile.picture %}
-                <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
-                {% else %}
-                <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
-                {% endif %}
-                <div class="comment-info">
-                    <p class="comment-text"><strong>@{{post.user.username}}</strong> {{post.description}}</p>
-                    <div class="comment-options">
-                        <p class="comment-date"><strong>{{post.posted}}</strong></p>
-                        <p class="comment-date"><strong>Responder</strong></p>
-
-                    </div>
-                    
-                </div>
-               
-            </div>
-           
-            {% for comment in comments %}
-            <div class="comment">
-                <a href="{% url 'users:profile' comment.user.username %}">
-                    {% if comment.user.profile.picture %}
-                        <img src="{{comment.user.profile.picture.url}}" width="35px" class="profile-pic">
-                    {% else %}
-                        {% load static %}
-                        <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
-                    {% endif %}
-                </a>
+    <div class="content">
+        <img src="{{post.picture.url}}" width="500px" class="post-img">
     
-                 <div class="comment-info">
-                    <p class="comment-text"><strong>@{{comment.user.username}}</strong> {{comment.text}}</p>
-                    <div class="comment-options">
-                        <p class="comment-date"><strong>{{comment.timestamp}}</strong></p>
-                        <p class="comment-date"><strong>Responder</strong></p>
-                    </div>
+        <div class="second-row">
+    
+        <a href="{% url 'users:profile' post.user.username %}" style="text-decoration: none;">
+                <div class="user-data">
+                {% if post.user.profile.picture %}
+                    <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
+                {% else %}
+                {% load static %}
+                    <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
+                {% endif %}
+                <p class="comment-text"><strong>{{post.user.username}}</strong></p>
                 </div>
-
-                <img src="{% static 'images/gray-heart.png' %}" width="20px">
-                    
-            </div>
-                    
-            {% endfor %}
-        
-              
-        </div>
-
-        <div class="icons">
-            <div class="left-icons">
-                {% include 'posts/like_button.html' %}
-                <a href="#comment">
-                    <img class="pic-icon" src="{% static 'images/add_comment.png' %}" height="25px">
-                </a>
-            </div>
-
-            <a href="">
-                <img class="pic-icon" src="{% static 'images/tag.png' %}" height="22px">
             </a>
 
-        </div>
-
-        <p class="info-pic-likes"><strong>{{n_likes}} Me gusta</strong></p>
-
+            
+            <div class="comments">
+                <div class="comment">
+                    <a href="{% url 'users:profile' post.user.username %}" style="text-decoration: none;">
+                        {% if post.user.profile.picture %}
+                        <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
+                        {% else %}
+                        <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
+                        {% endif %}
+                    </a>
+                        <div class="comment-info">
+                            <p class="comment-text"><strong>@{{post.user.username}}</strong> {{post.description}}</p>
+                            <div class="comment-options">
+                                <p class="comment-date"><strong>{{post.posted}}</strong></p>
+                                <p class="comment-date"><strong>Responder</strong></p>
+                            </div>
+                        </div>
+                </div>
+               
+                {% for comment in comments %}
+                <div class="comment">
+                    <a href="{% url 'users:profile' comment.user.username %}">
+                        {% if comment.user.profile.picture %}
+                            <img src="{{comment.user.profile.picture.url}}" width="35px" class="profile-pic">
+                        {% else %}
+                            {% load static %}
+                            <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
+                        {% endif %}
+                    </a>
         
-        {%include 'posts/comment_form.html'%}
-
-    </div>
+                     <div class="comment-info">
+                        <p class="comment-text"><strong>@{{comment.user.username}}</strong> {{comment.text}}</p>
+                        <div class="comment-options">
+                            <p class="comment-date"><strong>{{comment.timestamp}}</strong></p>
+                            <p class="comment-date"><strong>Responder</strong></p>
+                        </div>
+                    </div>
     
+                    <img src="{% static 'images/gray-heart.png' %}" width="20px">
+                        
+                </div>
+                        
+                {% endfor %}
+            
+                  
+            </div>
+    
+            <div class="icons">
+                <div class="left-icons">
+                    {% include 'posts/like_button.html' %}
+                    <a href="#comment">
+                        <img class="pic-icon" src="{% static 'images/add_comment.png' %}" height="25px">
+                    </a>
+                </div>
+    
+                <a href="">
+                    <img class="pic-icon" src="{% static 'images/tag.png' %}" height="22px">
+                </a>
+    
+            </div>
+    
+            <p class="info-pic-likes"><strong>{{n_likes}} Me gusta</strong></p>
+    
+            
+            {%include 'posts/comment_form.html'%}
+    
+        </div>
+        
+    </div>
+
 </div>
 {% endblock %}
     

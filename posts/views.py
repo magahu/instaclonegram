@@ -28,7 +28,14 @@ def new_post(request):
 #Home view
 @login_required
 def posts(request):
+    p = []
     posts = Post.objects.all().order_by('-posted')
+    for post in posts:
+        n_likes = Like.objects.filter(post=post.pk).count()
+        like = Like.objects.filter(post=post.pk, user=request.user)
+        post_data = { post, n_likes, like}
+        #p.append(post_data)
+    #import pdb; pdb.set_trace()
     return render(request, 'home.html', {'posts':posts})
 
 
@@ -43,6 +50,7 @@ def new_like(request):
         post = request.POST['post']
         user = request.POST['user']
         like = Like.objects.filter(post=post, user=user)
+
         #import pdb; pdb.set_trace()
         # check whether it's valid:
         if like:

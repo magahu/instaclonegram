@@ -5,8 +5,18 @@ body{
 }
 
 .content{
-    padding-top: 50px;
+    border: 1px solid #8fabbf;
    
+}
+
+.container{
+    padding: 7% 10%;
+
+}
+
+.comment-container{
+    border: 1px solid #8fabbf;
+    padding: 3%;
 }
 
 .comment-text{
@@ -61,11 +71,19 @@ body{
 
 .comments{
     padding: 13px 22px;
+    width: 350px;
+    height: 300px;
+    overflow: scroll;
 }
 
 .icons{
     display: flex;
     justify-content: space-between;
+    padding: 5px 22px;
+}
+
+.pic-icon{
+    margin-right: 15px;
 }
 
 .left-icons{
@@ -78,6 +96,7 @@ body{
     font-weight: inherit;
     margin-bottom: 1px;
     margin-top: 0;
+    padding: 5px 22px;
 }
 
 .comment-options{

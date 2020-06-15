@@ -1,6 +1,10 @@
+.content{
+    padding: 10% 15%;
+}
+
 .contacts-container{
-    padding-top: 55px;
     border: 1px solid #8fabbf;
+    border-radius: 10px;
 }
 
 .left-elements{
@@ -10,6 +14,7 @@
 .contact-data{
     display: flex;
     justify-content: space-between;
+    margin: 5px;
 }
 
 .contact-image{
@@ -40,7 +45,9 @@
 .contacts-label{
     font-family:'Varela', sans-serif;
     font-size: 0.9em;
-    margin: 10px;
+    margin:0;
     text-align: center;
+    border-bottom: 1px solid #8fabbf;
+    padding: 5px;
 
 }
