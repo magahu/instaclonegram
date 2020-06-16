@@ -1,31 +1,41 @@
-{% load static %}
 
 <style>
 .search-button .lens{
     margin: 0.1em;
 }
 
-.search-button p{
-    margin: 0em;
-    margin-left: 0.5em;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 0.8em;
-    color: #8fabbf;
-}
-
-.search-button{
+.search-input{
     display: flex;
     width: 15em;
-    height: 25px;
+    height: 20px;
     justify-content: center;
     align-items: center;
     border:  0.5px solid #8fabbf;
     background-color: whitesmoke;
-    
+    margin: 0em;
+    margin-left: 0.5em;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10px;
+    color: #477799;
+    padding: 0 5px;
 }
 </style>
 
-<button class="search-button">
-    <img class="lens" src="{% static 'images/lens.svg'%}" width="10px">
-    <p>Buscar</p>
-</button>
+<form action="{% url 'users:search-results' %}" method="POST">
+    {% csrf_token %}
+    
+    <input class="search-input" name="username" placeholder="Buscar" >
+
+    <input type="submit" 
+       style="position: absolute; left: -9999px; width: 1px; height: 1px;"
+       tabindex="-1" />
+
+</form>
+
+
+
+
+
+
+
+

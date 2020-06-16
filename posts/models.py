@@ -35,6 +35,13 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+class Reply(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField(max_length=200, blank=True)
+    timestamp = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.text
     
     

@@ -106,5 +106,7 @@ def list_comments(request, pk):
         }
 
     return render(request, 'posts/comments.html', context)
+
+
     
  

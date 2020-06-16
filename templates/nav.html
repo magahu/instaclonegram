@@ -36,11 +36,7 @@
                     <img src="{% static 'images/multy-user.svg' %} " height="25px">
                 </a>
             </li>
-            <!--<li>
-                <a href="">
-                    <img src="{% static 'imgs/add.png' %}" height="25px">
-                </a>
-            </li>-->
+
             <li>
                 <a href="{% url 'users:profile' request.user.username %}">
                     {% if request.user.profile.picture %}

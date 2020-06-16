@@ -179,3 +179,18 @@ def followed(request, username):
         'label':'Seguidos'
         }
     return render(request, 'users/contacts.html', context)
+
+
+#Search-user view
+def search(request):
+    if request.method == 'POST':
+        username_input = request.POST['username']
+
+        results = User.objects.filter(username__contains=username_input)
+         
+        context= {
+            'contacts':results,
+            'label': 'Resultados de la busqueda'
+         }
+
+        return render(request, 'users/contacts.html', context)
