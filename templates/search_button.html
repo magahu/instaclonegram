@@ -1,18 +1,15 @@
 
 <style>
-.search-button .lens{
-    margin: 0.1em;
-}
+
 
 .search-input{
     display: flex;
     width: 15em;
     height: 20px;
-    justify-content: center;
-    align-items: center;
     border:  0.5px solid #8fabbf;
+    border-radius: 3px;
     background-color: whitesmoke;
-    margin: 0em;
+    margin: 5px;
     margin-left: 0.5em;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 10px;
@@ -23,7 +20,7 @@
 
 <form action="{% url 'users:search-results' %}" method="POST">
     {% csrf_token %}
-    
+
     <input class="search-input" name="username" placeholder="Buscar" >
 
     <input type="submit" 

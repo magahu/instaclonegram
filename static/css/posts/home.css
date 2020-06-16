@@ -37,10 +37,6 @@ body{
     padding: 0;
 }
 
-.options img{
-    padding: 10px;
-}
-
 .pic-container{
     display: flex;
     align-content: center;

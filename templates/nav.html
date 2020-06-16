@@ -31,11 +31,6 @@
                     <img src="{% static 'imgs/heart-shape.svg' %}" height="25px">
                 </a>
             </li>-->
-            <li>
-                <a href="{% url 'users:logout' %}">
-                    <img src="{% static 'images/multy-user.svg' %} " height="25px">
-                </a>
-            </li>
 
             <li>
                 <a href="{% url 'users:profile' request.user.username %}">

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
 <title>Instaclonegram</title>
 {% endblock %}
 
 {% block css %}
-{% load static %}
 <link rel="stylesheet" href="{% static 'css/posts/home.css'%}">
 {% endblock %}
 
@@ -29,8 +29,7 @@
                 </div>
             </div>
             <div class="options">
-                {% load static %}
-                <img src="{% static 'images/options.png'%}" width="35px">
+                {% include 'options_icon.html' %}
             </div>
         </div>
 

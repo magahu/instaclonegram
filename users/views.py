@@ -190,7 +190,7 @@ def search(request):
          
         context= {
             'contacts':results,
-            'label': 'Resultados de la busqueda'
+            'label': 'Resultados de la busqueda "{}"'.format(username_input)
          }
 
         return render(request, 'users/contacts.html', context)
