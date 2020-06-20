@@ -28,14 +28,14 @@
                 {% include "users/settings_icon.html" %}
             </div>
             <div class="info-second-row">
-                        <p><strong>{{n_posts}}</strong> publicaciones</p>
+                        <p><strong>{{user.n_posts}}</strong> publicaciones</p>
 
                         <a href="{% url 'users:followers' user.username %}" class="contacts_link">
-                            <p><strong>{{n_followers}}</strong> seguidores</p>
+                            <p><strong>{{user.n_followers}}</strong> seguidores</p>
                         </a>
                     
                         <a href="{% url 'users:followed' user.username %}" class="contacts_link">
-                            <p><strong>{{n_followed}}</strong> seguidos</p>
+                            <p><strong>{{user.n_followed}}</strong> seguidos</p>
                         </a>     
             </div>
             
@@ -46,7 +46,7 @@
     </div>
 
     <div class="user-posts">
-        {% for post in posts %}
+        {% for post in user.posts %}
             <img class="user-pic" src="{{post.picture.url}}" alt="" width="293px" height="293px">
         {% endfor %}
     </div>

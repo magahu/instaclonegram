@@ -96,22 +96,13 @@ def profile(request, username):
         follow = Follow.objects.get(follower=request.user, followed=user)  
     except Follow.DoesNotExist:
         follow = Follow()
-    posts = Post.objects.filter(user=user).order_by('-posted')
-    n_posts = Post.objects.filter(user=user).count()
-    n_followers = Follow.objects.filter(followed=user).count()
-    n_followed = Follow.objects.filter(follower=user).count()
+    user.posts = Post.objects.filter(user=user).order_by('-posted')
+    user.n_posts = Post.objects.filter(user=user).count()
+    user.n_followers = Follow.objects.filter(followed=user).count()
+    user.n_followed = Follow.objects.filter(follower=user).count()
     #import pdb; pdb.set_trace()
 
-    context = {
-                     'user':user,
-                     'posts':posts,
-                     'follow':follow, 
-                     'n_posts':n_posts,
-                     'n_followers':n_followers,
-                     'n_followed':n_followed
-            }
-
-    return render(request, 'users/profile.html', context)
+    return render(request, 'users/profile.html', {'user':user, 'follow':follow})
                  
 
 #Follow view
@@ -153,12 +144,12 @@ def followers(request, username):
     followers=[]
     user = get_object_or_404(User, username=username)
     follows = Follow.objects.filter(followed=user).order_by('-follow_time')
+    
     for follow in follows:
         followers.append(follow.follower)
         context= {
             'user':user,
             'contacts':followers,
-            'follows':follows,
             'label':'Seguidores'
             }
     return render(request,'users/contacts.html', context)
@@ -175,7 +166,6 @@ def followed(request, username):
     context= {
         'user':user,
         'contacts':followed, 
-        'follows':follows, 
         'label':'Seguidos'
         }
     return render(request, 'users/contacts.html', context)
@@ -194,3 +184,9 @@ def search(request):
          }
 
         return render(request, 'users/contacts.html', context)
+
+
+#Notifications view
+def notifications(request, username):
+    #likes y follows del user para notifications.html
+    return redirect('profile')

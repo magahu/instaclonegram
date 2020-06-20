@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block css %}
 {% load static %}
@@ -17,16 +18,21 @@
     
         <div class="second-row">
     
-        <a href="{% url 'users:profile' post.user.username %}" style="text-decoration: none;">
+        <a href="{% url 'users:profile' post.user.username %}" style="text-decoration: none; color: black;">
                 <div class="user-data">
-                {% if post.user.profile.picture %}
-                    <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
-                {% else %}
-                {% load static %}
-                    <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
-                {% endif %}
-                <p class="comment-text"><strong>{{post.user.username}}</strong></p>
+                    <div class="user" style="display: flex; align-items: center;">
+                        {% if post.user.profile.picture %}
+                            <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
+                        {% else %}
+                            <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
+                        {% endif %}
+
+                        <p class="comment-text"><strong>{{post.user.username}}</strong></p>
+                    </div>
+                
+            
                 </div>
+                
             </a>
 
             
@@ -48,7 +54,7 @@
                         </div>
                 </div>
                
-                {% for comment in comments %}
+                {% for comment in post.comment_set.all %}
                 <div class="comment">
                     <a href="{% url 'users:profile' comment.user.username %}">
                         {% if comment.user.profile.picture %}
@@ -90,7 +96,7 @@
     
             </div>
     
-            <p class="info-pic-likes"><strong>{{n_likes}} Me gusta</strong></p>
+            <p class="info-pic-likes"><strong>{{post.like_set.count}} Me gusta</strong></p>
     
             
             {%include 'posts/comment_form.html'%}

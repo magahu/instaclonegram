@@ -27,14 +27,13 @@ def new_post(request):
 
 #Home view
 @login_required
-def posts(request):
-    p = []
+def home(request):
+   
     posts = Post.objects.all().order_by('-posted')
     for post in posts:
-        n_likes = Like.objects.filter(post=post.pk).count()
-        like = Like.objects.filter(post=post.pk, user=request.user)
-        post_data = { post, n_likes, like}
-        #p.append(post_data)
+        post.like = post.like_set.filter(user=request.user, post=post)
+        
+         
     #import pdb; pdb.set_trace()
     return render(request, 'home.html', {'posts':posts})
 
@@ -93,19 +92,10 @@ def new_comment(request, pk):
 
 #Show comments
 def list_comments(request, pk):
-    comments = Comment.objects.filter(post=pk)
     post = Post.objects.get(pk=pk)
-    n_likes = Like.objects.filter(post=pk).count()
-    like = Like.objects.filter(post=pk, user=request.user)
+    post.like = post.like_set.filter(user=request.user)
 
-    context = {
-        'comments':comments,
-        'post':post,
-        'n_likes':n_likes,
-        'like':like
-        }
-
-    return render(request, 'posts/comments.html', context)
+    return render(request, 'posts/comments.html', {'post':post})
 
 
     

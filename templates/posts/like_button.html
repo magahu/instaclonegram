@@ -16,7 +16,7 @@
     </style>
 
     <button type="submit" onclick="ChangeHeart()">
-        {% if like %}
+        {% if post.like %}
         <img class="pic-icon" src="{% static 'images/red-heart-shape.svg' %}" height="23px" id="red-heart">
         {% else %}
         <img class="pic-icon" src="{% static 'images/heart-shape.svg' %}" height="25px" id="black-heart">
