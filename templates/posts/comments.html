@@ -95,8 +95,12 @@
                 </a>
     
             </div>
+
+            <a href="{% url 'posts:show-likes' post.pk %}" style="text-decoration: none; color: black;">
+                <p class="info-pic-likes"><strong>{{post.like_set.count}} Me gusta</strong></p>
+            </a>
     
-            <p class="info-pic-likes"><strong>{{post.like_set.count}} Me gusta</strong></p>
+           
     
             
             {%include 'posts/comment_form.html'%}

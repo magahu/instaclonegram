@@ -62,7 +62,10 @@
            
             
         </div>
-        <p class="info-pic-likes"><strong>{{post.like_set.count}} Me gusta</strong></p>
+        <a href="{% url 'posts:show-likes' post.pk %}" style="text-decoration: none; color: black;">
+            <p class="info-pic-likes"><strong>{{post.like_set.count}} Me gusta</strong></p>
+        </a>
+        
         <p class="info-pic-footer"><strong>@{{post.user.username}}</strong> {{post.description}}</p> 
         <p class="info-pic-date"><strong>{{post.posted}}</strong></p>
 

@@ -98,5 +98,16 @@ def list_comments(request, pk):
     return render(request, 'posts/comments.html', {'post':post})
 
 
+#Show users likes
+def list_likes(request, pk):
+    users = []
+    likes = Like.objects.filter(post=pk)
+    for like in likes:
+        user = like.user
+        users.append(user)    
+    
+    return render(request, 'users/contacts.html', {'contacts':users, 'label':'Me gusta'})
+
+
     
  
