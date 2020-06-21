@@ -2,9 +2,10 @@
 
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import NewPostForm, NewLikeForm, NewCommentForm
-from posts.models import Post, Like, Comment
+from .forms import NewPostForm, NewLikeForm, NewCommentForm, SavedPostForm 
+from posts.models import Post, Like, Comment, SavedPost
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 #Create new post view
@@ -91,6 +92,7 @@ def new_comment(request, pk):
 
 
 #Show comments
+@login_required
 def list_comments(request, pk):
     post = Post.objects.get(pk=pk)
     post.like = post.like_set.filter(user=request.user)
@@ -98,7 +100,8 @@ def list_comments(request, pk):
     return render(request, 'posts/comments.html', {'post':post})
 
 
-#Show users likes
+#Display users likes
+@login_required
 def list_likes(request, pk):
     users = []
     likes = Like.objects.filter(post=pk)
@@ -107,6 +110,38 @@ def list_likes(request, pk):
         users.append(user)    
     
     return render(request, 'users/contacts.html', {'contacts':users, 'label':'Me gusta'})
+
+
+@login_required
+def save_post(request):
+    if request.method == 'POST':
+        form = SavedPostForm(request.POST)
+        post = request.POST['post']
+        user = request.POST['user']
+
+        saved_post = SavedPost.objects.filter(user=user, post=post)
+
+        if saved_post:
+            saved_post.delete()
+            return redirect('posts:home')
+        elif form.is_valid():
+            form.save()
+            return redirect('posts:show-saved')
+
+    else:
+        form = SavedPostForm()
+        return redirect('posts:home', {'form':form})
+
+
+@login_required
+def list_saved_posts(request):
+    posts = []
+    saved = SavedPost.objects.filter(user=request.user)
+    for save in saved:
+        post = Post.objects.get(pk=save.post.pk)
+        posts.append(post)
+    
+    return render(request, 'posts/saved_posts.html', {'saved_posts':posts})
 
 
     

@@ -57,8 +57,20 @@
                     <img class="pic-icon" src="{% static 'images/add_comment.png' %}" height="25px">
                 </a>
             </div>
+
+            <form action="{% url 'posts:save' %}" method="POST">
+                {% csrf_token %}
+
+                <input type="hidden" name="user" value="{{request.user.pk}}">
+                <input type="hidden" name="post" value="{{post.pk}}">
+
+                <button type="submit" style="border:none; background-color: transparent;">
+                    <img class="pic-icon" src="{% static 'images/tag.png' %}" height="22px">
+                </button>
+
+            </form>
            
-                <img class="pic-icon" src="{% static 'images/tag.png' %}" height="22px">
+                
            
             
         </div>

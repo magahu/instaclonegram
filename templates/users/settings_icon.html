@@ -54,10 +54,10 @@
       <a href="#" >
         <p class="link-text">Cambiar contraseña</p>
       </a>
-      <a href="#" class="link-text">
+      <a href="{% url 'posts:show-saved' %}" class="link-text">
         <p class="link-text">Guardados</p>
       </a>
-      <a href="{%url 'users:update-profile'%}" class="link-text">
+      <a href="{% url 'users:update-profile'%}" class="link-text">
         <p class="link-text">Editar</p>
       </a>
       <a href="{% url 'users:logout' %}" class="link-text">

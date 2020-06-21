@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Guardados</title>
+{% endblock %}
+
+{% block content %}
+<style>
+.user-posts{
+    padding-top: 5% ;
+    margin: 0 140px;
+}
+
+.user-pic{
+    margin: 10px;
+}
+
+
+.contacts_link{
+    text-decoration: none;
+    color: black;
+}
+</style>
+<div class="user-posts">
+    {% for post in saved_posts %}
+        <a href="{% url 'posts:show-comments' post.pk %}">
+        <img class="user-pic" src="{{post.picture.url}}" alt="" width="293px" height="293px">
+        </a>
+        
+    {% endfor %}
+</div>
+{% endblock %}
