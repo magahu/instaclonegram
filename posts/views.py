@@ -33,7 +33,7 @@ def home(request):
     posts = Post.objects.all().order_by('-posted')
     for post in posts:
         post.like = post.like_set.filter(user=request.user, post=post)
-        
+        post.saved = post.savedpost_set.filter(user=request.user)
          
     #import pdb; pdb.set_trace()
     return render(request, 'home.html', {'posts':posts})
@@ -96,6 +96,7 @@ def new_comment(request, pk):
 def list_comments(request, pk):
     post = Post.objects.get(pk=pk)
     post.like = post.like_set.filter(user=request.user)
+    post.saved = post.savedpost_set.filter(user=request.user)
 
     return render(request, 'posts/comments.html', {'post':post})
 

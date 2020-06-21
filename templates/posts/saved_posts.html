@@ -23,9 +23,8 @@
 </style>
 <div class="user-posts">
     {% for post in saved_posts %}
-        <a href="{% url 'posts:show-comments' post.pk %}">
-        <img class="user-pic" src="{{post.picture.url}}" alt="" width="293px" height="293px">
-        </a>
+    <a href="{% url 'posts:show-comments' post.pk %}">
+        <img class="user-pic" src="{{post.picture.url}}" alt="" width="293px" height="293px"></a>
         
     {% endfor %}
 </div>

@@ -58,21 +58,8 @@
                 </a>
             </div>
 
-            <form action="{% url 'posts:save' %}" method="POST">
-                {% csrf_token %}
+            {% include 'posts/save_post_form.html' %}
 
-                <input type="hidden" name="user" value="{{request.user.pk}}">
-                <input type="hidden" name="post" value="{{post.pk}}">
-
-                <button type="submit" style="border:none; background-color: transparent;">
-                    <img class="pic-icon" src="{% static 'images/tag.png' %}" height="22px">
-                </button>
-
-            </form>
-           
-                
-           
-            
         </div>
         <a href="{% url 'posts:show-likes' post.pk %}" style="text-decoration: none; color: black;">
             <p class="info-pic-likes"><strong>{{post.like_set.count}} Me gusta</strong></p>
