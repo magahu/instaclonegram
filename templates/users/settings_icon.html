@@ -19,18 +19,15 @@
   min-width: 160px;
   /*box-shadow: 0px 8px 16px 0px #8fabbf;*/
   border: 1px solid #8fabbf;
+  width: 280px;
   z-index: 1;
+ 
 }
 
-.dropdown-content a {
+.dropdown-content .link-text {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  border-bottom: 1px solid #8fabbf;
-  width: 250px;
-}
-
-.link-text{
   color: black;
   font-family: 'Varela', sans-serif;
   font-size: 13px;
@@ -38,7 +35,12 @@
   text-align: center;
 }
 
-.dropdown-content a:hover {background-color: #8fabbf;;}
+.element{
+  border-bottom: 1px solid #8fabbf;
+}
+
+
+/*.dropdown-content a:hover {background-color: #8fabbf;}*/
 
 .dropdown:hover .dropdown-content {display: block;}
 
@@ -51,18 +53,30 @@
     </button>
     
     <div class="dropdown-content">
-      <a href="#" >
-        <p class="link-text">Cambiar contraseña</p>
-      </a>
-      <a href="{% url 'posts:show-saved' %}" class="link-text">
-        <p class="link-text">Guardados</p>
-      </a>
-      <a href="{% url 'users:update-profile'%}" class="link-text">
-        <p class="link-text">Editar</p>
-      </a>
+      <div class="element">
+        <a href="{% url 'posts:show-saved' %}" class="link-text">
+          <p class="link-text">Guardados</p>
+        </a>
+      </div>
+      
+      <div class="element">
+        <a href="{% url 'users:update-profile'%}" class="link-text">
+          <p class="link-text">Editar</p>
+        </a>
+      </div>
+     
+      <div class="element">
+        <a href="{% url 'users:update-profile'%}" class="link-text">
+          <p class="link-text">Eliminar mi cuenta</p>
+        </a>
+      </div>
+      
+      <div class="element">
       <a href="{% url 'users:logout' %}" class="link-text">
         <p class="link-text">Cerrar sesión</p>
       </a>
+      </div>
+      
     </div>
   </div>
 

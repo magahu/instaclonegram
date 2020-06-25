@@ -17,7 +17,7 @@ urlpatterns = [
     path('profile/<str:username>/followers', views.followers, name='followers'),
     path('profile/<str:username>/followed', views.followed, name='followed'),
     path('search-results/', views.search, name='search-results'),
-    
+    path('notifications/', views.list_notifications, name='notifications')
 
 ]
 

@@ -22,39 +22,82 @@
       min-width: 160px;
       /*box-shadow: 0px 8px 16px 0px #8fabbf;*/
       border: 1px solid #8fabbf;
+      width: 280px;
       z-index: 2;
     }
-    
-    
     
     .text{
     color: black;
     font-family: 'Varela', sans-serif;
     font-size: 0.8em;
     font-weight: inherit;
+    margin: 10px;
     text-align: center;
     }
 
     /*.dropdown-content a:hover {background-color: #8fabbf;}*/
     
     .dropdown:hover .dropdown-content {display: block;}
+
+    .notification{
+      display: flex;
+      justify-content: space-between;
+      margin: 5px;
+    }
+
+    .user-container{
+      display: flex;
+    }
+
+    .element-link{
+      margin: 0;
+      padding: 0;
+      width: inherit;
+    }
     
 </style>
 
 <div class="dropdown">
     <li>
         <button class="dropbtn">
-            <img src="{% static 'images/heart-shape.svg' %}" height="25px">
-        </button>
+          <img src="{% static 'images/heart-shape.svg' %}" height="25px">
+      </button>
     </li>
     
     
-    <div class="dropdown-content">
-        {% if not notifications %}
-        <p class="text" >No hay notificaciones</p>
-        {% endif %}
+    <div class="dropdown-content" style="float:right; right: 0; width: 350px;">
+        {% if not likes %}
+        <div class="notification">
+          <p class="text" >No hay notificaciones</p>
+        </div>
+        {% else %}
+        {% for notification in likes %}
+        <div class="notification">
+          <div class="user-container">
 
+            {% if notification.profile.picture %}
+            <a href="{% url 'users:profile' notification.user.username %}">
+              <img src="{{notification.profile.picture.url}}" width="35px" height="35px" style="border-radius: 50%;">
+            </a>
+              
+            {% else %}
+            <a href="{% url 'users:profile' notification.user.username %}">
+              <img src="{% static 'images/default-profile.png'%}" width="35px" height="35px">
+            </a>
+            {% endif %}
+            
+            <p class="text">  
+              A <strong>{{notification.profile.user.username}}</strong> le gustó tu publicación
+            </p>
+          </div>
+          
+          <a href="{% url 'posts:show-comments' notification.post.pk %}">
+            <img src="{{notification.post.picture.url}}" width="35px" height="35px" >
+          </a>
+          
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
   </div>
-
 

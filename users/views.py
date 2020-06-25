@@ -4,11 +4,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from users.models import Profile
+from users.models import Profile, Follow
+from posts.models import Post, Like
 from django.db import IntegrityError
 from .forms import SignUpForm, UpdateProfileForm
-from posts.models import Post
-from .models import Follow
 from django.urls import reverse
 
 
@@ -61,6 +60,8 @@ def signup_view(request):
 #Update profile view
 @login_required
 def update_profile(request):
+    #notifications for the navigation bar
+    likes = list_notifications(request)
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -81,11 +82,11 @@ def update_profile(request):
             # redirect to a new URL:
             return redirect('users:update-profile')
         else:
-            return render(request, 'users/update_profile.html', {'form':form})
+            return render(request, 'users/update_profile.html', {'form':form, 'likes':likes})
     # if a GET (or any other method) we'll create a blank form
     else:
         form = UpdateProfileForm()      
-    return render(request, 'users/update_profile.html')
+    return render(request, 'users/update_profile.html', {'likes':likes})
 
 
 #Profile view 
@@ -96,13 +97,16 @@ def profile(request, username):
         follow = Follow.objects.get(follower=request.user, followed=user)  
     except Follow.DoesNotExist:
         follow = Follow()
-    user.posts = Post.objects.filter(user=user).order_by('-posted')
+    user.posts = Post.objects.filter(user=user).order_by('-created')
     user.n_posts = Post.objects.filter(user=user).count()
     user.n_followers = Follow.objects.filter(followed=user).count()
     user.n_followed = Follow.objects.filter(follower=user).count()
-    #import pdb; pdb.set_trace()
+    #notifications for the navigation bar
+    likes = list_notifications(request)
 
-    return render(request, 'users/profile.html', {'user':user, 'follow':follow})
+    context = {'user':user, 'follow':follow, 'likes':likes}
+
+    return render(request, 'users/profile.html', context)
                  
 
 #Follow view
@@ -120,6 +124,7 @@ def follow(request, username):
             followed = user,
             follower = request.user
         )
+
     else:
         follow = Follow.objects.get(followed=user, follower=request.user)
 
@@ -143,14 +148,17 @@ def unfollow(request, username):
 def followers(request, username):
     followers=[]
     user = get_object_or_404(User, username=username)
-    follows = Follow.objects.filter(followed=user).order_by('-follow_time')
+    follows = Follow.objects.filter(followed=user).order_by('-created')
+    #notifications for the navigation bar
+    likes = list_notifications(request)
     
     for follow in follows:
         followers.append(follow.follower)
         context= {
             'user':user,
             'contacts':followers,
-            'label':'Seguidores'
+            'label':'Seguidores',
+            'likes':likes
             }
     return render(request,'users/contacts.html', context)
 
@@ -159,14 +167,19 @@ def followers(request, username):
 def followed(request, username):
     followed=[]
     user = get_object_or_404(User, username=username)
-    follows = Follow.objects.filter(follower=user).order_by('-follow_time')
+    follows = Follow.objects.filter(follower=user).order_by('-created')
     for follow in follows:
         followed.append(follow.followed)
     #import pdb; pdb.set_trace()
+
+    #notifications for the navigation bar
+    likes = list_notifications(request)
+
     context= {
         'user':user,
         'contacts':followed, 
-        'label':'Seguidos'
+        'label':'Seguidos',
+        'likes':likes
         }
     return render(request, 'users/contacts.html', context)
 
@@ -177,16 +190,26 @@ def search(request):
         username_input = request.POST['username']
 
         results = User.objects.filter(username__contains=username_input)
+
+        #notifications for the navigation bar
+        likes = list_notifications(request)
+
          
         context= {
             'contacts':results,
-            'label': 'Resultados de la busqueda "{}"'.format(username_input)
+            'label': 'Resultados de la busqueda "{}"'.format(username_input),
+            'likes':likes
          }
 
         return render(request, 'users/contacts.html', context)
 
 
-#Notifications view
-def notifications(request, username):
-    #likes y follows del user para notifications.html
-    return redirect('profile')
+#List likes to the user posts
+def list_notifications(request):
+    likes = Like.objects.filter(post__profile__user=request.user).exclude(user=request.user).order_by('-created')
+    for like in likes:
+        like.profile = Profile.objects.get(user=like.user)
+    #import pdb; pdb.set_trace()
+    return likes
+
+

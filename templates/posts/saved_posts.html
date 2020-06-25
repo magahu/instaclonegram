@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<title>Guardados</title>
+<title>@{{request.user.username}} - Guardados</title>
 {% endblock %}
 
 {% block content %}
@@ -20,12 +20,26 @@
     text-decoration: none;
     color: black;
 }
+
+.info{
+    color: grey;
+    font-family: 'Varela', sans-serif;
+    font-size: small;
+    margin: 10px;
+}
 </style>
+
+
 <div class="user-posts">
+    <p class="info">Solo tú puedes ver lo que guardaste</p>
+    {% if not saved_posts %}
+    <p class="info">Aún no has guardado ningún post</p>
+    {% else %}
     {% for post in saved_posts %}
     <a href="{% url 'posts:show-comments' post.pk %}">
         <img class="user-pic" src="{{post.picture.url}}" alt="" width="293px" height="293px"></a>
         
     {% endfor %}
+    {% endif%}
 </div>
 {% endblock %}

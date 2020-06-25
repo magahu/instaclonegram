@@ -13,6 +13,7 @@ urlpatterns = [
      path('<int:pk>/likes/', views.list_likes, name='show-likes'),
      path('saved_posts/', views.list_saved_posts, name='show-saved'),
      path('save_post/', views.save_post, name='save')
+     
   
 
 ]

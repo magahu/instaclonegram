@@ -6,11 +6,14 @@ from .forms import NewPostForm, NewLikeForm, NewCommentForm, SavedPostForm
 from posts.models import Post, Like, Comment, SavedPost
 from django.urls import reverse
 from django.contrib.auth.models import User
+from users.views import list_notifications
 
 
 #Create new post view
 @login_required
 def new_post(request):
+    #notifications for the navigation bar
+    likes = list_notifications(request)
     # if this is a POST request we need to process the form data
     if request.method == 'POST': 
         # create a form instance and populate it with data from the request:
@@ -23,20 +26,21 @@ def new_post(request):
     else:
         # if a GET (or any other method) we'll create a blank form
         form = NewPostForm()
-    return render(request, 'posts/new_post.html', {'form':form})
+    return render(request, 'posts/new_post.html', {'form':form, 'likes':likes})
 
 
 #Home view
 @login_required
 def home(request):
-   
-    posts = Post.objects.all().order_by('-posted')
+    posts = Post.objects.all().order_by('-created')
     for post in posts:
         post.like = post.like_set.filter(user=request.user, post=post)
         post.saved = post.savedpost_set.filter(user=request.user)
+        #notifications for the navigation bar
+        likes = list_notifications(request)
          
     #import pdb; pdb.set_trace()
-    return render(request, 'home.html', {'posts':posts})
+    return render(request, 'home.html', {'posts':posts, 'likes':likes})
 
 
 #Create like view
@@ -55,12 +59,11 @@ def new_like(request):
         # check whether it's valid:
         if like:
             like.delete()
-            return redirect('posts:home')
+            return redirect(request.META.get('HTTP_REFERER'))
         elif form.is_valid():
             form.save()
             # redirect to a new URL:
-            url = reverse('posts:show-comments', kwargs={'pk':post})
-            return redirect(url)
+            return redirect(request.META.get('HTTP_REFERER'))
 
     else:
         # if a GET (or any other method) we'll create a blank form
@@ -98,7 +101,10 @@ def list_comments(request, pk):
     post.like = post.like_set.filter(user=request.user)
     post.saved = post.savedpost_set.filter(user=request.user)
 
-    return render(request, 'posts/comments.html', {'post':post})
+    #notifications for the navigation bar
+    likes = list_notifications(request)
+
+    return render(request, 'posts/comments.html', {'post':post, 'likes':likes})
 
 
 #Display users likes
@@ -108,11 +114,17 @@ def list_likes(request, pk):
     likes = Like.objects.filter(post=pk)
     for like in likes:
         user = like.user
-        users.append(user)    
+        users.append(user)   
+
+    #notifications for the navigation bar
+    likes = list_notifications(request) 
+
+    context = {'contacts':users, 'label':'Me gusta', 'likes':likes}
     
-    return render(request, 'users/contacts.html', {'contacts':users, 'label':'Me gusta'})
+    return render(request, 'users/contacts.html', context)
 
 
+#Save-post view
 @login_required
 def save_post(request):
     if request.method == 'POST':
@@ -134,6 +146,7 @@ def save_post(request):
         return redirect('posts:home', {'form':form})
 
 
+#List saved posts by the logged user
 @login_required
 def list_saved_posts(request):
     posts = []
@@ -141,9 +154,13 @@ def list_saved_posts(request):
     for save in saved:
         post = Post.objects.get(pk=save.post.pk)
         posts.append(post)
-    
-    return render(request, 'posts/saved_posts.html', {'saved_posts':posts})
+   
+    #notifications for the navigation bar
+    likes = list_notifications(request)
 
+    context = {'saved_posts':posts, 'likes':likes}
+    
+    return render(request, 'posts/saved_posts.html', context)
 
     
  
