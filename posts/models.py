@@ -52,6 +52,6 @@ class Reply(models.Model):
     created = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.text
+        return self.comment
     
     

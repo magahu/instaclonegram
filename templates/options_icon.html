@@ -40,7 +40,7 @@
 
 
 .divisor{
-      color: #bed7e9;;
+    border: 1px solid #8fabbf;
       width: inherit;
       margin: 0;
 }
@@ -59,14 +59,30 @@
         
         <div class="dropdown-content">
           <div class="element">
-            <a href="{% url 'posts:show-comments' post.pk %}" class="link-text">Ir a la publicación</a>
+            <a href="{% url 'posts:show-comments' post.pk %}" class="link-text">
+              Ir a la publicación
+            </a>
           </div>
           
           <hr class="divisor">
 
           <div class="element">
-            <a href="{% url 'users:profile' post.user.username %}" class="link-text">Ver perfil</a>
+            <a href="{% url 'users:profile' post.user.username %}" class="link-text">
+              Ver perfil
+            </a>
           </div>
+
+          {% if post.user == request.user %}
+
+          <hr class="divisor">
+
+          <div class="element">
+            <a href="{% url 'posts:delete' post.pk %}" class="link-text">
+              Eliminar este post
+            </a>
+          </div>
+
+          {% endif %}
          
         </div>
       </div>

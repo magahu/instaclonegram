@@ -163,4 +163,13 @@ def list_saved_posts(request):
     return render(request, 'posts/saved_posts.html', context)
 
     
+
+@login_required
+def delete_post(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    if post.user == request.user:
+        post.delete()
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+
  
