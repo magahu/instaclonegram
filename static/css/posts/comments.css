@@ -36,8 +36,18 @@ body{
     font-weight: inherit;
     margin-top: 0;
     color: gray;
-    text-transform: uppercase;
+    text-transform: lowercase;
 
+}
+
+.answer-button{
+    margin: 0 20px 0 0;
+    font-family: 'Varela', sans-serif;
+    font-size: 0.5em;
+    font-weight: inherit;
+    margin-top: 0;
+    color: gray;
+    text-transform: uppercase;
 }
 
 .comment{
