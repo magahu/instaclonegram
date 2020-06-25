@@ -24,6 +24,7 @@
       border: 1px solid #8fabbf;
       width: 280px;
       z-index: 2;
+       
     }
     
     .text{
@@ -54,6 +55,12 @@
       padding: 0;
       width: inherit;
     }
+
+    .divisor{
+      color: #bed7e9;;
+      width: inherit;
+      margin: 0;
+    }
     
 </style>
 
@@ -65,7 +72,7 @@
     </li>
     
     
-    <div class="dropdown-content" style="float:right; right: 0; width: 350px;">
+    <div class="dropdown-content" style="float:right; right: 0; width: 350px; overflow-x: hidden; overflow-y: auto; height: 300px;">
         {% if not likes %}
         <div class="notification">
           <p class="text" >No hay notificaciones</p>
@@ -94,10 +101,11 @@
           <a href="{% url 'posts:show-comments' notification.post.pk %}">
             <img src="{{notification.post.picture.url}}" width="35px" height="35px" >
           </a>
-          
         </div>
+        <hr class="divisor">
         {% endfor %}
         {% endif %}
+        
     </div>
   </div>
 

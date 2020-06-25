@@ -38,15 +38,18 @@
   text-align: center;
 }
 
-.element{
-  border-bottom: 1px solid #8fabbf;
+
+.divisor{
+      color: #bed7e9;;
+      width: inherit;
+      margin: 0;
 }
 
-    /*.dropdown-content a:hover {background-color: #8fabbf;;}*/
+    .dropdown-content a:hover {background-color: #8fabbf;;}
     
     .dropdown:hover .dropdown-content {display: block;}
     
-    </style>
+</style>
     
     
     <div class="dropdown">
@@ -59,6 +62,8 @@
             <a href="{% url 'posts:show-comments' post.pk %}" class="link-text">Ir a la publicación</a>
           </div>
           
+          <hr class="divisor">
+
           <div class="element">
             <a href="{% url 'users:profile' post.user.username %}" class="link-text">Ver perfil</a>
           </div>
