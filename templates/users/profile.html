@@ -46,9 +46,14 @@
     </div>
 
     <div class="user-posts">
+        {% if not user.posts%}
+        <p class="text">Publica un post para ver contenido aquí</p>
+        {% else %}
         {% for post in user.posts %}
-            <img class="user-pic" src="{{post.picture.url}}" alt="" width="293px" height="293px">
+<a href="{% url 'posts:show-comments' post.pk %}">
+<img class="user-pic" src="{{post.picture.url}}" alt="" width="293px" height="293px"></a>    
         {% endfor %}
+        {% endif %}
     </div>
 
 </div>

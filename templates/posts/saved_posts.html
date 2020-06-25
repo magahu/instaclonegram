@@ -27,13 +27,21 @@
     font-size: small;
     margin: 10px;
 }
+.text{
+    color: black;
+    font-family: 'Varela', sans-serif;
+    font-size: 0.8em;
+    font-weight: inherit;
+    margin: 10px;
+    text-align: center;
+}
 </style>
 
 
 <div class="user-posts">
     <p class="info">Solo tú puedes ver lo que guardaste</p>
     {% if not saved_posts %}
-    <p class="info">Aún no has guardado ningún post</p>
+    <p class="text">Aún no has guardado ningún post</p>
     {% else %}
     {% for post in saved_posts %}
     <a href="{% url 'posts:show-comments' post.pk %}">
