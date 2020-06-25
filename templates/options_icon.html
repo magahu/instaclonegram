@@ -1,89 +1,37 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/posts/dropdown_base.css'%}">
 
-<style>
-    .options img{
-        padding-right: 10px;
-    }
+<div class="dropdown">
+  <button class="dropbtn">
+    <img src="{% static 'images/options.png'%}" width="35px">
+  </button>
 
-    .dropbtn {
-      border: none;
-    }
-    
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    
-  .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  /*box-shadow: 0px 8px 16px 0px #8fabbf;*/
-  border: 1px solid #8fabbf;
-  width: 280px;
-  z-index: 1;
+  <div class="dropdown-content" style="float:right; right: 0; width: 300px;">
+    <div class="element">
+      <a href="{% url 'posts:show-comments' post.pk %}" class="link-text">
+        <p class="link-text">Ir a la publicación</p>
+      </a>
+    </div>
 
- 
-}
+    <hr class="divisor">
 
-.dropdown-content .link-text {
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  color: black;
-  font-family: 'Varela', sans-serif;
-  font-size: 13px;
-  font-weight: inherit;
-  text-align: center;
-}
+    <div class="element">
+      <a href="{% url 'users:profile' post.user.username %}" class="link-text">
+        <p class="link-text">Ver perfil</p>
+      </a>
+    </div>
 
+    {% if post.user == request.user %}
 
-.divisor{
-    border: 1px solid #8fabbf;
-      width: inherit;
-      margin: 0;
-}
+    <hr class="divisor">
 
-    /*.dropdown-content a:hover {background-color: #8fabbf;}*/
-    
-    .dropdown:hover .dropdown-content {display: block;}
-    
-</style>
-    
-    
-    <div class="dropdown">
-        <button class="dropbtn">
-            <img src="{% static 'images/options.png'%}" width="35px">
-        </button>
-        
-        <div class="dropdown-content">
-          <div class="element">
-            <a href="{% url 'posts:show-comments' post.pk %}" class="link-text">
-              Ir a la publicación
-            </a>
-          </div>
-          
-          <hr class="divisor">
+    <div class="element">
+      <a href="{% url 'posts:delete' post.pk %}" class="link-text">
+        <p class="link-text">Eliminar este post</p>
+      </a>
+    </div>
 
-          <div class="element">
-            <a href="{% url 'users:profile' post.user.username %}" class="link-text">
-              Ver perfil
-            </a>
-          </div>
+    {% endif %}
 
-          {% if post.user == request.user %}
-
-          <hr class="divisor">
-
-          <div class="element">
-            <a href="{% url 'posts:delete' post.pk %}" class="link-text">
-              Eliminar este post
-            </a>
-          </div>
-
-          {% endif %}
-         
-        </div>
-      </div>
-
+  </div>
+</div>

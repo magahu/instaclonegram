@@ -1,59 +1,14 @@
-{% load static %}
 {% if user == request.user %}
 
-<style>
-.dropbtn {
-  border: none;
-  background-color: #f5f5f5;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  /*box-shadow: 0px 8px 16px 0px #8fabbf;*/
-  border: 1px solid #8fabbf;
-  width: 280px;
-  z-index: 1;
- 
-}
-
-.dropdown-content .link-text {
-  text-decoration: none;
-  display: block;
-  color: black;
-  font-family: 'Varela', sans-serif;
-  font-size: 13px;
-  font-weight: inherit;
-  text-align: center;
-}
-
-
-.divisor{
-      border: 1px solid #8fabbf;
-      width: inherit;
-      margin: 0;
-}
-
-/*.dropdown-content a:hover {background-color: #8fabbf;}*/
-
-.dropdown:hover .dropdown-content {display: block;}
-
-</style>
-
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/posts/dropdown_base.css'%}">
 
 <div class="dropdown">
     <button class="dropbtn">
     <img class="settings-icon" src="{% static 'images/settings.png'%}">
     </button>
     
-    <div class="dropdown-content">
+    <div class="dropdown-content" style="float:left; left: 0; width: 300px;">
       <div class="element">
         <a href="{% url 'posts:show-saved' %}" class="link-text">
           <p class="link-text">Guardados</p>

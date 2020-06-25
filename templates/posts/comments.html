@@ -19,24 +19,33 @@
         <div class="second-row">
     
         <a href="{% url 'users:profile' post.user.username %}" style="text-decoration: none; color: black;">
-                <div class="user-data">
-                    <div class="user">
-                        
-                        {% if post.user.profile.picture %}
-                        <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
-                        {% else %}
-                        <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
-                        {% endif %}
+                <div class="comments-header">
+
+                    <div class="user-data">
+                        <div class="user">
+                            
+                            {% if post.user.profile.picture %}
+                            <img src="{{post.user.profile.picture.url}}" width="35px" class="profile-pic">
+                            {% else %}
+                            <img src="{% static 'images/default-profile.png' %}" width="35px" class="profile-pic">
+                            {% endif %}
+                            
+                        </div>
+                        <p class="comment-text"><strong>{{post.user.username}}</strong></p>
                         
                     </div>
-                    <p class="comment-text"><strong>{{post.user.username}}</strong></p>
+    
+                    {% include 'options_icon.html' %}
+                    
                 </div>
+                
 
-                <hr class="divisor">
+                
                 
             </a>
 
-            
+            <hr class="divisor">
+
             <div class="comments">
 
                     <div class="comment">

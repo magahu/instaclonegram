@@ -1,0 +1,47 @@
+
+.options img{
+    padding-right: 10px;
+}
+
+.dropbtn {
+  border: none;
+}
+    
+.dropdown {
+    position: relative;
+    display: inline-block;
+    background-color: inherit;
+}
+    
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    /*box-shadow: 0px 8px 16px 0px #8fabbf;*/
+    border: 1px solid #dbdbdb;
+    /*width: 280px;*/
+    z-index: 1;
+}
+
+
+
+.divisor{
+    border: 1px solid #dbdbdb;
+    width: inherit;
+    margin: 0;
+}
+
+.link-text{
+    text-decoration: none;
+    display: block;
+    color: black;
+    font-family: 'Varela', sans-serif;
+    font-size: 13px;
+    font-weight: inherit;
+    text-align: center;
+}
+
+    
+.dropdown:hover .dropdown-content {display: block;}
+    

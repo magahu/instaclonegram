@@ -1,32 +1,6 @@
 {% load static %}
 
 <style>
-    .options img{
-        padding-right: 10px;
-    }
-
-    .dropbtn {
-      border: none;
-      background-color:#ffffff;
-    }
-    
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: white;
-      min-width: 160px;
-      /*box-shadow: 0px 8px 16px 0px #8fabbf;*/
-      border: 1px solid #8fabbf;
-      width: 280px;
-      z-index: 2;
-       
-    }
-    
     .text{
     color: black;
     font-family: 'Varela', sans-serif;
@@ -35,10 +9,6 @@
     margin: 10px;
     text-align: center;
     }
-
-    /*.dropdown-content a:hover {background-color: #8fabbf;}*/
-    
-    .dropdown:hover .dropdown-content {display: block;}
 
     .notification{
       display: flex;
@@ -56,11 +26,7 @@
       width: inherit;
     }
 
-    .divisor{
-      border: 1px solid #8fabbf;
-      width: inherit;
-      margin: 0;
-    }
+
     
 </style>
 
@@ -72,7 +38,7 @@
     </li>
     
     
-    <div class="dropdown-content" style="float:right; right: 0; width: 350px; overflow-x: hidden; overflow-y: auto; height: 300px;">
+    <div class="dropdown-content" style="float:right; right: 0; width: 500px; overflow-x: hidden; overflow-y: auto; height: 300px;">
         {% if not likes %}
         <div class="notification">
           <p class="text" >No hay notificaciones</p>

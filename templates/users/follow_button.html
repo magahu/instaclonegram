@@ -3,12 +3,12 @@
 
 {% if user == request.user %}
 <button class="follow-button">
-    <a href="{% url 'users:update-profile' %}">
+    <a href="{% url 'users:update-profile' %}"> 
         <strong>Editar perfil</strong>
     </a>
 </button>
 
-{% elif follow.followed == user %}
+{% elif user.follow %}
 <button class="follow-button">
     <a href="{% url 'users:unfollow' user.username %}">
         <strong>Dejar de seguir</strong>

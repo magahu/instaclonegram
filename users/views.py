@@ -101,10 +101,11 @@ def profile(request, username):
     user.n_posts = Post.objects.filter(user=user).count()
     user.n_followers = Follow.objects.filter(followed=user).count()
     user.n_followed = Follow.objects.filter(follower=user).count()
+    user.follow = Follow.objects.filter(follower=request.user, followed=user)
     #notifications for the navigation bar
     likes = list_notifications(request)
 
-    context = {'user':user, 'follow':follow, 'likes':likes}
+    context = {'user':user, 'likes':likes}
 
     return render(request, 'users/profile.html', context)
                  
@@ -126,7 +127,7 @@ def follow(request, username):
         )
 
     else:
-        follow = Follow.objects.get(followed=user, follower=request.user)
+        follow = Follow.objects.get(follower=request.user, followed=user)
 
     url = reverse('users:profile', kwargs={'username':user.username})
     return redirect(url)
@@ -149,17 +150,22 @@ def followers(request, username):
     followers=[]
     user = get_object_or_404(User, username=username)
     follows = Follow.objects.filter(followed=user).order_by('-created')
+    
     #notifications for the navigation bar
     likes = list_notifications(request)
     
     for follow in follows:
         followers.append(follow.follower)
-        context= {
+
+    for user in followers:
+        user.follow = Follow.objects.filter(followed=user, follower=request.user)
+
+    context= {
             'user':user,
             'contacts':followers,
             'label':'Seguidores',
             'likes':likes
-            }
+        }
     return render(request,'users/contacts.html', context)
 
 
@@ -168,12 +174,18 @@ def followed(request, username):
     followed=[]
     user = get_object_or_404(User, username=username)
     follows = Follow.objects.filter(follower=user).order_by('-created')
+
     for follow in follows:
         followed.append(follow.followed)
     #import pdb; pdb.set_trace()
 
     #notifications for the navigation bar
     likes = list_notifications(request)
+
+    for user in followed:
+        user.follow = Follow.objects.filter(followed=user, follower=request.user)
+
+    user.follow = Follow.objects.filter(followed=user, follower=request.user)
 
     context= {
         'user':user,
