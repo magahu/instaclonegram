@@ -42,6 +42,15 @@
     text-align: center;
 }
 
+.text-date{
+    font-family: 'Varela', sans-serif;
+    font-size: 13px;
+    text-align: center;
+    font-weight: inherit;
+    color: gray;
+    text-transform: lowercase;
+}
+
     
 .dropdown:hover .dropdown-content {display: block;}
     

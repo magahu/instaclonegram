@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from users.models import Profile
 from datetime import datetime
 
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -35,16 +36,6 @@ class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.post.title
-
-
-class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField(max_length=200, blank=True)
-    created = models.DateTimeField(auto_now=True)
-
     def get_date(self):
         time = datetime.now()
         if self.created.day == time.day:
@@ -58,7 +49,7 @@ class Comment(models.Model):
         return self.created
 
     def __str__(self):
-        return self.text
+        return self.post.title
 
 
 class SavedPost(models.Model):
@@ -70,13 +61,38 @@ class SavedPost(models.Model):
         return self.user.username
 
 
-class Reply(models.Model):
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+class CommentInfo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(max_length=200, blank=True)
     created = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        abstract = True
+
+    def get_date(self):
+        time = datetime.now()
+        if self.created.day == time.day:
+            return str(time.hour - self.created.hour) + " h"
+        else:
+            if self.created.month == time.month:
+                return str(time.day - self.created.day) + " d"
+            else:
+                if self.created.year == time.year:
+                    return str(time.month - self.created.month) + " m"
+        return self.created
+
+
+class Comment(CommentInfo):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    
     def __str__(self):
-        return self.comment
+        return self.text
+
+
+class Reply(CommentInfo):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.text
     
     

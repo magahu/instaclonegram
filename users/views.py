@@ -140,8 +140,9 @@ def unfollow(request, username):
     follow = Follow.objects.filter(followed=user, follower=request.user)
     follow.delete()
 
-    url = reverse('users:profile', kwargs={'username':user.username})
-    return redirect(url)
+    #url = reverse('users:profile', kwargs={'username':user.username})
+    #return redirect(url)
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 #Followers view

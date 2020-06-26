@@ -59,9 +59,12 @@
             </a>
             {% endif %}
             
-            <p class="text">  
-              A <strong>{{notification.profile.user.username}}</strong> le gustó tu publicación
+            <p class="text">
+              A <strong>{{notification.profile.user.username}}</strong> le gustó tu publicación.
             </p>
+
+            <p class="text-date">{{notification.get_date}}</p>
+            
           </div>
           
           <a href="{% url 'posts:show-comments' notification.post.pk %}">
