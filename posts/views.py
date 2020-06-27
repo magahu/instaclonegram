@@ -18,14 +18,17 @@ def new_post(request):
     if request.method == 'POST': 
         # create a form instance and populate it with data from the request:
         form = NewPostForm(request.POST, request.FILES)
-        # check whether it's valid:
+        #Set the post description as the first comment
+        
         if form.is_valid(): 
             form.save()
+
             # redirect to a new URL:
             return redirect('posts:home')
     else:
         # if a GET (or any other method) we'll create a blank form
-        form = NewPostForm()
+        form = NewPostForm(prefix="form")
+       
     return render(request, 'posts/new_post.html', {'form':form, 'likes':likes})
 
 
@@ -99,6 +102,8 @@ def new_comment(request, pk):
 def list_comments(request, pk):
     post = Post.objects.get(pk=pk)
     post.like = post.like_set.filter(user=request.user)
+
+    #pass if is a saved post
     post.saved = post.savedpost_set.filter(user=request.user)
 
     #notifications for the navigation bar
@@ -163,13 +168,29 @@ def list_saved_posts(request):
     return render(request, 'posts/saved_posts.html', context)
 
     
-
+#Delete the selected post of the logged user
 @login_required
 def delete_post(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     if post.user == request.user:
         post.delete()
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect('posts:home')
+
+
+#Like comment
+@login_required
+def like_comment(request, comment_pk):
+    #Create like for the comment
+
+    comment = Comment.objects.get(pk=comment_pk)
+    url = reverse('posts:show-comments', kwargs={'pk':comment.post.pk})
+    return redirect(url)
+
+
+#Create a reply to a comment
+@login_required
+def new_reply(request, comment_pk):
+    return render(request, 'posts/reply.html')
     
 
  

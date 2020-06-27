@@ -1,20 +1,18 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/posts/comment_form.css' %}">
 
-    <form class="comment-form" action="{% url 'posts:new-comment' post.pk %}" method="POST" id="comment">
+    
+    <form class="comment-form" action="{% url 'posts:new-comment' post.pk %}" method="POST">
 
         {% csrf_token %}
-
+         
         <input type="hidden" name="post" value="{{post.pk}}">
         <input type="hidden" name="user" value="{{request.user.pk}}">
-
-            <input type="text" class="comment-space" name="text" placeholder="Agregar un comentario...">
-
-            
-            <button type="submit" class="submit-comment">
-                <p class="button-text"><strong>Publicar</strong></p>
-            </button>
-
+        <input type="text" class="comment-space" name="text" id="text-input" placeholder="Agregar un comentario...">
         
+            
+        <button type="submit" class="submit-comment">
+            <p class="button-text"><strong>Publicar</strong></p>
+        </button>
 
     </form>

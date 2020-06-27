@@ -61,14 +61,18 @@
                             <div class="user">
                                 <div class="top-div">
                                     <p class="comment-text"><strong>@{{post.user.username}}</strong> {{post.description}}</p>
-                                    <!--<img src="{% static 'images/gray-heart.png' %}" width="20px" style="margin: 10px;">-->
+                                    
+                                    <img src="{% static 'images/gray-heart.png' %}" width="20px" style="margin: 10px;">
+                                    
+                                    
                                 </div>
 
                                 <div class="comment-options">
                                     <p class="comment-date"><strong>{{post.get_date}}</strong></p>
-                                    <!--<p class="answer-button"><strong>Responder</strong></p>-->
+                                        <a href="#text-input" style="text-decoration: none;">
+                                        <p class="answer-button"><strong>Responder</strong></p>
+                                    </a>
                                 </div>
-
                             </div>
 
                         </div>
@@ -90,15 +94,23 @@
                         
                         <div class="user">
                             
-                            <div class="top-div">
+                            <div class="top-div"> 
                                 <p class="comment-text"><strong>@{{comment.user.username}}</strong> {{comment.text}}</p>
-                                <!--<img src="{% static 'images/gray-heart.png' %}" width="20px" style="margin: 10px;">-->
+                                <a href="{% url 'posts:comment-like' comment.pk %}">
+                                    <img src="{% static 'images/gray-heart.png' %}" width="20px" style="margin: 10px;">
+                                </a>
                             </div>
                             
                         
                             <div class="comment-options">
                                 <p class="comment-date"><strong>{{comment.get_date}}</strong></p>
-                                <!--<p class="answer-button"><strong>Responder</strong></p>-->
+
+                                <a href="{% url 'posts:reply' comment.pk %}" style="text-decoration: none;">
+                                
+                                    <p class="answer-button"><strong>Responder</strong></p>
+                                     
+                                </a>  
+
                             </div>
                         
                         </div>
