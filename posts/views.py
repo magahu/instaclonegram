@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import NewPostForm, NewLikeForm, NewCommentForm, SavedPostForm 
-from posts.models import Post, Like, Comment, SavedPost
+from posts.models import Post, Like, Comment, SavedPost, CommentLike
 from django.urls import reverse
 from django.contrib.auth.models import User
 from users.views import list_notifications
@@ -106,6 +106,12 @@ def list_comments(request, pk):
     #pass if is a saved post
     post.saved = post.savedpost_set.filter(user=request.user)
 
+    #likes for comments in this post
+    comments = Comment.objects.filter(post=post.pk)
+    for comment in comments:
+        comment.comment_like = CommentLike.objects.filter(comment=comment.pk, user=request.user)
+
+
     #notifications for the navigation bar
     likes = list_notifications(request)
 
@@ -122,7 +128,7 @@ def list_likes(request, pk):
         users.append(user)   
 
     #notifications for the navigation bar
-    likes = list_notifications(request) 
+    likes = list_notifications(request)
 
     context = {'contacts':users, 'label':'Me gusta', 'likes':likes}
     
@@ -180,9 +186,21 @@ def delete_post(request, post_pk):
 #Like comment
 @login_required
 def like_comment(request, comment_pk):
-    #Create like for the comment
+    #Create like for the comment or delete it if already exists
+    #Check if like exists
+    #import pdb; pdb.set_trace()
+    #comment = Comment.objects.filter(pk=comment_pk)
+    #NO FUNCIONA
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    like = CommentLike.objects.filter(comment=comment, user=request.user)
 
-    comment = Comment.objects.get(pk=comment_pk)
+    #import pdb; pdb.set_trace()
+
+    if not like:
+        like = CommentLike.objects.create(comment=comment, user=request.user)
+    else:
+        like.delete()
+    
     url = reverse('posts:show-comments', kwargs={'pk':comment.post.pk})
     return redirect(url)
 

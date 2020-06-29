@@ -89,9 +89,7 @@
                             
                             <div class="top-div"> 
                                 <p class="comment-text"><strong>@{{comment.user.username}}</strong> {{comment.text}}</p>
-                                <a href="{% url 'posts:comment-like' comment.pk %}">
-                                    <img src="{% static 'images/gray-heart.png' %}" width="20px" style="margin: 10px;">
-                                </a>
+                                {% include 'posts/like_comment.html' %}
                             </div>
                             
                         
