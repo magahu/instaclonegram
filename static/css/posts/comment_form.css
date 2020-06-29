@@ -20,9 +20,16 @@
 }
 
 .button-text{
-    color: #b1defc;
+    color: #0f95f6;
     font-family:'Varela', sans-serif;
     font-size: 0.9em;
     margin: 0;
 }
 
+.disabled-button-text{
+    color: #b1defc;
+    font-family:'Varela', sans-serif;
+    font-size: 0.9em;
+    margin: 0;
+    padding: 10%;
+}
