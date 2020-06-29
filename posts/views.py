@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import NewPostForm, NewLikeForm, NewCommentForm, SavedPostForm 
-from posts.models import Post, Like, Comment, SavedPost, CommentLike
+from posts.models import Post, Like, Comment, SavedPost, CommentLike, Reply
 from django.urls import reverse
 from django.contrib.auth.models import User
 from users.views import list_notifications
@@ -111,11 +111,10 @@ def list_comments(request, pk):
     for comment in comments:
         comment.comment_like = CommentLike.objects.filter(comment=comment.pk, user=request.user)
 
-
     #notifications for the navigation bar
     likes = list_notifications(request)
 
-    return render(request, 'posts/comments.html', {'post':post, 'likes':likes})
+    return render(request, 'posts/comments.html', {'post':post, 'likes':likes, 'comments':comments})
 
 
 #Display users likes
@@ -208,6 +207,8 @@ def like_comment(request, comment_pk):
 #Create a reply to a comment
 @login_required
 def new_reply(request, comment_pk):
+    if request.method == 'POST':
+        pass
     return render(request, 'posts/reply.html')
     
 

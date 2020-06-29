@@ -72,7 +72,8 @@
 
                     </div>
 
-                {% for comment in post.comment_set.all %}
+                {% comment %}{% for comment in post.comment_set.all %}{% endcomment %}
+                {% for comment in comments %}
                 <div class="comment">
                     <a href="{% url 'users:profile' comment.user.username %}">
                         {% if comment.user.profile.picture %}
@@ -96,10 +97,9 @@
                             <div class="comment-options">
                                 <p class="comment-date"><strong>{{comment.get_date}}</strong></p>
 
-                                <a href="{% url 'posts:reply' comment.pk %}" style="text-decoration: none;">
-                                
+                                <p class="comment-like"><strong>{{ comment.commentlike_set.count }} Me gusta</strong></p>
+                                <a href="{% url 'posts:reply' comment.pk %}" style="text-decoration: none;">                               
                                     <p class="answer-button"><strong>Responder</strong></p>
-                                     
                                 </a>  
 
                             </div>

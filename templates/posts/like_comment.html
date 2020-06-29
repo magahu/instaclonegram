@@ -2,8 +2,8 @@
 
 <a href="{% url 'posts:comment-like' comment.pk %}">
     {% if comment.comment_like %}
-    <img src="{% static 'images/red-heart-shape.svg' %}" width="20px" style="margin: 10px;">
+    <img src="{% static 'images/red-heart-shape.svg' %}" width="10px" style="margin: 10px;">
     {% else %}
-    <img src="{% static 'images/gray-heart.png' %}" width="20px" style="margin: 10px;">
+    <img src="{% static 'images/gray-heart.png' %}" width="10px" style="margin: 10px;">
     {% endif %}
 </a>
