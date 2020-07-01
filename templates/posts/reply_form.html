@@ -6,17 +6,17 @@
 
         {% csrf_token %}
          
-        <input type="hidden" name="post" value="{{comment.pk}}">
+        <input type="hidden" name="comment" value="{{reply_to.pk}}">
         <input type="hidden" name="user" value="{{request.user.pk}}">
-        <input type="text" class="comment-space" name="text" id="text-input"
+        <input type="text" name="text" id="text-input" class="comment-space"
         placeholder="Agregar un comentario..." onkeyup="EnableButton()"
         value = "@{{reply_to.user.username}}">
          
-        <div class="submit-comment" id="text-div" >
+        <div class="submit-comment" id="text-div"  hidden="true">
             <p class="disabled-button-text">Publicar</p>
         </div>
         
-        <button type="submit" class="submit-comment" id="submit-button" disabled="true" hidden="true">
+        <button type="submit" class="submit-comment" id="submit-button">
             <p class="button-text"><strong>Publicar</strong></p>
         </button>
 

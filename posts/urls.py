@@ -19,8 +19,6 @@ urlpatterns = [
      path('<int:comment_pk>/reply/', views.new_reply, name='reply'),
      path('<int:comment_pk>/create-reply', views.create_reply, name='create-reply')
      
-  
-
 ]
 
 

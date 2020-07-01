@@ -2,8 +2,8 @@
 
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import NewPostForm, NewLikeForm, NewCommentForm, SavedPostForm 
-from posts.models import Post, Like, Comment, SavedPost, CommentLike, Reply
+from .forms import NewPostForm, NewLikeForm, NewCommentForm, SavedPostForm, ReplyForm
+from .models import Post, Like, Comment, SavedPost, CommentLike, Reply
 from django.urls import reverse
 from django.contrib.auth.models import User
 from users.views import list_notifications
@@ -92,9 +92,7 @@ def new_comment(request, pk):
             return redirect(url)
             
     else:
-        # if a GET (or any other method) we'll create a blank form
-        form =NewCommentForm()
-    return redirect('posts:home')
+        return redirect('posts:home')
 
 
 #Show comments
@@ -228,7 +226,9 @@ def create_reply(request, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     
     if request.method == 'POST':
-        pass
+        reply_form = ReplyForm(request.POST)
+        if reply_form.is_valid():
+            reply_form.save()
     
     url = reverse('posts:show-comments', kwargs={'pk':comment.post.pk})
     return redirect(url)

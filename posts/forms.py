@@ -1,7 +1,7 @@
 """Posts forms"""
 
 from django import forms
-from posts.models import Post, Like, Comment, SavedPost
+from posts.models import Post, Like, Comment, SavedPost, Reply
 
 class NewPostForm(forms.ModelForm):
     class Meta:
@@ -26,4 +26,7 @@ class SavedPostForm(forms.ModelForm):
         fields = ('post', 'user')
     
 
-    
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ('comment', 'user', 'text')
