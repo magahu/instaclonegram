@@ -1,0 +1,25 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/posts/comment_form.css' %}">
+    
+    <form class="comment-form" action="{% url 'posts:create-reply' reply_to.pk %}" method="POST">
+
+        {% csrf_token %}
+         
+        <input type="hidden" name="post" value="{{comment.pk}}">
+        <input type="hidden" name="user" value="{{request.user.pk}}">
+        <input type="text" class="comment-space" name="text" id="text-input"
+        placeholder="Agregar un comentario..." onkeyup="EnableButton()"
+        value = "@{{reply_to.user.username}}">
+         
+        <div class="submit-comment" id="text-div" >
+            <p class="disabled-button-text">Publicar</p>
+        </div>
+        
+        <button type="submit" class="submit-comment" id="submit-button" disabled="true" hidden="true">
+            <p class="button-text"><strong>Publicar</strong></p>
+        </button>
+
+    </form>
+
+    <script src="{% static 'js/posts/enable_button.js' %}" type="text/javascript"></script>

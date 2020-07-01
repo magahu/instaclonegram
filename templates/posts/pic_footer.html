@@ -53,7 +53,7 @@
         <div class="pic-icons">
             <div class="left-icons">
                 {% include 'posts/like_button.html' %}
-                <a href="{% url 'posts:show-comments' post.pk %}">
+                <a href="{% url 'posts:show-comments' post.pk  %}">
                     <img class="pic-icon" src="{% static 'images/add_comment.png' %}" height="25px">
                 </a>
             </div>
@@ -61,7 +61,7 @@
             {% include 'posts/save_post_form.html' %}
 
         </div>
-        <a href="{% url 'posts:show-likes' post.pk %}" style="text-decoration: none; color: black;">
+        <a href="{% url 'posts:show-likes' post.pk%}" style="text-decoration: none; color: black;">
             <p class="info-pic-likes"><strong>{{post.like_set.count}} Me gusta</strong></p>
         </a>
         

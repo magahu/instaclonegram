@@ -104,22 +104,18 @@
 
                             </div>
 
-                            
-                        
                         </div>
 
-                        
-                   
                     </div>  
-
-                    
-                           
-                </div>  
-                
-                <div style="display: flex; margin: 5px 0; padding-left:45px;">
-                    <hr style="width: 30px; margin:5px; background-color: #dbdbdb; color:#dbdbdb;"> 
-                    <p class="comment-like"><strong >Ver respuestas</strong></p>
+        
                 </div>
+
+                
+                    <div style="display: flex; margin: 5px 0; padding-left:45px;">
+                        <hr style="width: 30px; margin:5px; background-color: #dbdbdb; color:#dbdbdb;"> 
+                        <p class="comment-like"><strong >Ver respuestas ()</strong></p>
+                    </div>
+                
                 {% endfor %}    
             </div>
     
@@ -139,8 +135,16 @@
                 <p class="info-pic-likes"><strong>{{post.like_set.count}} Me gusta</strong></p>
             </a>
             
-            {%include 'posts/comment_form.html'%}
-    
+            <!--Show the comment form if it's a post or reply form if it's a comment-->
+            
+            {% if reply_to %}
+            {% include 'posts/reply_form.html' %}
+            {% else %}
+            {% include 'posts/comment_form.html'%}
+            {% endif %}
+            
+
+
         </div>
         
     </div>

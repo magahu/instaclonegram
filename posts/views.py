@@ -99,10 +99,9 @@ def new_comment(request, pk):
 
 #Show comments
 @login_required
-def list_comments(request, pk):
+def list_comments(request, pk, comment_pk=0):
     post = Post.objects.get(pk=pk)
     post.like = post.like_set.filter(user=request.user)
-
     #pass if is a saved post
     post.saved = post.savedpost_set.filter(user=request.user)
 
@@ -113,8 +112,17 @@ def list_comments(request, pk):
 
     #notifications for the navigation bar
     likes = list_notifications(request)
+    
+    #if there's a comment to reply
+    comment_to_reply = Comment.objects.filter(pk=comment_pk)
+    if comment_to_reply:
+        reply_to = get_object_or_404(Comment, pk=comment_pk)
+    else:
+        reply_to = 0
 
-    return render(request, 'posts/comments.html', {'post':post, 'likes':likes, 'comments':comments})
+    context = {'post':post, 'likes':likes, 'comments':comments, 'reply_to':reply_to}
+    #import pdb; pdb.set_trace()
+    return render(request, 'posts/comments.html', context)
 
 
 #Display users likes
@@ -204,12 +212,23 @@ def like_comment(request, comment_pk):
     return redirect(url)
 
 
-#Create a reply to a comment
+#Redirect to the page with the reply form instead the comment form
 @login_required
 def new_reply(request, comment_pk):
-    if request.method == 'POST':
-        pass
-    return render(request, 'posts/reply.html')
+    comment = get_object_or_404(Comment, pk=comment_pk)
     
 
- 
+    context = {'pk':comment.post.pk, 'comment_pk':comment_pk}
+    url = reverse('posts:show-comments-reply', kwargs=context)
+    return redirect(url)
+    
+
+#Create a reply to a comment
+def create_reply(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    
+    if request.method == 'POST':
+        pass
+    
+    url = reverse('posts:show-comments', kwargs={'pk':comment.post.pk})
+    return redirect(url)
