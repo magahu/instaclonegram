@@ -101,5 +101,12 @@ class Reply(CommentInfo):
     
     def __str__(self):
         return self.text
+
+
+class ReplyLike(LikeInfo):
+    reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.reply.text
     
     

@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import NewPostForm, NewLikeForm, NewCommentForm, SavedPostForm, ReplyForm
-from .models import Post, Like, Comment, SavedPost, CommentLike, Reply
+from .models import Post, Like, Comment, SavedPost, CommentLike, Reply, ReplyLike
 from django.urls import reverse
 from django.contrib.auth.models import User
 from users.views import list_notifications
@@ -103,11 +103,6 @@ def list_comments(request, pk, comment_pk=0):
     #pass if is a saved post
     post.saved = post.savedpost_set.filter(user=request.user)
 
-    #likes for comments in this post
-    comments = Comment.objects.filter(post=post.pk)
-    for comment in comments:
-        comment.comment_like = CommentLike.objects.filter(comment=comment.pk, user=request.user)
-
     #notifications for the navigation bar
     likes = list_notifications(request)
     
@@ -118,7 +113,8 @@ def list_comments(request, pk, comment_pk=0):
     else:
         reply_to = 0
 
-    context = {'post':post, 'likes':likes, 'comments':comments, 'reply_to':reply_to}
+
+    context = {'post':post, 'likes':likes, 'reply_to':reply_to}
     #import pdb; pdb.set_trace()
     return render(request, 'posts/comments.html', context)
 
@@ -191,11 +187,7 @@ def delete_post(request, post_pk):
 #Like comment
 @login_required
 def like_comment(request, comment_pk):
-    #Create like for the comment or delete it if already exists
-    #Check if like exists
-    #import pdb; pdb.set_trace()
-    #comment = Comment.objects.filter(pk=comment_pk)
-    #NO FUNCIONA
+    
     comment = get_object_or_404(Comment, pk=comment_pk)
     like = CommentLike.objects.filter(comment=comment, user=request.user)
 
@@ -232,3 +224,21 @@ def create_reply(request, comment_pk):
     
     url = reverse('posts:show-comments', kwargs={'pk':comment.post.pk})
     return redirect(url)
+
+
+#Like reply
+def like_reply(request, reply_pk):
+    reply = get_object_or_404(Reply, pk=reply_pk)
+    reply_like = ReplyLike.objects.filter(pk=reply_pk)
+    
+
+    if not reply_like:
+        reply_like = ReplyLike.objects.create(reply=reply, user=request.user)
+    else:
+        reply_like.delete()
+
+    comment = get_object_or_404(Comment, pk=reply.comment.pk)
+    url = reverse('posts:show-comments', kwargs={'pk':comment.post.pk})
+    return redirect(url)
+
+

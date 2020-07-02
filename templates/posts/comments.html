@@ -39,9 +39,7 @@
                     
                 </div>
                 
-
-                
-                
+   
             </a>
 
             <hr class="divisor">
@@ -60,7 +58,7 @@
                         <div class="comment-body">
                             <div class="user">
                                 <div class="top-div">
-                                    <p class="comment-text"><strong>@{{post.user.username}}</strong> {{post.description}}</p>
+                                    <p class="comment-text" ><strong>@{{post.user.username}}</strong> {{post.description}}</p>
                                 </div>
 
                                 <div class="comment-options">
@@ -72,8 +70,8 @@
 
                     </div>
 
-                {% comment %}{% for comment in post.comment_set.all %}{% endcomment %}
-                {% for comment in comments %}
+                {% for comment in post.comment_set.all %}
+  
                 <div class="comment">
                     <a href="{% url 'users:profile' comment.user.username %}">
                         {% if comment.user.profile.picture %}
@@ -110,11 +108,9 @@
         
                 </div>
 
-                
-                    <div style="display: flex; margin: 5px 0; padding-left:45px;">
-                        <hr style="width: 30px; margin:5px; background-color: #dbdbdb; color:#dbdbdb;"> 
-                        <p class="comment-like"><strong >Ver respuestas ()</strong></p>
-                    </div>
+                {% if comment.reply_set.all %}
+                {% include 'posts/display_replies.html' %}
+                {% endif %}
                 
                 {% endfor %}    
             </div>
@@ -136,15 +132,13 @@
             </a>
             
             <!--Show the comment form if it's a post or reply form if it's a comment-->
-            
+    
             {% if reply_to %}
             {% include 'posts/reply_form.html' %}
             {% else %}
             {% include 'posts/comment_form.html'%}
             {% endif %}
             
-
-
         </div>
         
     </div>

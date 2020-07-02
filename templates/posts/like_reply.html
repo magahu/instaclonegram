@@ -1,0 +1,9 @@
+{% load static %}
+
+<a href="{% url 'posts:reply-like' reply.pk %}">
+    {% if reply.like_reply %}
+    <img src="{% static 'images/red-heart-shape.svg' %}" width="10px" style="margin: 10px;">
+    {% else %}
+    <img src="{% static 'images/gray-heart.png' %}" width="10px" style="margin: 10px;">
+    {% endif %}
+</a>

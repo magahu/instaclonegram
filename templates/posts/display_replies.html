@@ -1,0 +1,110 @@
+<style>
+    .replies-dropdown{
+        margin: 5px 0;
+        padding-left:45px;
+    }
+
+    .replies-dropbtn{
+        display: flex;
+        text-decoration: none;
+    }
+
+    hr{
+        width: 30px;
+        height: 1px;
+        margin:5px;
+        background-color: #bfbfbf;
+        color:#bfbfbf;
+    }
+
+    .reply-text{
+        margin: 0 0 5px 0;
+        font-family: 'Varela', sans-serif;
+        font-size: 0.8em;
+        font-weight: inherit;
+        margin-top: 0;
+        width: 267px;
+    }
+
+    .replies-content{
+        display: none;
+        min-width: 160px;
+        background-color: #f5f5f5;
+        padding-top: 5px;
+    }
+  
+</style>
+
+
+<div class="replies-dropdown" >
+    <button class="replies-dropbtn" onclick="myFunction()">
+      
+        <hr>
+        <p class="comment-like">
+             <strong >Ver respuestas ({{comment.reply_set.count}})</strong>
+        </p>
+
+        
+    </button>
+
+    <div class="replies-content" id="repliesDropdown">
+        {% for reply in comment.reply_set.all %}
+        <div class="comment">
+            <a href="{% url 'users:profile' reply.user.username %}">
+                {% if reply.user.profile.picture %}
+                    <img src="{{reply.user.profile.picture.url}}" width="33px" class="profile-pic">
+                {% else %}
+                    {% load static %}
+                    <img src="{% static 'images/default-profile.png' %}" width="33px" class="profile-pic">
+                {% endif %}
+            </a>
+
+            <div class="comment-body">
+                
+                <div class="user">
+                    
+                    <div class="top-div">
+
+                        <p class="reply-text">
+                            <strong>@{{reply.user.username}}</strong> {{reply.text}}
+                        </p>
+                            
+                        {% include 'posts/like_reply.html' %}
+                    </div>
+                    
+                
+                    <div class="comment-options">
+                        <p class="comment-date"><strong>{{reply.get_date}}</strong></p>
+
+                        <p class="comment-like"><strong>{{ reply.replylike_set.count }} Me gusta</strong></p>
+                        <a href="{% url 'posts:reply' comment.pk %}" style="text-decoration: none;">                               
+                            <p class="answer-button"><strong>Responder</strong></p>
+                        </a>  
+
+                    </div>
+
+                </div>
+
+            </div>  
+
+        </div>
+        {% endfor %}
+    </div>
+    
+</div>
+
+<script>
+    function myFunction() {
+        //debugger;
+      var my_dropdown= document.getElementById("repliesDropdown");
+      if (my_dropdown.style.display === "none") {
+        my_dropdown.style.display = "block";
+      } else {
+        my_dropdown.style.display = "none";
+      }
+    }
+    </script>
+    
+    </body>
+    </html>
+    
