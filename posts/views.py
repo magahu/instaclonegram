@@ -102,6 +102,15 @@ def list_comments(request, pk, comment_pk=0):
     post.like = post.like_set.filter(user=request.user)
     #pass if is a saved post
     post.saved = post.savedpost_set.filter(user=request.user)
+    #pass comment whit like user like variable
+    comments = post.comment_set.all()
+    for comment in comments:
+        comment.comment_like = CommentLike.objects.filter(comment=comment, user=request.user)
+    
+    #pass reply with like user variable
+    replies = comment.reply_set.all()
+    for reply in replies:
+        reply.reply_like = ReplyLike.objects.filter(reply=reply, user=request.user)
 
     #notifications for the navigation bar
     likes = list_notifications(request)
@@ -114,7 +123,8 @@ def list_comments(request, pk, comment_pk=0):
         reply_to = 0
 
 
-    context = {'post':post, 'likes':likes, 'reply_to':reply_to}
+    context = {'post':post, 'likes':likes, 'reply_to':reply_to,
+    'comments':comments, 'replies':replies}
     #import pdb; pdb.set_trace()
     return render(request, 'posts/comments.html', context)
 
