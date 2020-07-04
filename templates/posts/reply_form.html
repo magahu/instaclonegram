@@ -9,10 +9,11 @@
         <input type="hidden" name="comment" value="{{reply_to.pk}}">
         <input type="hidden" name="user" value="{{request.user.pk}}">
         <input type="text" name="text" id="text-input" class="comment-space"
-        placeholder="Agregar un comentario..." onkeyup="EnableButton()"
+        placeholder="Agregar un comentario..."
+        onkeyup="EnableButton('text-input', 'text-div', 'submit-button')"
         value = "@{{reply_to.user.username}}">
          
-        <div class="submit-comment" id="text-div"  hidden="true">
+        <div class="submit-comment" id="text-div{{reply_to.pk}"  hidden="true">
             <p class="disabled-button-text">Publicar</p>
         </div>
         

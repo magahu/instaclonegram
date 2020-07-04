@@ -17,6 +17,7 @@ class Post(models.Model):
 
     def get_date(self):
         time = datetime.now()
+       
         if self.created.day == time.day:
             return "hace " + str(time.hour - self.created.hour) + " horas"
         elif self.created.month == time.month:
@@ -38,6 +39,7 @@ class LikeInfo(models.Model):
 
     def get_date(self):
         time = datetime.now()
+       
         if self.created.day == time.day:
             return str(time.hour - self.created.hour) + " h"
         elif self.created.month == time.month:
@@ -105,7 +107,7 @@ class Reply(CommentInfo):
 
 class ReplyLike(LikeInfo):
     reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return self.reply.text
     

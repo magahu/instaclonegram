@@ -106,12 +106,13 @@ def list_comments(request, pk, comment_pk=0):
     comments = post.comment_set.all()
     for comment in comments:
         comment.comment_like = CommentLike.objects.filter(comment=comment, user=request.user)
-    
+        comment.replies = comment.reply_set.all()
     #pass reply with like user variable
-    replies = comment.reply_set.all()
-    for reply in replies:
-        reply.reply_like = ReplyLike.objects.filter(reply=reply, user=request.user)
 
+        for reply in comment.replies:
+            reply.reply_like = ReplyLike.objects.filter(reply=reply, user=request.user)
+            #
+    
     #notifications for the navigation bar
     likes = list_notifications(request)
     
@@ -122,9 +123,8 @@ def list_comments(request, pk, comment_pk=0):
     else:
         reply_to = 0
 
-
     context = {'post':post, 'likes':likes, 'reply_to':reply_to,
-    'comments':comments, 'replies':replies}
+    'comments':comments}
     #import pdb; pdb.set_trace()
     return render(request, 'posts/comments.html', context)
 
@@ -239,7 +239,7 @@ def create_reply(request, comment_pk):
 #Like reply
 def like_reply(request, reply_pk):
     reply = get_object_or_404(Reply, pk=reply_pk)
-    reply_like = ReplyLike.objects.filter(pk=reply_pk)
+    reply_like = ReplyLike.objects.filter(reply=reply_pk, user=request.user)
     
 
     if not reply_like:

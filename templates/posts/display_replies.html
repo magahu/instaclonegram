@@ -48,7 +48,7 @@
     </button>
 
     <div class="replies-content" id="repliesDropdown">
-        {% for reply in replies %}
+        {% for reply in comment.replies %}
         <div class="comment">
             <a href="{% url 'users:profile' reply.user.username %}">
                 {% if reply.user.profile.picture %}
