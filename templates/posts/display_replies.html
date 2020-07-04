@@ -37,17 +37,16 @@
 
 
 <div class="replies-dropdown" >
-    <button class="replies-dropbtn" onclick="myFunction()">
+    <button class="replies-dropbtn" onclick="myFunction('repliesDropdown{{comment.pk}}')">
       
         <hr>
         <p class="comment-like">
              <strong >Ver respuestas ({{comment.reply_set.count}})</strong>
         </p>
 
-        
     </button>
 
-    <div class="replies-content" id="repliesDropdown">
+    <div class="replies-content" id="repliesDropdown{{comment.pk}}">
         {% for reply in comment.replies %}
         <div class="comment">
             <a href="{% url 'users:profile' reply.user.username %}">
@@ -94,9 +93,9 @@
 </div>
 
 <script>
-    function myFunction() {
+    function myFunction(repliesDropdown) {
         //debugger;
-      var my_dropdown= document.getElementById("repliesDropdown");
+      var my_dropdown= document.getElementById(repliesDropdown);
       if (my_dropdown.style.display === "none") {
         my_dropdown.style.display = "block";
       } else {
