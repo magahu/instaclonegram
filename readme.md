@@ -1,10 +1,13 @@
 #Instaclonegram
+
 **Instaclonegram** is a plataform based on instagram functionallity, recreates the main intagram tools for sharing photos, customize a profile,  have a contacts network and react to another photos.
 
 #Instaclonegram users
+
 When a user arrives to the **Instaclonegram** site there are two options, login or signup if the user don't have an account yet. 
 
 ###Login
+
 ![Login screen](instaclonegram_screenshots/Screenshot1.png "Login")
 
 ###Signup
