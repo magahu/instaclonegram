@@ -9,6 +9,8 @@ from posts.models import Post, Like
 from django.db import IntegrityError
 from .forms import SignUpForm, UpdateProfileForm
 from django.urls import reverse
+#using class-based views
+from django.views.generic import DetailView
 
 
 # Login view
@@ -90,24 +92,46 @@ def update_profile(request):
 
 
 #Profile view 
-@login_required
-def profile(request, username):
-    user = get_object_or_404(User, username=username)
-    try:
-        follow = Follow.objects.get(follower=request.user, followed=user)  
-    except Follow.DoesNotExist:
-        follow = Follow()
-    user.posts = Post.objects.filter(user=user).order_by('-created')
-    user.n_posts = Post.objects.filter(user=user).count()
-    user.n_followers = Follow.objects.filter(followed=user).count()
-    user.n_followed = Follow.objects.filter(follower=user).count()
-    user.follow = Follow.objects.filter(follower=request.user, followed=user)
+#@login_required
+#def profile(request, username):
+    #user = get_object_or_404(User, username=username)
+    #try:
+        #follow = Follow.objects.get(follower=request.user, followed=user)  
+    #except Follow.DoesNotExist:
+        #follow = Follow()
+    #user.posts = Post.objects.filter(user=user).order_by('-created')
+    #user.n_posts = Post.objects.filter(user=user).count()
+    #user.n_followers = Follow.objects.filter(followed=user).count()
+    #user.n_followed = Follow.objects.filter(follower=user).count()
+    #user.follow = Follow.objects.filter(follower=request.user, followed=user)
     #notifications for the navigation bar
-    likes = list_notifications(request)
+    #likes = list_notifications(request)
 
-    context = {'user':user, 'likes':likes}
+    #context = {'user':user, 'likes':likes}
 
-    return render(request, 'users/profile.html', context)
+    #return render(request, 'users/profile.html', context)
+
+
+#Profile class-based view
+class ProfileDetail(DetailView):
+    template_name = 'users/profile.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    queryset = User.objects.all()
+    context_object_name = 'user'
+
+    def get_context_data(self, **kwargs): 
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context['posts'] = Post.objects.filter(user=user).order_by('-created')
+        context['n_posts'] = Post.objects.filter(user=user).count()
+        context['n_followers'] = Follow.objects.filter(followed=user).count()
+        context['n_followed'] = Follow.objects.filter(follower=user).count()
+        context['follow'] = Follow.objects.filter(follower=self.request.user, followed=user)
+        #notifications for the navigation bar
+        context['likes'] = list_notifications(self.request)
+        
+        return context
                  
 
 #Follow view

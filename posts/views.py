@@ -7,6 +7,8 @@ from .models import Post, Like, Comment, SavedPost, CommentLike, Reply, ReplyLik
 from django.urls import reverse
 from django.contrib.auth.models import User
 from users.views import list_notifications
+#using class-based views
+from django.views import generic
 
 
 #Create new post view
@@ -19,10 +21,8 @@ def new_post(request):
         # create a form instance and populate it with data from the request:
         form = NewPostForm(request.POST, request.FILES)
         #Set the post description as the first comment
-        
         if form.is_valid(): 
             form.save()
-
             # redirect to a new URL:
             return redirect('posts:home')
     else:
@@ -30,6 +30,7 @@ def new_post(request):
         form = NewPostForm(prefix="form")
        
     return render(request, 'posts/new_post.html', {'form':form, 'likes':likes})
+
 
 
 #Home view

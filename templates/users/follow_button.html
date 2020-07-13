@@ -8,7 +8,7 @@
     </a>
 </button>
 
-{% elif user.follow %}
+{% elif follow %}
 <button class="follow-button">
     <a href="{% url 'users:unfollow' user.username %}">
         <strong>Dejar de seguir</strong>
