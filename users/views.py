@@ -11,6 +11,7 @@ from .forms import SignUpForm, UpdateProfileForm
 from django.urls import reverse
 #using class-based views
 from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Login view
@@ -113,7 +114,7 @@ def update_profile(request):
 
 
 #Profile class-based view
-class ProfileDetail(DetailView):
+class ProfileDetail(DetailView, LoginRequiredMixin):
     template_name = 'users/profile.html'
     slug_field = 'username'
     slug_url_kwarg = 'username'

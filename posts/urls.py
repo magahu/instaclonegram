@@ -5,7 +5,7 @@ from posts import views
 
 urlpatterns = [
 
-     path('home/',  views.home, name='home'),
+     path('home/',  views.HomePostsList.as_view(), name='home'),
      path('new-post/', views.new_post, name='new-post'),
      path('like/', views.new_like, name='like'),
      path('<int:pk>/new-comment/', views.new_comment, name='new-comment'),

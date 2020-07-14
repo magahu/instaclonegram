@@ -8,7 +8,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from users.views import list_notifications
 #using class-based views
-from django.views import generic
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 #Create new post view
@@ -32,19 +33,39 @@ def new_post(request):
     return render(request, 'posts/new_post.html', {'form':form, 'likes':likes})
 
 
-
-#Home view
-@login_required
-def home(request):
-    posts = Post.objects.all().order_by('-created')
-    for post in posts:
-        post.like = post.like_set.filter(user=request.user, post=post)
-        post.saved = post.savedpost_set.filter(user=request.user)
-        #notifications for the navigation bar
-        likes = list_notifications(request)
+##Home view
+#@login_required
+#def home(request):
+    #posts = Post.objects.all().order_by('-created')
+    #for post in posts:
+        #post.like = post.like_set.filter(user=request.user, post=post)
+        #post.saved = post.savedpost_set.filter(user=request.user)
+        ##notifications for the navigation bar
+        #likes = list_notifications(request)
          
-    #import pdb; pdb.set_trace()
-    return render(request, 'home.html', {'posts':posts, 'likes':likes})
+    ##import pdb; pdb.set_trace()
+    #return render(request, 'home.html', {'posts':posts, 'likes':likes})
+
+
+#Home class-based view
+class HomePostsList(ListView, LoginRequiredMixin):
+    template_name = 'home.html'
+    model = Post
+    ordering = ('-created',)
+    context_object_name = 'posts'
+
+    def get_context_data(self,**kwargs):
+        posts = Post.objects.all().order_by('-created')
+        for post in posts:
+            post.like = post.like_set.filter(user=self.request.user, post=post)
+            post.saved = post.savedpost_set.filter(user=self.request.user)
+
+        context = super(HomePostsList, self).get_context_data(**kwargs)
+
+        context['posts'] = posts
+        context['likes'] = list_notifications(self.request)
+        return context
+
 
 
 #Create like view
@@ -101,9 +122,9 @@ def new_comment(request, pk):
 def list_comments(request, pk, comment_pk=0):
     post = Post.objects.get(pk=pk)
     post.like = post.like_set.filter(user=request.user)
-    #pass if is a saved post
+    ##pass if is a saved post
     post.saved = post.savedpost_set.filter(user=request.user)
-    #pass comment whit like user like variable
+    ##pass comment whit like user like variable
     comments = post.comment_set.all()
     for comment in comments:
         comment.comment_like = CommentLike.objects.filter(comment=comment, user=request.user)
@@ -112,12 +133,11 @@ def list_comments(request, pk, comment_pk=0):
 
         for reply in comment.replies:
             reply.reply_like = ReplyLike.objects.filter(reply=reply, user=request.user)
-            #
     
-    #notifications for the navigation bar
+    ##notifications for the navigation bar
     likes = list_notifications(request)
     
-    #if there's a comment to reply
+    ##if there's a comment to reply
     comment_to_reply = Comment.objects.filter(pk=comment_pk)
     if comment_to_reply:
         reply_to = get_object_or_404(Comment, pk=comment_pk)
@@ -126,8 +146,10 @@ def list_comments(request, pk, comment_pk=0):
 
     context = {'post':post, 'likes':likes, 'reply_to':reply_to,
     'comments':comments}
-    #import pdb; pdb.set_trace()
+    ##import pdb; pdb.set_trace()
     return render(request, 'posts/comments.html', context)
+
+
 
 
 #Display users likes
