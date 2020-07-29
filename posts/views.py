@@ -4,33 +4,47 @@ from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import NewPostForm, NewLikeForm, NewCommentForm, SavedPostForm, ReplyForm
 from .models import Post, Like, Comment, SavedPost, CommentLike, Reply, ReplyLike
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import User
 from users.views import list_notifications
 #using class-based views
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView
+from django.views.generic import CreateView
+
+#Create new post using a class based view
+class CreatePostView(CreateView, LoginRequiredMixin):
+    template_name = 'posts/new_post.html'
+    form_class = NewPostForm
+    success_url = reverse_lazy('posts:home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        context['profile'] = self.request.user.profile
+        return context
 
 
 #Create new post view
-@login_required
-def new_post(request):
-    #notifications for the navigation bar
-    likes = list_notifications(request)
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST': 
-        # create a form instance and populate it with data from the request:
-        form = NewPostForm(request.POST, request.FILES)
-        #Set the post description as the first comment
-        if form.is_valid(): 
-            form.save()
+#@login_required
+#def new_post(request):
+    ##notifications for the navigation bar
+    #likes = list_notifications(request)
+    ## if this is a POST request we need to process the form data
+    #if request.method == 'POST': 
+        ## create a form instance and populate it with data from the request:
+        #form = NewPostForm(request.POST, request.FILES)
+        ##Set the post description as the first comment
+        #if form.is_valid(): 
+            #form.save()
             # redirect to a new URL:
-            return redirect('posts:home')
-    else:
+            #return redirect('posts:home')
+    #else:
         # if a GET (or any other method) we'll create a blank form
-        form = NewPostForm(prefix="form")
+        #form = NewPostForm(prefix="form")
        
-    return render(request, 'posts/new_post.html', {'form':form, 'likes':likes})
+    #return render(request, 'posts/new_post.html', {'form':form, 'likes':likes})
 
 
 ##Home view
@@ -117,39 +131,80 @@ def new_comment(request, pk):
         return redirect('posts:home')
 
 
-#Show comments
-@login_required
-def list_comments(request, pk, comment_pk=0):
-    post = Post.objects.get(pk=pk)
-    post.like = post.like_set.filter(user=request.user)
+##Show comments
+#@login_required
+#def list_comments(request, pk, comment_pk=0):
+    #post = Post.objects.get(pk=pk)
+    #post.like = post.like_set.filter(user=request.user)
     ##pass if is a saved post
-    post.saved = post.savedpost_set.filter(user=request.user)
+    #post.saved = post.savedpost_set.filter(user=request.user)
     ##pass comment whit like user like variable
-    comments = post.comment_set.all()
-    for comment in comments:
-        comment.comment_like = CommentLike.objects.filter(comment=comment, user=request.user)
-        comment.replies = comment.reply_set.all()
+    #comments = post.comment_set.all()
+    #for comment in comments:
+        #comment.comment_like = CommentLike.objects.filter(comment=comment, user=request.user)
+        #comment.replies = comment.reply_set.all()
     #pass reply with like user variable
 
-        for reply in comment.replies:
-            reply.reply_like = ReplyLike.objects.filter(reply=reply, user=request.user)
+        #for reply in comment.replies:
+            #reply.reply_like = ReplyLike.objects.filter(reply=reply, user=request.user)
     
     ##notifications for the navigation bar
-    likes = list_notifications(request)
+    #likes = list_notifications(request)
     
     ##if there's a comment to reply
-    comment_to_reply = Comment.objects.filter(pk=comment_pk)
-    if comment_to_reply:
-        reply_to = get_object_or_404(Comment, pk=comment_pk)
-    else:
-        reply_to = 0
+    #comment_to_reply = Comment.objects.filter(pk=comment_pk)
+    #if comment_to_reply:
+        #reply_to = get_object_or_404(Comment, pk=comment_pk)
+    #else:
+        #reply_to = 0
 
-    context = {'post':post, 'likes':likes, 'reply_to':reply_to,
-    'comments':comments}
+    #context = {'post':post, 'likes':likes, 'reply_to':reply_to,
+    #'comments':comments}
     ##import pdb; pdb.set_trace()
-    return render(request, 'posts/comments.html', context)
+    #return render(request, 'posts/comments.html', context)
 
 
+#Show comments class-based views
+class PostDetail(DetailView, LoginRequiredMixin):
+    template_name = 'posts/comments.html'
+    slug_field = 'pk'
+    slug_url_kwarg = 'pk'
+    queryset = Post.objects.all()
+    context_object_name = 'post'
+
+
+    def get_context_data(self, **kwargs): 
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        
+
+        #post = Post.objects.get(pk=pk)
+        post.like = post.like_set.filter(user=self.request.user)
+        #pass if is a saved post
+        post.saved = post.savedpost_set.filter(user=self.request.user)
+
+        context['post'] = post
+
+        comments = post.comment_set.all()
+        for comment in comments:
+            comment.comment_like = CommentLike.objects.filter(comment=comment, user=self.request.user)
+            comment.replies = comment.reply_set.all()
+            #pass reply with like user variable
+            for reply in comment.replies:
+                reply.reply_like = ReplyLike.objects.filter(reply=reply, user=self.request.user)
+        
+        context['comments'] = post.comment_set.all()
+
+        #if there's a comment to reply
+        comment_to_reply = Comment.objects.filter(pk=self.comment_pk)
+        if comment_to_reply:
+            reply_to = get_object_or_404(Comment, pk=self.comment_pk)
+        else:
+            reply_to = 0
+
+        context['reply_to'] = reply_to
+
+        return context
 
 
 #Display users likes

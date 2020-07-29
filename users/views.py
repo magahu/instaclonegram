@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 from users.models import Profile, Follow
 from posts.models import Post, Like
 from django.db import IntegrityError
-from .forms import SignUpForm, UpdateProfileForm
-from django.urls import reverse
+from .forms import SignUpForm #UpdateProfileForm
+from django.urls import reverse, reverse_lazy
 #using class-based views
-from django.views.generic import DetailView
+from django.views.generic import DetailView, FormView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -40,56 +40,79 @@ def logout_view(request):
     # Redirect to a success page.
     return redirect('users:login')
 
+#Signup using a class based view
+class SignupView(FormView):
+    template_name = 'users/signup.html'
+    form_class = SignUpForm
+    success_url = reverse_lazy('users:login')
 
-#Signup view
-def signup_view(request):
+    def form_valid(self, form):
+        """Salvar los datos del formulario"""
+        form.save()
+        return super().form_valid(form)
+
+##Signup view
+#def signup_view(request):
+    ## if this is a POST request we need to process the form data
+    #if request.method == 'POST':
+        ## create a form instance and populate it with data from the request:
+        #form = SignUpForm(request.POST)
+        ##import pdb; pdb.set_trace()
+        ## check whether it's valid:
+        #if form.is_valid():
+            ## process the data in form.cleaned_data as required
+            #form.save()
+            ## redirect to a new URL:
+            #return redirect('users:login')
+    ## if a GET (or any other method) we'll create a blank form
+    #else:
+        #form = SignUpForm()
+    #return render(request, 'users/signup.html', {'form':form})
+
+class UpdateProfileView(UpdateView, LoginRequiredMixin):
+    template_name = 'users/update_profile.html'
+    model = Profile
+    fields = ['picture', 'website', 'biography', 'phone']
+
+    def get_object(self):
+        return self.request.user.profile
+    
+    def get_success_url(self):
+        """Return to user profile"""
+        username = self.object.user.username
+        return reverse('users:profile', kwargs = {'username':username})
+
+
+##Update profile view
+#@login_required
+#def update_profile(request):
+    ##notifications for the navigation bar
+    #likes = list_notifications(request)
     # if this is a POST request we need to process the form data
-    if request.method == 'POST':
+    #if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = SignUpForm(request.POST)
-        #import pdb; pdb.set_trace()
+        #form = UpdateProfileForm(request.POST, request.FILES)
         # check whether it's valid:
-        if form.is_valid():
+        #if form.is_valid():
             # process the data in form.cleaned_data as required
-            form.save()
-            # redirect to a new URL:
-            return redirect('users:login')
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = SignUpForm()
-    return render(request, 'users/signup.html', {'form':form})
-
-
-#Update profile view
-@login_required
-def update_profile(request):
-    #notifications for the navigation bar
-    likes = list_notifications(request)
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = UpdateProfileForm(request.POST, request.FILES)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            data = form.cleaned_data
-            if data['picture']:
-                request.user.profile.picture = data['picture']
-            else:
-                request.user.profile.picture
-            request.user.profile.website = data['website']
-            request.user.profile.biography = data['biography']
-            request.user.profile.phone = data['phone']
-            #request.user.profile.gender = data['gender']
-            request.user.profile.save()
-            # redirect to a new URL:
-            return redirect('users:update-profile')
-        else:
-            return render(request, 'users/update_profile.html', {'form':form, 'likes':likes})
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = UpdateProfileForm()      
-    return render(request, 'users/update_profile.html', {'likes':likes})
+            #data = form.cleaned_data
+            #if data['picture']:
+                #request.user.profile.picture = data['picture']
+            #else:
+                #request.user.profile.picture
+            #request.user.profile.website = data['website']
+            #request.user.profile.biography = data['biography']
+            #request.user.profile.phone = data['phone']
+            ##request.user.profile.gender = data['gender']
+            #request.user.profile.save()
+            ## redirect to a new URL:
+            #return redirect('users:update-profile')
+        #else:
+            #return render(request, 'users/update_profile.html', {'form':form, 'likes':likes})
+    ## if a GET (or any other method) we'll create a blank form
+    #else:
+        #form = UpdateProfileForm()      
+    #return render(request, 'users/update_profile.html', {'likes':likes})
 
 
 #Profile view 
@@ -135,7 +158,7 @@ class ProfileDetail(DetailView, LoginRequiredMixin):
         return context
                  
 
-#Follow view
+#Follow view. Follow an user if isn't followed
 @login_required
 def follow(request, username):
     user = get_object_or_404(User, username=username)
@@ -170,7 +193,7 @@ def unfollow(request, username):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-#Followers view
+#Followers view display a followers list
 @login_required
 def followers(request, username):
     followers=[]
@@ -195,7 +218,7 @@ def followers(request, username):
     return render(request,'users/contacts.html', context)
 
 
-#Followed view
+#Followed view display a followed list
 def followed(request, username):
     followed=[]
     user = get_object_or_404(User, username=username)
@@ -226,19 +249,14 @@ def followed(request, username):
 def search(request):
     if request.method == 'POST':
         username_input = request.POST['username']
-
         results = User.objects.filter(username__contains=username_input)
-
         #notifications for the navigation bar
         likes = list_notifications(request)
-
-         
         context= {
             'contacts':results,
             'label': 'Resultados de la busqueda "{}"'.format(username_input),
             'likes':likes
          }
-
         return render(request, 'users/contacts.html', context)
 
 
